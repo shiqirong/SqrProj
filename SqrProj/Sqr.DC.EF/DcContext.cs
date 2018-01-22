@@ -8,7 +8,7 @@ using System.Text;
 namespace Sqr.DC.EF
 {
     [DbConfigurationType(typeof(MySqlEFConfiguration))]
-    public class DcContext: DbContext
+    internal class DcContext: DbContext
     {
         public DcContext() : this("DC") { }
         public DcContext(string connectionKey)

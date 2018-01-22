@@ -65,16 +65,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseRepository.cs" />
     <Compile Include="Configs\UserConfig.cs" />
     <Compile Include="DcContext.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Interface\ISoftDelete.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Sqr.DC.EF.Models\Sqr.DC.EF.Models.csproj">
+      <Project>{dd84a240-4e1b-4c92-84d9-71937bd7d22c}</Project>
+      <Name>Sqr.DC.EF.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

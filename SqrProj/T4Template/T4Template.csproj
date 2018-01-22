@@ -42,15 +42,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sqr.DC.EF.Models\ModelTemplate.cs">
+      <DependentUpon>ModelTemplate.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Sqr.DC.EF\Configs\ConfigTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ConfigTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Sqr.DC.EF\Models\ModelTemplate.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelTemplate.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -61,14 +61,14 @@
     <None Include="EntityHelper.ttinclude" />
     <None Include="Manager.ttinclude" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
     <None Include="Sqr.DC.EF\Configs\ConfigTemplate.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ConfigTemplate.cs</LastGenOutput>
     </None>
-    <Content Include="Sqr.DC.EF\Models\ModelTemplate.tt">
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Sqr.DC.EF.Models\ModelTemplate.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ModelTemplate.cs</LastGenOutput>
     </Content>
