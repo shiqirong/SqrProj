@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sqr.DC.EF", "Sqr.DC.EF\Sqr.DC.EF.csproj", "{1F339703-7D72-42FA-ADA2-EB62B3B1B584}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "T4", "T4", "{1E8F3122-37FF-414F-BF84-60D392109226}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T4Template", "T4Template\T4Template.csproj", "{4AF5C325-F5EA-43BD-A0E7-B50A8A5ACAB4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,8 +19,15 @@ Global
 		{1F339703-7D72-42FA-ADA2-EB62B3B1B584}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F339703-7D72-42FA-ADA2-EB62B3B1B584}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F339703-7D72-42FA-ADA2-EB62B3B1B584}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AF5C325-F5EA-43BD-A0E7-B50A8A5ACAB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AF5C325-F5EA-43BD-A0E7-B50A8A5ACAB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AF5C325-F5EA-43BD-A0E7-B50A8A5ACAB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AF5C325-F5EA-43BD-A0E7-B50A8A5ACAB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4AF5C325-F5EA-43BD-A0E7-B50A8A5ACAB4} = {1E8F3122-37FF-414F-BF84-60D392109226}
 	EndGlobalSection
 EndGlobal

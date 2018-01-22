@@ -14,6 +14,7 @@ namespace Sqr.DC.EF
         public DcContext(string connectionKey)
             : base(string.Format("name={0}", connectionKey))
         {
+            
             //Database.SetInitializer(new EFInitializer());
             Database.SetInitializer<DcContext>(null);
         }
