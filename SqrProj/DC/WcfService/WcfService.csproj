@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Account\AccountService.svc" />
+    <Content Include="log4net.xml" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
