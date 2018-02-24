@@ -63,15 +63,15 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Account\AccountService.svc" />
+    <Content Include="SSO\SsoService.svc" />
     <Content Include="log4net.xml" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account\AccountService.svc.cs">
-      <DependentUpon>AccountService.svc</DependentUpon>
+    <Compile Include="SSO\SsoService.svc.cs">
+      <DependentUpon>SsoService.svc</DependentUpon>
     </Compile>
-    <Compile Include="Account\IAccountService.cs" />
+    <Compile Include="SSO\ISsoService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

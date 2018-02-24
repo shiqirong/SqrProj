@@ -7,16 +7,18 @@ using System.Text;
 
 namespace Sqr.Common.Cache
 {
-    public class RedisCache : ICache
+    public class RedisCache : ICache, IDisposable
     {
         private readonly TimeSpan _defaultExpireTimeSpan = TimeSpan.FromDays(1);
         private readonly ConnectionMultiplexer _redisConnections;
         private readonly IDatabase _database;
         private readonly JsonSerializerSettings _jsonSerializerSettings;
 
-        public RedisCache(string name)
+        public RedisCache()
         {
-            _redisConnections = ConnectionMultiplexer.Connect(name);
+            var redisConnectStr=System.Configuration.ConfigurationManager.AppSettings.Get("redis");
+
+            _redisConnections = ConnectionMultiplexer.Connect(redisConnectStr);
             _database = _redisConnections.GetDatabase();
             _jsonSerializerSettings =
                 new JsonSerializerSettings
@@ -94,6 +96,12 @@ namespace Sqr.Common.Cache
                 slidingExpireTime ?? _defaultExpireTimeSpan,
                 When.NotExists
             );
+        }
+
+        public void Dispose()
+        {
+            _redisConnections.Close();
+            _redisConnections.Dispose();
         }
     }
 }

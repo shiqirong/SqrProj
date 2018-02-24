@@ -12,7 +12,9 @@ namespace Sqr.SSO.Web
     {
         public void Configuration(IAppBuilder app)
         {
-
+            
         }
+
+        
     }
 }

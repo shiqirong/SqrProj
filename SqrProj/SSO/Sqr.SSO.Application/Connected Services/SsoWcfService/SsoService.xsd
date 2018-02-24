@@ -16,4 +16,21 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="User" nillable="true" type="tns:User" />
+  <xs:complexType name="ArrayOfSsoSite">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SsoSite" nillable="true" type="tns:SsoSite" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSsoSite" nillable="true" type="tns:ArrayOfSsoSite" />
+  <xs:complexType name="SsoSite">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AddTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ChName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EnName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="SetCookieUrl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Url" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SsoSite" nillable="true" type="tns:SsoSite" />
 </xs:schema>

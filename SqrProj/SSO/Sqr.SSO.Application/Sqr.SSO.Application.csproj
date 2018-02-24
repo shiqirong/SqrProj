@@ -42,8 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account\BLL_User.cs" />
-    <Compile Include="Connected Services\AccountWcf\Reference.cs">
+    <Compile Include="SsoSiteService.cs" />
+    <Compile Include="UserService.cs" />
+    <Compile Include="TokenManager.cs" />
+    <Compile Include="Connected Services\SsoWcfService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -56,43 +58,50 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Connected Services\AccountWcf\AccountService.wsdl" />
-    <None Include="Connected Services\AccountWcf\AccountService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\AccountWcf\AccountService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\AccountWcf\AccountService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\AccountWcf\Sqr.SSO.Application.AccountWcf.User.datasource">
+    <None Include="Connected Services\SsoWcfService\Sqr.SSO.Application.SsoWcfService.SsoSite.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\AccountWcf\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\AccountWcf\AccountService.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\AccountWcf\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\AccountWcf\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\AccountWcf\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
+    <None Include="Connected Services\SsoWcfService\Sqr.SSO.Application.SsoWcfService.User.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\SsoWcfService\SsoService.wsdl" />
+    <None Include="Connected Services\SsoWcfService\SsoService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SsoWcfService\SsoService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SsoWcfService\SsoService2.xsd">
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\Sqr.Common\Sqr.Common.csproj">
+      <Project>{f9ca1d06-974a-4a91-a3c7-f6a1d60059a4}</Project>
+      <Name>Sqr.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sqr.SSO.Common\Sqr.SSO.Common.csproj">
       <Project>{a5e16be2-6eac-4144-805b-ee361980d2cd}</Project>
       <Name>Sqr.SSO.Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\SsoWcfService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\SsoWcfService\SsoService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\SsoWcfService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\SsoWcfService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\SsoWcfService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

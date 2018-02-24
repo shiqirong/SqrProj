@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="04fe730a-9275-4386-a7c9-1bb8ae872d22" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1020/SSO/SsoService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="SsoService.xsd" MetadataType="Schema" ID="d8b3532e-27c3-40ac-a301-c4dfb6d128b1" SourceId="1" SourceUrl="http://itinside-176:1020/SSO/SsoService.svc?xsd=xsd2" />
+    <MetadataFile FileName="SsoService1.xsd" MetadataType="Schema" ID="238f51a7-1fb1-4ffe-828b-6c935359be2b" SourceId="1" SourceUrl="http://itinside-176:1020/SSO/SsoService.svc?xsd=xsd0" />
+    <MetadataFile FileName="SsoService2.xsd" MetadataType="Schema" ID="d3ae5ceb-e487-4f33-a14c-1e1e00feffac" SourceId="1" SourceUrl="http://itinside-176:1020/SSO/SsoService.svc?xsd=xsd1" />
+    <MetadataFile FileName="SsoService.disco" MetadataType="Disco" ID="82c7133c-1c80-45e4-adab-2ad189614a14" SourceId="1" SourceUrl="http://itinside-176:1020/SSO/SsoService.svc?disco" />
+    <MetadataFile FileName="SsoService.wsdl" MetadataType="Wsdl" ID="e36c5366-7854-4297-b97c-92dd0de85062" SourceId="1" SourceUrl="http://itinside-176:1020/SSO/SsoService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

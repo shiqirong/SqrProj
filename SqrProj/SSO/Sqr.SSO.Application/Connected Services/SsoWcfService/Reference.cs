@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sqr.SSO.Application.AccountWcf {
+namespace Sqr.SSO.Application.SsoWcfService {
     using System.Runtime.Serialization;
     using System;
     
@@ -218,64 +218,203 @@ namespace Sqr.SSO.Application.AccountWcf {
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="AccountWcf.IAccountService")]
-    public interface IAccountService {
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SsoSite", Namespace="http://schemas.datacontract.org/2004/07/Sqr.DC.EF.Models")]
+    [System.SerializableAttribute()]
+    public partial class SsoSite : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccountService/GetUser", ReplyAction="http://tempuri.org/IAccountService/GetUserResponse")]
-        Sqr.SSO.Application.AccountWcf.User GetUser(string account);
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccountService/GetUser", ReplyAction="http://tempuri.org/IAccountService/GetUserResponse")]
-        System.Threading.Tasks.Task<Sqr.SSO.Application.AccountWcf.User> GetUserAsync(string account);
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime AddTimeField;
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccountService/ValidAndGet", ReplyAction="http://tempuri.org/IAccountService/ValidAndGetResponse")]
-        Sqr.SSO.Application.AccountWcf.User ValidAndGet(string account, string password);
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ChNameField;
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccountService/ValidAndGet", ReplyAction="http://tempuri.org/IAccountService/ValidAndGetResponse")]
-        System.Threading.Tasks.Task<Sqr.SSO.Application.AccountWcf.User> ValidAndGetAsync(string account, string password);
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EnNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SetCookieUrlField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UrlField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime AddTime {
+            get {
+                return this.AddTimeField;
+            }
+            set {
+                if ((this.AddTimeField.Equals(value) != true)) {
+                    this.AddTimeField = value;
+                    this.RaisePropertyChanged("AddTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ChName {
+            get {
+                return this.ChNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ChNameField, value) != true)) {
+                    this.ChNameField = value;
+                    this.RaisePropertyChanged("ChName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string EnName {
+            get {
+                return this.EnNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EnNameField, value) != true)) {
+                    this.EnNameField = value;
+                    this.RaisePropertyChanged("EnName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SetCookieUrl {
+            get {
+                return this.SetCookieUrlField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SetCookieUrlField, value) != true)) {
+                    this.SetCookieUrlField = value;
+                    this.RaisePropertyChanged("SetCookieUrl");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Url {
+            get {
+                return this.UrlField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UrlField, value) != true)) {
+                    this.UrlField = value;
+                    this.RaisePropertyChanged("Url");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IAccountServiceChannel : Sqr.SSO.Application.AccountWcf.IAccountService, System.ServiceModel.IClientChannel {
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="SsoWcfService.ISsoService")]
+    public interface ISsoService {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISsoService/GetUser", ReplyAction="http://tempuri.org/ISsoService/GetUserResponse")]
+        Sqr.SSO.Application.SsoWcfService.User GetUser(string account);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISsoService/GetUser", ReplyAction="http://tempuri.org/ISsoService/GetUserResponse")]
+        System.Threading.Tasks.Task<Sqr.SSO.Application.SsoWcfService.User> GetUserAsync(string account);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISsoService/ValidAndGet", ReplyAction="http://tempuri.org/ISsoService/ValidAndGetResponse")]
+        Sqr.SSO.Application.SsoWcfService.User ValidAndGet(string account, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISsoService/ValidAndGet", ReplyAction="http://tempuri.org/ISsoService/ValidAndGetResponse")]
+        System.Threading.Tasks.Task<Sqr.SSO.Application.SsoWcfService.User> ValidAndGetAsync(string account, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISsoService/GetSsoSiteList", ReplyAction="http://tempuri.org/ISsoService/GetSsoSiteListResponse")]
+        System.Collections.Generic.List<Sqr.SSO.Application.SsoWcfService.SsoSite> GetSsoSiteList();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISsoService/GetSsoSiteList", ReplyAction="http://tempuri.org/ISsoService/GetSsoSiteListResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<Sqr.SSO.Application.SsoWcfService.SsoSite>> GetSsoSiteListAsync();
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface ISsoServiceChannel : Sqr.SSO.Application.SsoWcfService.ISsoService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class AccountServiceClient : System.ServiceModel.ClientBase<Sqr.SSO.Application.AccountWcf.IAccountService>, Sqr.SSO.Application.AccountWcf.IAccountService {
+    public partial class SsoServiceClient : System.ServiceModel.ClientBase<Sqr.SSO.Application.SsoWcfService.ISsoService>, Sqr.SSO.Application.SsoWcfService.ISsoService {
         
-        public AccountServiceClient() {
+        public SsoServiceClient() {
         }
         
-        public AccountServiceClient(string endpointConfigurationName) : 
+        public SsoServiceClient(string endpointConfigurationName) : 
                 base(endpointConfigurationName) {
         }
         
-        public AccountServiceClient(string endpointConfigurationName, string remoteAddress) : 
+        public SsoServiceClient(string endpointConfigurationName, string remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public AccountServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public SsoServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public AccountServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public SsoServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
         }
         
-        public Sqr.SSO.Application.AccountWcf.User GetUser(string account) {
+        public Sqr.SSO.Application.SsoWcfService.User GetUser(string account) {
             return base.Channel.GetUser(account);
         }
         
-        public System.Threading.Tasks.Task<Sqr.SSO.Application.AccountWcf.User> GetUserAsync(string account) {
+        public System.Threading.Tasks.Task<Sqr.SSO.Application.SsoWcfService.User> GetUserAsync(string account) {
             return base.Channel.GetUserAsync(account);
         }
         
-        public Sqr.SSO.Application.AccountWcf.User ValidAndGet(string account, string password) {
+        public Sqr.SSO.Application.SsoWcfService.User ValidAndGet(string account, string password) {
             return base.Channel.ValidAndGet(account, password);
         }
         
-        public System.Threading.Tasks.Task<Sqr.SSO.Application.AccountWcf.User> ValidAndGetAsync(string account, string password) {
+        public System.Threading.Tasks.Task<Sqr.SSO.Application.SsoWcfService.User> ValidAndGetAsync(string account, string password) {
             return base.Channel.ValidAndGetAsync(account, password);
+        }
+        
+        public System.Collections.Generic.List<Sqr.SSO.Application.SsoWcfService.SsoSite> GetSsoSiteList() {
+            return base.Channel.GetSsoSiteList();
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Sqr.SSO.Application.SsoWcfService.SsoSite>> GetSsoSiteListAsync() {
+            return base.Channel.GetSsoSiteListAsync();
         }
     }
 }

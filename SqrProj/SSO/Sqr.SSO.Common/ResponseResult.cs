@@ -18,5 +18,7 @@ namespace Sqr.SSO.Common
         public string Msg { get; set; }
 
         public T Data { get; set; }
+
+        public object Tag { get; set; }
     }
 }

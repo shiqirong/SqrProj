@@ -20,14 +20,32 @@ namespace Sqr.SSO.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user=new BLL_User().ValidAndGet(model.Account, model.Password);
-                if (user != null)
+                var response=new UserService().ValidAndGet(model.Account, model.Password);
+                if (1==response.Code)
                 {
-                    ModelState.AddModelError("", "登录成功");
+                    HttpCookie cookie= new HttpCookie("SsoToken");
+                    cookie.Value = response.Tag.ToString();
+                    Request.Cookies.Add(cookie);
+                    return RedirectToActionPermanent("setCookie", new {token=response.Tag, returnUrl= Request.Params["returnUrl"] });
                 }
-                ModelState.AddModelError("", "用户名或密码不正确");
+                else
+                {
+                    ModelState.AddModelError("", response.Msg);
+                }
             }
             return View(model);
+        }
+
+        public ActionResult SetCookie(string token,string returnUrl)
+        {
+            var siteList=new SsoSiteService().GetSsoSiteList();
+            if (siteList == null)
+            {
+                siteList = new List<Application.SsoWcfService.SsoSite>();
+            }
+            ViewBag.token = token;
+            ViewBag.returnUrl = returnUrl;
+            return View(siteList);
         }
     }
 }

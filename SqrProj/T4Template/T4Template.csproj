@@ -43,9 +43,9 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sqr.DC.EF.Models\ModelTemplate.cs">
-      <DependentUpon>ModelTemplate.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>ModelTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="Sqr.DC.EF\Configs\ConfigTemplate.cs">
       <AutoGen>True</AutoGen>

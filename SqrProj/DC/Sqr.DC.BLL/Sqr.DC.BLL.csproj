@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account\BLL_Account.cs" />
+    <Compile Include="Account\BLL_SsoSite.cs" />
     <Compile Include="BLL_Base.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

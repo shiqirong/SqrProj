@@ -69,10 +69,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseRepository.cs" />
+    <Compile Include="Configs\SsoSiteConfig.cs" />
     <Compile Include="Configs\UserConfig.cs" />
     <Compile Include="DcContext.cs" />
     <Compile Include="Interface\ISoftDelete.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\SsoSiteRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
