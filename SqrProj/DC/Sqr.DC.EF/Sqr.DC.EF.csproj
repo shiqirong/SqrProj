@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sqr.DC.EF</RootNamespace>
     <AssemblyName>Sqr.DC.EF</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -33,35 +33,34 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.ProtocolBuffers, Version=2.4.1.555, Culture=neutral, PublicKeyToken=55f7125234beb589, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.ProtocolBuffers.2.4.1.555\lib\net35\Google.ProtocolBuffers.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Google.ProtocolBuffers.Serialization, Version=2.4.1.555, Culture=neutral, PublicKeyToken=55f7125234beb589, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.ProtocolBuffers.2.4.1.555\lib\net35\Google.ProtocolBuffers.Serialization.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MySql.Data, Version=6.10.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MySql.Data.6.10.8\lib\net452\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\packages\MySql.Data.Entity.6.9.9\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.10.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MySql.Data.Entity.6.10.8\lib\net452\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -69,12 +68,49 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseRepository.cs" />
-    <Compile Include="Configs\SsoSiteConfig.cs" />
+    <Compile Include="Configs\AccountActionRelationConfig.cs" />
+    <Compile Include="Configs\AccountRolesRelationConfig.cs" />
+    <Compile Include="Configs\AccountsConfig.cs" />
+    <Compile Include="Configs\ActionInfoConfig.cs" />
+    <Compile Include="Configs\BannerInfoConfig.cs" />
+    <Compile Include="Configs\DicInfoConfig.cs" />
+    <Compile Include="Configs\KeyValueInfoConfig.cs" />
+    <Compile Include="Configs\NewsCategoryConfig.cs" />
+    <Compile Include="Configs\NewsInfoConfig.cs" />
+    <Compile Include="Configs\ProductCategoryConfig.cs" />
+    <Compile Include="Configs\ProductInfoConfig.cs" />
+    <Compile Include="Configs\RolesConfig.cs" />
+    <Compile Include="Configs\SsoSitesConfig.cs" />
     <Compile Include="Configs\UserConfig.cs" />
     <Compile Include="DcContext.cs" />
     <Compile Include="Interface\ISoftDelete.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\SsoSiteRepository.cs" />
+    <Compile Include="Repositories\AccountActionRelationRespository.cs" />
+    <Compile Include="Repositories\AccountActionRelationRespository.Generated.cs" />
+    <Compile Include="Repositories\AccountRolesRelationRespository.cs" />
+    <Compile Include="Repositories\AccountRolesRelationRespository.Generated.cs" />
+    <Compile Include="Repositories\AccountsRespository.cs" />
+    <Compile Include="Repositories\AccountsRespository.Generated.cs" />
+    <Compile Include="Repositories\ActionInfoRespository.cs" />
+    <Compile Include="Repositories\ActionInfoRespository.Generated.cs" />
+    <Compile Include="Repositories\BannerInfoRespository.cs" />
+    <Compile Include="Repositories\BannerInfoRespository.Generated.cs" />
+    <Compile Include="Repositories\DicInfoRespository.cs" />
+    <Compile Include="Repositories\DicInfoRespository.Generated.cs" />
+    <Compile Include="Repositories\KeyValueInfoRespository.cs" />
+    <Compile Include="Repositories\KeyValueInfoRespository.Generated.cs" />
+    <Compile Include="Repositories\NewsCategoryRespository.cs" />
+    <Compile Include="Repositories\NewsCategoryRespository.Generated.cs" />
+    <Compile Include="Repositories\NewsInfoRespository.cs" />
+    <Compile Include="Repositories\NewsInfoRespository.Generated.cs" />
+    <Compile Include="Repositories\ProductCategoryRespository.cs" />
+    <Compile Include="Repositories\ProductCategoryRespository.Generated.cs" />
+    <Compile Include="Repositories\ProductInfoRespository.cs" />
+    <Compile Include="Repositories\ProductInfoRespository.Generated.cs" />
+    <Compile Include="Repositories\RolesRespository.cs" />
+    <Compile Include="Repositories\RolesRespository.Generated.cs" />
+    <Compile Include="Repositories\SsoSitesRespository.cs" />
+    <Compile Include="Repositories\SsoSitesRespository.Generated.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>

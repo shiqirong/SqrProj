@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sqr.DC.EF.Models</RootNamespace>
     <AssemblyName>Sqr.DC.EF.Models</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -42,8 +42,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountActionRelation.cs" />
+    <Compile Include="AccountRolesRelation.cs" />
+    <Compile Include="Accounts.cs" />
+    <Compile Include="ActionInfo.cs" />
+    <Compile Include="BannerInfo.cs" />
+    <Compile Include="BaseMo.cs" />
+    <Compile Include="DicInfo.cs" />
+    <Compile Include="KeyValueInfo.cs" />
+    <Compile Include="NewsCategory.cs" />
+    <Compile Include="NewsInfo.cs" />
+    <Compile Include="ProductCategory.cs" />
+    <Compile Include="ProductInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SsoSite.cs" />
+    <Compile Include="Roles.cs" />
+    <Compile Include="SsoSites.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

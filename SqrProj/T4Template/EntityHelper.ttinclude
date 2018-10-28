@@ -135,6 +135,17 @@
                     return dbType;
             }
         }
+
+		public static string GetPascalName(string name)
+        {
+            var names = name.Split(new char[] { '_' });
+            var pascalName = string.Empty;
+            foreach(var n in names)
+            {
+                pascalName += n.Substring(0,1).ToUpperInvariant()+n.Substring(1).ToLowerInvariant();
+            }
+            return pascalName;
+        }
     }
 
     public class Entity
