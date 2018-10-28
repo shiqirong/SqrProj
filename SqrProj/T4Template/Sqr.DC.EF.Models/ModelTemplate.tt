@@ -9,7 +9,7 @@
     var connectionString = @"server=127.0.0.1;uid=root;pwd=root;";
 
     // 需要解析的数据库
-    var database = new List<string> { "sqr" };
+    var database = new List<string> { "company" };
 
     // 文件版权信息
     var copyright = DateTime.Now.Year + " xxxx Enterprises All Rights Reserved";
@@ -21,14 +21,14 @@
 
     foreach(Entity entity in entities)
     {
-        manager.StartNewFile(entity.EntityName + ".cs");
+        manager.StartNewFile(EntityHelper.GetPascalName(entity.EntityName) + ".cs");
 #>
 //-----------------------------------------------------------------------
 // <copyright file=" <#= entity.EntityName #>.cs" company="xxxx Enterprises">
 // * Copyright (C) <#= copyright #>
 // * version : <#= version #>
 // * author  : <#= author #>
-// * FileName: <#= entity.EntityName #>.cs
+// * FileName: <#= EntityHelper.GetPascalName(entity.EntityName) #>.cs
 // * history : Created by T4 <#= DateTime.Now #> 
 // </copyright>
 //-----------------------------------------------------------------------
@@ -44,57 +44,50 @@ using System.Runtime.Serialization;
 namespace Sqr.DC.EF.Models
 {
     /// <summary>
-    /// <#= entity.EntityName #> Entity Model
+    /// <#= EntityHelper.GetPascalName(entity.EntityName) #> Entity Model
     /// </summary>    
     [Serializable]
-<#    if(serviceModel)
+<#  if(serviceModel)
     {
 #>
     [DataContract]
 <#
     }
 #>
-    public class <#= entity.EntityName #>
+    public class <#= EntityHelper.GetPascalName(entity.EntityName) #>:BaseMo
     {
 <#
         for(int i = 0; i < entity.Fields.Count; i++)
         {
-            if(i ==0){
-#>        /// <summary>
-        /// <#= entity.Fields[i].Comment #>
-        /// </summary>
-<#    if(serviceModel)
-    {
-#>
-        [DataMember]
-<#
-    }
-#>
-        public <#= entity.Fields[i].Type #> <#= entity.Fields[i].Name #> { get; set; }
-<#
-            }
-            else{
-#>    
-        /// <summary>
-        /// <#= entity.Fields[i].Comment #>
-        /// </summary>
-<#    if(serviceModel)
-    {
-#>
-        [DataMember]
-<#
-    }
-#>
-        public <#= entity.Fields[i].Type #> <#= entity.Fields[i].Name #> { get; set; }
-<#            }
+			
+				if(EntityHelper.GetPascalName(entity.Fields[i].Name)=="Id"
+					||EntityHelper.GetPascalName(entity.Fields[i].Name)=="CreateTime"
+					||EntityHelper.GetPascalName(entity.Fields[i].Name)=="UpdateTime"
+					||EntityHelper.GetPascalName(entity.Fields[i].Name)=="DeleteTime"
+					||EntityHelper.GetPascalName(entity.Fields[i].Name)=="IsDeleted"){
+					continue;
+                    }
+#>      
+			/// <summary>
+			/// <#= entity.Fields[i].Comment #>
+			/// </summary>
+			<#  if(serviceModel)
+				{
+			#>
+					[DataMember]
+			<#
+				}
+			#>
+			public <#= entity.Fields[i].Type #> <#= EntityHelper.GetPascalName(entity.Fields[i].Name) #> { get; set; }
+
+<# 
+			
         }
 #>
     }
 }
-<#        
-        manager.EndBlock(); 
+<#
     }
-
-    manager.Process(true);
+	manager.EndBlock(); 
+	manager.Process(true);
 #>
-

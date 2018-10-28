@@ -89,6 +89,8 @@
                 case "int":
                 case "integer":
                     return "int";
+				case "bigint":
+					return "long";
                 case "double":
                     return "double";
                 case "float":

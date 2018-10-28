@@ -46,6 +46,7 @@
     <Compile Include="AccountRolesRelation.cs" />
     <Compile Include="Accounts.cs" />
     <Compile Include="ActionInfo.cs" />
+    <Compile Include="ActionInfoRolesRelation.cs" />
     <Compile Include="BannerInfo.cs" />
     <Compile Include="BaseMo.cs" />
     <Compile Include="DicInfo.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Roles.cs" />
     <Compile Include="SsoSites.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="VAccountActioninfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Sqr.DC.BLL.Account
+namespace Sqr.DC.BLL.Security
 {
     public class BLL_Account:BLL_Base
     {

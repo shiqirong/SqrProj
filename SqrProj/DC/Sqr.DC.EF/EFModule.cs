@@ -11,7 +11,7 @@ namespace Sqr.DC.EF
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterGeneric(typeof(BaseRepository<>)).As(typeof(IRepository<>));
+            builder.RegisterGeneric(typeof(BaseRepository<>));
             builder.RegisterAssemblyTypes(this.ThisAssembly).Where(c => c.Name.EndsWith("Repository"));
         }
     }

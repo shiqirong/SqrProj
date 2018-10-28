@@ -1,5 +1,4 @@
-﻿using Sqr.Common.Paging;
-using Sqr.DC.EF.Models;
+﻿using Sqr.DC.EF.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -135,7 +134,7 @@ namespace Sqr.DC.EF
         /// <param name="keySelector"></param>
         /// <param name="isAsc"></param>
         /// <returns></returns>
-        PagingOutput<T> GetPageList<TKey>(int pageIndex, int pageSize, Expression<Func<T, bool>> where, Expression<Func<T, TKey>> keySelector = null, bool isAsc = true);
+        //PagingOutput<T> GetPageList<TKey>(int pageIndex, int pageSize, Expression<Func<T, bool>> where, Expression<Func<T, TKey>> keySelector = null, bool isAsc = true);
 
     }
 }
