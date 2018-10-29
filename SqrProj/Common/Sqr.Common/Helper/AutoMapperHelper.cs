@@ -9,6 +9,13 @@ namespace Sqr.Common.Helper
 {
     public static class AutoMapperHelper
     {
+        static AutoMapperHelper()
+        {
+            Mapper.Initialize(c =>
+            {
+
+            });
+        }
         /// <summary>
         /// AutoMapper 
         /// </summary>
@@ -16,7 +23,8 @@ namespace Sqr.Common.Helper
         {
             if (source == null)
                 return default(TDestination);
-            return Mapper.Map<TDestination>(source);
+            
+            return Mapper.Instance.Map<TDestination>(source);
         }
         
     }

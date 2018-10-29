@@ -84,8 +84,10 @@
             switch(dbType)
             {
                 case "tinyint":
+					return "sbyte";
                 case "smallint":
                 case "mediumint":
+					return "short";
                 case "int":
                 case "integer":
                     return "int";

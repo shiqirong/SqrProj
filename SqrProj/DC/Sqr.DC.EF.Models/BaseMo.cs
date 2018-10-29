@@ -15,7 +15,7 @@ namespace Sqr.DC.EF.Models
         /// <summary>
         /// 是否删除
         /// </summary>
-        public bool IsDeleted { get; set; }
+        public sbyte IsDeleted { get; set; }
 
         /// <summary>
         /// 删除时间

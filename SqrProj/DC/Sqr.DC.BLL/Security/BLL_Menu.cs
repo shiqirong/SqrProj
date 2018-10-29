@@ -16,7 +16,7 @@ namespace Sqr.DC.BLL.Security
 
         public List<GetMenuListOutput> GetMenuList(long accountId)
         {
-            return VAccountActionInfoRep.GetMany(c => c.AccountId == accountId && c.IsDeleted == false)?.MapTo<List<GetMenuListOutput>>() ;
+            return VAccountActionInfoRep.GetMany(c => c.AccountId == accountId && c.IsDeleted == 0)?.MapTo<List<GetMenuListOutput>>() ;
         }
     }
 }

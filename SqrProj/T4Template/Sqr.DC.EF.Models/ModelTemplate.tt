@@ -3,7 +3,7 @@
 <#@ include file="$(ProjectDir)EntityHelper.ttinclude" #>
 <# 
     // 是否是WCF服务模型
-    bool serviceModel = true;
+    bool serviceModel = false;
     
     // 数据库连接
     var connectionString = @"server=127.0.0.1;uid=root;pwd=root;";
