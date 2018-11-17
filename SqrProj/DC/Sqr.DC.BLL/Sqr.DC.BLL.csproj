@@ -48,6 +48,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BllModule.cs" />
+    <Compile Include="News\BLL_News.cs" />
+    <Compile Include="News\Dtos\GetNewsListDto.cs" />
     <Compile Include="Security\BLL_Account.cs" />
     <Compile Include="BLL_Base.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -74,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Base\" />
+    <Folder Include="Product\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

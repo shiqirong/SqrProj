@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    <link rel="stylesheet" href="assets/materialize/css/materialize.min.css" media="screen,projection" />
+    <!-- Bootstrap Styles-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <!-- FontAwesome Styles-->
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+    <!-- Morris Chart Styles-->
+    <link href="assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
+    <!-- Custom Styles-->
+    <link href="assets/css/custom-styles.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="mainNav">
+        @Html.Partial("_MainNav")
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+    <div class="footer">
+        <div class="w1050">
+            <div class="tc"><a href="http://www.17sucai.com/preview/33522/2018-01-23/html_%E6%96%B0%E7%89%88.rar/index.html#top" target="_self"><img src="./广州普金科技股份有限公司_files/top.png" width="151" height="41"></a></div>
+            <ul>
+                <li class="list">
+                    <h3>联系我们</h3>
+                    <p><a href="http://www.17sucai.com/preview/33522/2018-01-23/html_%E6%96%B0%E7%89%88.rar/index.html#">法律申明</a></p>
+                    <p><a href="http://www.17sucai.com/preview/33522/2018-01-23/html_%E6%96%B0%E7%89%88.rar/index.html#">联系我们</a></p>
+                    <p><a href="http://www.17sucai.com/preview/33522/2018-01-23/html_%E6%96%B0%E7%89%88.rar/index.html#">公司荣誉</a></p>
+                </li>
+                <li class="list">
+                    <h3>关于普金</h3>
+                    <p><a href="http://www.17sucai.com/preview/33522/2018-01-23/html_%E6%96%B0%E7%89%88.rar/index.html#">公司简介</a></p>
+                    <p><a href="http://www.17sucai.com/preview/33522/2018-01-23/html_%E6%96%B0%E7%89%88.rar/index.html#">主营业务</a></p>
+                    <p><a href="http://www.17sucai.com/preview/33522/2018-01-23/html_%E6%96%B0%E7%89%88.rar/index.html#">文化体系</a></p>
+                    <p><a href="http://www.17sucai.com/preview/33522/2018-01-23/html_%E6%96%B0%E7%89%88.rar/index.html#">发展历程</a></p>
+                    <p><a href="http://www.17sucai.com/preview/33522/2018-01-23/html_%E6%96%B0%E7%89%88.rar/index.html#">合作伙伴</a></p>
+                </li>
+                <li class="list">
+                    <h3>产品服务</h3>
+                    <p><a href="http://www.17sucai.com/preview/33522/2018-01-23/html_%E6%96%B0%E7%89%88.rar/index.html#">税务稽查类</a></p>
+                    <p><a href="http://www.17sucai.com/preview/33522/2018-01-23/html_%E6%96%B0%E7%89%88.rar/index.html#">税收征管类</a></p>
+                    <p><a href="http://www.17sucai.com/preview/33522/2018-01-23/html_%E6%96%B0%E7%89%88.rar/index.html#">纳税服务类</a></p>
+                    <p><a href="http://www.17sucai.com/preview/33522/2018-01-23/html_%E6%96%B0%E7%89%88.rar/index.html#">财务业务应用类</a></p>
+                    <p><a href="http://www.17sucai.com/preview/33522/2018-01-23/html_%E6%96%B0%E7%89%88.rar/index.html#">网络教育类</a></p>
+                </li>
+                <li class="list"><img src="./广州普金科技股份有限公司_files/wx.jpg" width="120" height="120"> </li>
+                <li class="address">
+                    <p>服务热线：40068-21621</p>
+                    <p>传真号码：020-38621074</p>
+                    <p>版权信息：Copyright © 2013 广州普金计算机科技股份有限公司</p>
+                    <p>ICP备案：粤ICP备11060394号</p>
+                    <p>详细地址：广州市天河区珠江新城黄埔大道西平云路163号广电平云广场A塔5层</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

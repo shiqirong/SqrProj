@@ -13,10 +13,11 @@ namespace Sqr.DC.BLL.Security
     public class BLL_Menu:BLL_Base
     {
         public VAccountActioninfoRepository VAccountActionInfoRep { get; set; }
+        public string SystemId { get; private set; }
 
-        public List<GetMenuListOutput> GetMenuList(long accountId)
+        public List<GetMenuListOutput> GetMenuList(long accountId,string systemId)
         {
-            return VAccountActionInfoRep.GetMany(c => c.AccountId == accountId && c.IsDeleted == 0)?.MapTo<List<GetMenuListOutput>>() ;
-        }
+            return VAccountActionInfoRep.GetMany(c => c.AccountId == accountId  && SystemId==systemId)?.MapTo<List<GetMenuListOutput>>() ;
+        } 
     }
 }

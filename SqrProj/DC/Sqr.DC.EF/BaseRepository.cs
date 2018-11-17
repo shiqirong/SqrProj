@@ -1,9 +1,11 @@
-﻿using Sqr.DC.EF.Interface;
+﻿using Sqr.Common.Response;
+using Sqr.DC.EF.Interface;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Sqr.DC.EF
 {
@@ -100,7 +102,7 @@ namespace Sqr.DC.EF
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public virtual List<T> GetMany(Expression<Func<T, bool>> where, params Expression<Func<T, object>>[] paths)
+        public virtual List<T> GetMany(Expression<Func<T, bool>> where,  params Expression<Func<T, object>>[] paths)
         {
             using (var dbContext = new DcContext())
             {
@@ -268,7 +270,7 @@ namespace Sqr.DC.EF
         }
 
 
-        #region 查询第一条
+
         public virtual T FirstOrDefault(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] paths)
         {
             using (var dbContext = new DcContext())
@@ -298,9 +300,7 @@ namespace Sqr.DC.EF
                 return order(query).FirstOrDefault(filter);
             }
         }
-        #endregion
 
-        #region 查询唯一
 
         public virtual T SingleOrDefault(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] paths)
         {
@@ -321,9 +321,9 @@ namespace Sqr.DC.EF
                 return order(query).SingleOrDefault(filter);
             }
         }
-        #endregion
 
-        #region 集合查询
+
+
         public List<T> Query(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] paths)
         {
             using (var dbCotext = new DcContext())
@@ -353,6 +353,21 @@ namespace Sqr.DC.EF
                     .ToList();
             }
         }
-        #endregion
+
+        public async Task<PageResult<T>> QueryPagedAsync(PageRequest pageInput,Expression<Func<T,bool>> filter, Func<IQueryable<T>, IOrderedQueryable<T>> order)
+        {
+            PageResult<T> pageResult = new PageResult<T>();
+            using (var dbCotext = new DcContext())
+            {
+                pageResult.Total = dbCotext.Set<T>().Where(filter).Count();
+
+                pageResult.Rows= await order(dbCotext.Set<T>().Where(filter))
+                    .Skip((pageInput.PageIndex-1)*pageInput.PageSize)
+                    .Take(pageInput.PageSize)
+                    .ToListAsync();
+            }
+            return pageResult;
+        }
+
     }
 }
