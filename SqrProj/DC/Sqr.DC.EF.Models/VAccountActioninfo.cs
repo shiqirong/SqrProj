@@ -59,5 +59,7 @@ namespace Sqr.DC.EF.Models
 			/// </summary>
 						public long ParentId { get; set; }
 
+        public string SystemId { get; set; }
+
     }
 }

@@ -8,7 +8,31 @@ using System.Threading.Tasks;
 
 namespace Sqr.Common
 {
-    public class SqrResponse<T>
+
+    public class SqrResponse
+    {
+        public SqrStatusCode StatusCode { get; set; }
+
+        public string Message { get; set; }
+
+        public SqrResponse(SqrStatusCode statusCode = SqrStatusCode.Ok, string msg = "")
+        {
+            StatusCode = statusCode;
+            Message = msg;
+        }
+
+        public static SqrResponse Ok()
+        {
+            return new SqrResponse(SqrStatusCode.Ok, string.Empty);
+        }
+
+        public static SqrResponse  Fail(string msg = "")
+        {
+            return new SqrResponse (SqrStatusCode.Fail );
+        }
+    }
+
+    public class SqrResponse<T> 
     {
         public SqrStatusCode StatusCode { get; set; }
 
@@ -19,6 +43,7 @@ namespace Sqr.Common
         public SqrResponse(SqrStatusCode statusCode= SqrStatusCode.Ok, string msg="",T data=default(T))
         {
             StatusCode = statusCode;
+            Message = msg;
             Data= data;
         }
 

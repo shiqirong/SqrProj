@@ -7,6 +7,7 @@ namespace Sqr.Admin.App.Api.DC.Dtos
 {
     public class GetNewsListOutput
     {
+        public long Id { get; set; }
         /// <summary>
         /// 标题
         /// </summary>

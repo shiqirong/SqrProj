@@ -20,7 +20,7 @@ namespace Sqr.DC.EF.Models
         /// <summary>
         /// 删除时间
         /// </summary>
-        public DateTime DeleteTime { get; set; }
+        public DateTime? DeleteTime { get; set; }
 
         /// <summary>
         /// 创建时间
@@ -30,6 +30,6 @@ namespace Sqr.DC.EF.Models
         /// <summary>
         /// 更新时间
         /// </summary>
-        public DateTime UpdateTime { get; set; }
+        public DateTime? UpdateTime { get; set; }
     }
 }

@@ -9,6 +9,13 @@ using Sqr.Common.Helper;
 
 namespace Sqr.Admin.App.Api
 {
+    public class ResponseModel<T>
+    {
+        public int StatusCode { get; set; }
+        public string Message { get; set; }
+        public T Data { get; set; }
+    }
+
     public abstract class ApiBase
     {
         public string ApiUrl { get; set; } = "http://localhost:9000/";
@@ -16,12 +23,13 @@ namespace Sqr.Admin.App.Api
         public async virtual Task<T> Post<T>(string url, object data)
         {
             HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             try
             {
-                var response = await client.PostAsync(url, new StringContent(data.ToJson()));
+                var response = await client.PostAsync(url, new StringContent(data.ToJson(),Encoding.UTF8,"application/json"));
                 if (response.IsSuccessStatusCode)
                 {
-                    return (await response.Content.ReadAsStringAsync()).ToObject<T>();
+                    return (await response.Content.ReadAsStringAsync()).ToObject<ResponseModel<T>>().Data;
                 }
                 LoggerManager.Warn($"调用接口返回失败(post)。{(new { url, input = data, output = response }).ToJson()}", SystemInfo.SystemId, "Api");
                 return default(T);
@@ -49,7 +57,8 @@ namespace Sqr.Admin.App.Api
                 var response = await client.GetAsync(url);
                 if (response.IsSuccessStatusCode)
                 {
-                    return (await response.Content.ReadAsStringAsync()).ToObject<T>();
+                    var result = await response.Content.ReadAsStringAsync();
+                    return result.ToObject<ResponseModel<T>>().Data;
                 }
                 LoggerManager.Warn($"调用接口返回失败(get)。{(new { url, input = data, output = response }).ToJson()}", SystemInfo.SystemId, "Api");
                 return default(T);
@@ -67,7 +76,7 @@ namespace Sqr.Admin.App.Api
             if (data != null)
             {
                 var t = data.GetType();
-                var properties = t.GetProperties(System.Reflection.BindingFlags.Public);
+                var properties = t.GetProperties();
                 strParams = "1=1";
                 foreach (var p in properties)
                 {

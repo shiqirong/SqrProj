@@ -13,7 +13,7 @@ namespace Sqr.Common.Helper
         {
             Mapper.Initialize(c =>
             {
-
+                c.ValidateInlineMaps = false;
             });
         }
         /// <summary>

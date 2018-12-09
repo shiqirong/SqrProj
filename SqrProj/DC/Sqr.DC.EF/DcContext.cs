@@ -1,4 +1,5 @@
 ﻿using MySql.Data.Entity;
+using Sqr.Common.Logger;
 using Sqr.DC.EF.Models;
 using System;
 using System.Collections.Generic;
@@ -19,12 +20,14 @@ namespace Sqr.DC.EF
         {
             this.Database.Log = (c =>
             {
-                log4net.LogManager.GetLogger("RollingLogFileAppender").Debug(c);
+                LoggerManager.Info(c);
             });
                 
             //Database.SetInitializer(new EFInitializer());
             Database.SetInitializer<DcContext>(null);
         }
+
+        
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -52,8 +55,11 @@ namespace Sqr.DC.EF
                 {
                     case EntityState.Added:
                         entry.CurrentValues["IsDeleted"] = false;
+                        entry.CurrentValues["CreateTime"] = DateTime.Now;
                         break;
-
+                    case EntityState.Modified:
+                        entry.CurrentValues["UpdateTime"] = DateTime.Now;
+                        break;
                     case EntityState.Deleted:
                         entry.State = EntityState.Modified;
                         entry.CurrentValues["IsDeleted"] = true;

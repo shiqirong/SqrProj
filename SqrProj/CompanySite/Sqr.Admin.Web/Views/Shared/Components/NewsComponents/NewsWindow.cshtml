@@ -1,0 +1,18 @@
+﻿@model Sqr.Common.Response.PageResult<Sqr.Admin.Web.Models.News.VM_News>
+
+<div>
+    <div>新闻</div>
+    <table>
+        @if (Model != null)
+        {
+        @foreach (var news in Model.Rows)
+        {
+        <tr>
+            <td>@news.PublishedTime.ToString("yyyy-MM-dd")</td>
+            <td>@news.Title</td>
+            <td>@news.Ishot</td>
+        </tr>
+        }
+        }
+    </table>
+</div>

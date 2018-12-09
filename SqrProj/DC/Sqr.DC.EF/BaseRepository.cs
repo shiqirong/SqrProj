@@ -1,5 +1,6 @@
 ﻿using Sqr.Common.Response;
 using Sqr.DC.EF.Interface;
+using Sqr.DC.EF.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Sqr.DC.EF
 {
-    public class BaseRepository<T> where T : class
+    public class BaseRepository<T> where T : BaseMo,new()
     {
         /// <summary>
         /// 判断是否存在 by id
@@ -76,7 +77,7 @@ namespace Sqr.DC.EF
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual T GetById(int id)
+        public virtual T GetById(long id)
         {
             using (var dbContext = new DcContext())
             {
@@ -177,6 +178,42 @@ namespace Sqr.DC.EF
                 return dbContext.SaveChanges();
             }
         }
+
+        public virtual int Update(T entity, params Expression<Func<T, object>>[] updatedProperties)
+        {
+            using (var dbContext = new DcContext())
+            {
+                //entity=dbContext.Set<T>().Where(c => c.Id == 1).FirstOrDefault();
+                var dbEntityEntry=dbContext.Entry(entity);
+                if (dbEntityEntry.Entity == null || dbEntityEntry.State== EntityState.Detached) {
+                    var dbEntityAttach = dbContext.Set<T>().Attach(entity);
+                    dbEntityEntry = dbContext.Entry(entity);
+                }
+                
+                if (updatedProperties.Any())
+                {
+                    foreach (var property in updatedProperties)
+                    {
+                        dbEntityEntry.Property(property).IsModified = true;
+                    }
+                }
+                else
+                {
+                    foreach (var property in dbEntityEntry.OriginalValues.PropertyNames)
+                    {
+                        var original = dbEntityEntry.OriginalValues.GetValue<object>(property);
+                        var current = dbEntityEntry.CurrentValues.GetValue<object>(property);
+                        if (original != null && !original.Equals(current))
+                        {
+                            dbEntityEntry.Property(property).IsModified = true;
+                        }
+                    }
+                }
+                return dbContext.SaveChanges();
+            }
+        }
+
+
         /// <summary>
         /// 执行sql语句
         /// </summary>
@@ -233,6 +270,21 @@ namespace Sqr.DC.EF
                     dbContext.Set<T>().Remove(entity);
                 }
                 return dbContext.SaveChanges();
+            }
+        }
+
+        public virtual int Delete(long id)
+        {
+            using (var dbContext = new DcContext())
+            {
+                var dbEntityEntry=dbContext.Entry(new T()
+                {
+                    Id = id,
+                    IsDeleted=1
+                });
+                dbEntityEntry.Property("Id").IsModified = true;
+                return dbContext.SaveChanges();
+                
             }
         }
 

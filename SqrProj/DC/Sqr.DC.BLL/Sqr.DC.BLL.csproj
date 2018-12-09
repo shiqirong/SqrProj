@@ -50,15 +50,15 @@
     <Compile Include="BllModule.cs" />
     <Compile Include="News\BLL_News.cs" />
     <Compile Include="News\Dtos\GetNewsListDto.cs" />
-    <Compile Include="Security\BLL_Account.cs" />
     <Compile Include="BLL_Base.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\BLL_ActionInfo.cs" />
     <Compile Include="Security\BLL_Menu.cs" />
     <Compile Include="Security\Dto\GetMenuListDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Sqr.Common\Sqr.Common.csproj">
-      <Project>{f9ca1d06-974a-4a91-a3c7-f6a1d60059a4}</Project>
+      <Project>{12492d1d-fb3c-44f2-b88f-c007cb1e1086}</Project>
       <Name>Sqr.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sqr.DC.EF.Models\Sqr.DC.EF.Models.csproj">

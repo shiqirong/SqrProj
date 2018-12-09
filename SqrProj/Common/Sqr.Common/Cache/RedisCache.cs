@@ -16,7 +16,7 @@ namespace Sqr.Common.Cache
 
         public RedisCache()
         {
-            var redisConnectStr=System.Configuration.ConfigurationManager.AppSettings.Get("redis");
+            var redisConnectStr = string.Empty;// System.Configuration.ConfigurationManager.AppSettings.Get("redis");
 
             _redisConnections = ConnectionMultiplexer.Connect(redisConnectStr);
             _database = _redisConnections.GetDatabase();

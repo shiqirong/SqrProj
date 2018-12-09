@@ -1,0 +1,33 @@
+﻿@model  System.Collections.Generic.List< Sqr.Admin.App.Api.DC.Dtos.GetMenuListOutput>
+
+<!--导航菜单开始-->
+
+@if (Model != null)
+{
+<ul class="nav" id="side-menu">
+    @{
+        //LEVEL 1
+        var mLevel1 = Model.Where(c => c.ParentId == 0);
+        foreach (var m in mLevel1)
+        {
+        <li>
+            <a href="#" class="waves-effect waves-dark"><i class="fa fa-sitemap"></i> @m.Name <span class="fa arrow"></span></a>
+            @{
+                var mLevel2 = Model.Where(c => c.ParentId == m.Id);
+                if (mLevel2 != null && mLevel2.Count() > 0)
+                {
+                    <ul class="nav nav-second-level">
+                    @foreach (var m2 in mLevel2)
+                    {
+                        <li>
+                            <a class="J_menuItem" href='@($"{m2.Controller}/{m2.Action}")'>@m2.Name</a>
+                        </li>
+                    }
+                    </ul>
+                }
+            }
+        </li>
+        }
+    }
+</ul>
+}

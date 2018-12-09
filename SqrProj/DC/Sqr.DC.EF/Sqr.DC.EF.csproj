@@ -85,7 +85,6 @@
     <Compile Include="Configs\ProductInfoConfig.cs" />
     <Compile Include="Configs\RolesConfig.cs" />
     <Compile Include="Configs\SsoSitesConfig.cs" />
-    <Compile Include="Configs\UserConfig.cs" />
     <Compile Include="Configs\VAccountActioninfoConfig.cs" />
     <Compile Include="DcContext.cs" />
     <Compile Include="EFModule.cs" />
@@ -120,7 +119,6 @@
     <Compile Include="Repositories\RolesRespository.Generated.cs" />
     <Compile Include="Repositories\SsoSitesRespository.cs" />
     <Compile Include="Repositories\SsoSitesRespository.Generated.cs" />
-    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\VAccountActioninfoRespository.cs" />
     <Compile Include="Repositories\VAccountActioninfoRespository.Generated.cs" />
   </ItemGroup>
@@ -130,7 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Sqr.Common\Sqr.Common.csproj">
-      <Project>{f9ca1d06-974a-4a91-a3c7-f6a1d60059a4}</Project>
+      <Project>{12492d1d-fb3c-44f2-b88f-c007cb1e1086}</Project>
       <Name>Sqr.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sqr.DC.EF.Models\Sqr.DC.EF.Models.csproj">

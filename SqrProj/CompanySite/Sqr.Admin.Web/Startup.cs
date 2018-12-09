@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Sqr.Admin.Web.Filters;
 
 namespace Sqr.Admin.Web
 {
@@ -33,6 +34,7 @@ namespace Sqr.Admin.Web
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(options => { options.Filters.Add<HttpGlobalExceptionFilter>(); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,0 +1,36 @@
+﻿@model Sqr.Admin.App.Api.DC.Dtos.ActionInfo
+@section Scripts{
+    <script type="text/javascript" src="http://malsup.github.io/jquery.form.js"></script>
+    <script src="~/js/menu/edit.js"></script>
+}
+<div class="content">
+    <p>通过使用 <code>.col-md-push-*</code> 和 <code>.col-md-pull-*</code> 类就可以很容易的改变列（column）的顺序。</p>
+    <form method="post" id="ajaxForm" action="/Menu/Edit">
+        <div class="row show-grid">
+            <div class="col-md-3 col-xs-5 no-padding">类型</div>
+            <div class="col-md-9 col-xs-7 no-padding">@Html.TextBoxFor(c => Model.Category, new { @class = "form-control" })</div>
+        </div>
+        <div class="row show-grid no-padding">
+            <div class="col-md-3 col-xs-5 no-padding">菜单名</div>
+            <div class="col-md-9 col-xs-7 no-padding">@Html.TextBoxFor(c => Model.Name, new { @class = "form-control" })</div>
+        </div>
+        <div class="row show-grid">
+            <div class="col-md-3 col-xs-5 no-padding">控制器</div>
+            <div class="col-md-9 col-xs-7 no-padding">@Html.TextBoxFor(c => Model.Controller, new { @class = "form-control" })</div>
+        </div>
+        <div class="row show-grid">
+            <div class="col-md-3 col-xs-5 no-padding">处理行为</div>
+            <div class="col-md-9 col-xs-7 no-padding">@Html.TextBoxFor(c => Model.Action, new { @class = "form-control" })</div>
+        </div>
+        <div class="row show-grid">
+            <div class="col-md-3 col-xs-5 no-padding">参数</div>
+            <div class="col-md-9 col-xs-7 no-padding">@Html.TextBoxFor(c => Model.Parameters, new { @class = "form-control" }) </div>
+        </div>
+
+        <div style="padding:2rem; text-align:center;">
+            <button class="btn btn-default btn-lg" id="btnSave"><span class="glyphicon glyphicon-floppy-save"></span>&nbsp; 保存</button>
+            <button class="btn btn-default btn-lg" id="btnClose"><span class="glyphicon glyphicon-remove"></span>&nbsp;关闭</button>
+        </div>
+    </form>
+</div>
+
