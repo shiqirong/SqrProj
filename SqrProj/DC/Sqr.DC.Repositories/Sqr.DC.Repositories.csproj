@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Sqr.Dapper.Linq\Sqr.Dapper.Linq.csproj" />
+    <ProjectReference Include="..\Sqr.DC.Entities\Sqr.DC.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

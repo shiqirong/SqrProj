@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Sqr.Common\Sqr.Common.csproj" />
+    <ProjectReference Include="..\Sqr.DC.Entities\Sqr.DC.Entities.csproj" />
+    <ProjectReference Include="..\Sqr.DC.Repositories\Sqr.DC.Repositories.csproj" />
+  </ItemGroup>
+
+</Project>
