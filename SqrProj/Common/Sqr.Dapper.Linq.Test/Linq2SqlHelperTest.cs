@@ -39,6 +39,9 @@ namespace Sqr.Dapper.Linq.Test
             Linq2SqlHelper.GetExpressStr(la.Body as MemberInitExpression);
         }
 
+        /// <summary>
+        /// ¥¥Ω®≤È—Ø”Ôæ‰
+        /// </summary>
         [Fact]
         public void CreateSelectSqlTest()
         {

@@ -1,13 +1,24 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using System.Linq;
 
 namespace Sqr.Dapper.Linq
 {
+    public enum CommandType
+    {
+        SELECT,
+        UPDATE,
+        DELETE
+    }
+
     public class Linq2SqlHelper
     {
+        public static string _paramPrix = ":";
+
         public static string CreateInsertSql<T>(T model)
         {
             string sql = "Insert into {0}({1}) Values({2})";
@@ -72,40 +83,22 @@ namespace Sqr.Dapper.Linq
             return string.Empty;
         }
 
-        public static string DealMemberExpresion(Expression exp)
+        public static string DealMemberExpresion(Expression exp, IList<KeyValuePair<string, object>> paramsList)
         {
-            return DealOrderbyExpress(exp);
+            return DealOrderbyExpress(exp, paramsList);
         }
+
         /// <summary>
         /// 排序语句
         /// </summary>
         /// <param name="exp"></param>
         /// <returns></returns>
-        public static string DealOrderbyExpress(Expression exp)
+        public static string DealOrderbyExpress(Expression exp,IList<KeyValuePair<string,object>> paramsList,CommandType commandType= CommandType.SELECT)
         {
-            if (exp is LambdaExpression)
-            {
-                LambdaExpression l_exp = exp as LambdaExpression;
-                return DealExpress(l_exp.Body);
-            }
-            if (exp is BinaryExpression)
-            {
-                return DealBinaryExpression(exp as BinaryExpression);
-            }
-            if (exp is MemberExpression)
-            {
-                return DealMemberExpression(exp as MemberExpression);
-            }
-            if (exp is ConstantExpression)
-            {
-                return DealConstantExpression(exp as ConstantExpression);
-            }
-            if (exp is UnaryExpression)
-            {
-                return DealUnaryExpression(exp as UnaryExpression);
-            }
-            return "";
+                return DealExpress(exp, paramsList, commandType);
+           
         }
+
         /// <summary>
         /// 更新语句
         /// </summary>
@@ -144,51 +137,103 @@ namespace Sqr.Dapper.Linq
             }
             return v_str;
         }
-        public static string DealExpress(Expression exp)
+        public static string DealExpress(Expression exp,IList<KeyValuePair<string,object>> paramsList, CommandType commandType= CommandType.SELECT )
         {
             if (exp is LambdaExpression)
             {
                 LambdaExpression l_exp = exp as LambdaExpression;
-                return DealExpress(l_exp.Body);
+                return DealExpress(l_exp.Body, paramsList, commandType);
             }
             if (exp is BinaryExpression)
             {
-                return DealBinaryExpression(exp as BinaryExpression);
+                return DealBinaryExpression(exp as BinaryExpression, paramsList, commandType);
             }
             if (exp is MemberExpression)
             {
-                return DealMemberExpression(exp as MemberExpression);
+                return DealMemberExpression(exp as MemberExpression, paramsList, commandType);
             }
             if (exp is ConstantExpression)
             {
-                return DealConstantExpression(exp as ConstantExpression);
+                return DealConstantExpression(exp as ConstantExpression, paramsList, commandType);
             }
             if (exp is UnaryExpression)
             {
-                return DealUnaryExpression(exp as UnaryExpression);
+                return DealUnaryExpression(exp as UnaryExpression, paramsList, commandType);
             }
             if(exp is NewExpression)
             {
-                return DealNewExpression(exp as NewExpression);
+                return DealNewExpression(exp as NewExpression, paramsList, commandType);
+            }
+            if(exp is MethodCallExpression)
+            {
+                return DealCallExpression(exp as MethodCallExpression, paramsList, commandType);
+            }
+            if(exp is ParameterExpression)
+            {
+                return DealParameterExpression(exp as ParameterExpression, paramsList, commandType);
             }
             return "";
         }
 
-        public static string DealNewExpression(NewExpression exp)
+        private static string DealParameterExpression(ParameterExpression parameterExpression, IList<KeyValuePair<string, object>> paramsList, CommandType commandType)
+        {
+            var ps=parameterExpression.Type.GetProperties();
+            return string.Join(",", ps.Select(c => $" {parameterExpression.Name}.{ c.Name} "));
+        }
+
+        public static string DealCallExpression(MethodCallExpression exp, IList<KeyValuePair<string, object>> paramsList, CommandType commandType = CommandType.SELECT)
+        {
+          
+            switch (exp.Method.Name)
+            {
+                case "ToString":
+                    return $" CAST({DealExpress(exp.Object, paramsList, commandType)},CHAR) ";
+                case "StartsWith":
+                    var para1= DealExpress(exp.Object, paramsList, commandType);
+                    var para2 = DealExpress(exp.Arguments[0], paramsList, commandType);
+                    return $"  {para1} like {para2.Insert(para2.Length - 1, "%")}) ";
+                case "EndWith":
+                    var endWithP1 = DealExpress(exp.Object, paramsList, commandType);
+                    var endWithP2 = DealExpress(exp.Arguments[0], paramsList, commandType);
+                    return $"  {endWithP1} like {endWithP2.Insert(1,"%")}) ";
+                case "Contains":
+                    var containsP1 = DealExpress(exp.Object, paramsList, commandType);
+                    var paramName = $"{_paramPrix}p_{paramsList.Count + 1}";
+                    paramsList.Add(new KeyValuePair<string, object>(paramName, containsP1));
+                    return $" {DealExpress(exp.Arguments[0], paramsList, commandType)} in({paramName})  ";
+                default:
+                    throw new NotSupportedException($"not Supported method:{exp.Method.Name}.");
+
+
+            }
+            
+        }
+        public static  string DealNewExpression(NewExpression exp, IList<KeyValuePair<string, object>> paramsList, CommandType commandType=CommandType.SELECT)
         {
             string[] members = new string[exp.Arguments.Count];
             var i = 0;
-            foreach(var a in exp.Arguments)
+            if (commandType == CommandType.UPDATE)
             {
-                members[i++] = DealExpress(a);
+                foreach (var a in exp.Arguments)
+                {
+                    members[i] = exp.Members[i].Name + "=" + DealExpress(a, paramsList, commandType);
+                    i++;
+                }
+            }
+            else
+            {
+                foreach (var a in exp.Arguments)
+                {
+                    members[i++] =  DealExpress(a, paramsList,commandType);
+                }
             }
             return $" {string.Join(",", members)}";
         }
-        public static string DealUnaryExpression(UnaryExpression exp)
+        public static string DealUnaryExpression(UnaryExpression exp, IList<KeyValuePair<string, object>> paramsList, CommandType commandType = CommandType.SELECT)
         {
-            return DealExpress(exp.Operand);
+            return DealExpress(exp.Operand,paramsList, commandType);
         }
-        public static string DealConstantExpression(ConstantExpression exp)
+        public static string DealConstantExpression(ConstantExpression exp, IList<KeyValuePair<string, object>> paramsList, CommandType commandType = CommandType.SELECT)
         {
             object vaule = exp.Value;
             string v_str = string.Empty;
@@ -211,12 +256,11 @@ namespace Sqr.Dapper.Linq
             }
             return v_str;
         }
-        public static string DealBinaryExpression(BinaryExpression exp)
+        public static string DealBinaryExpression(BinaryExpression exp, IList<KeyValuePair<string, object>> paramsList, CommandType commandType = CommandType.SELECT)
         {
-
-            string left = DealExpress(exp.Left);
+            string left = DealExpress(exp.Left,paramsList, commandType);
             string oper = GetOperStr(exp.NodeType);
-            string right = DealExpress(exp.Right);
+            string right = DealExpress(exp.Right,paramsList, commandType);
             if (right == "NULL")
             {
                 if (oper == "=")
@@ -230,9 +274,18 @@ namespace Sqr.Dapper.Linq
             }
             return left + oper + right;
         }
-        public static string DealMemberExpression(MemberExpression exp)
+        public static string DealMemberExpression(MemberExpression exp,IList<KeyValuePair<string,object>> paramsList, CommandType commandType = CommandType.SELECT)
         {
-            return $" {exp.ToString()} ";
+            if (exp.Expression.NodeType == ExpressionType.Parameter)
+                return $" {exp.ToString()} ";
+            else
+            {
+                var cast = Expression.Convert(exp, typeof(object));
+                object c = Expression.Lambda<Func<object>>(cast).Compile().Invoke();
+                var paramName = $"{_paramPrix}p_{paramsList.Count+1}";
+                paramsList.Add(new KeyValuePair<string, object>(paramName, c));
+                return paramName;
+            }
         }
         public static string GetOperStr(ExpressionType e_type)
         {

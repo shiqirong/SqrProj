@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Sqr.Dapper.Linq.Test
 {
-    public class Linq2SqlTest
+    public class Linq2SqlTest:TestBase
     {
         public class Student
         {
@@ -32,11 +32,27 @@ namespace Sqr.Dapper.Linq.Test
         [Fact]
         public void Select()
         {
-            KeyValuePair<string, int> kv = new KeyValuePair<string, int>("1", 1);
-            var l2s = new Linq2Sql<Student, Greade, Lession>();
+            List<string> lstStr = new List<string>();
+            lstStr.Add("1");
+            lstStr.Add("2");
+            KeyValuePair<string, int> kv = new KeyValuePair<string, int>("1",1);
+            var l2s = new SelectSqlFactory<Student, Greade, Lession>();
             var sql=l2s.Select((s, g, l) => new { s.Id, s.Name, GreadeName = g.Name, LessionName = l.Name })
                 .From<Student>()
-                .LeftJoin<Lession>((s,l, g) => s.Grede==g.Id).Where((s,l,g)=>s.Id==1 && l.Id==kv.Value).Excute();
+                .LeftJoin<Lession>((s,l, g) => s.Grede==g.Id).Where((s,l,g)=>s.Id==1 
+                && l.Id==kv.Value 
+                && l.Id.ToString()==l.Name 
+                && lstStr.Contains(l.Id.ToString())
+                && l.Name.StartsWith("hello")
+                ).Sql;
+            var siu = sql;
+        }
+
+        [Fact]
+        public void Update()
+        {
+            var l2s = new UpdateSqlFactory<Student>()
+                .Update(c => new {Id=90,Name=c.Id }, c => c.Id == 1);
             
         }
     }
