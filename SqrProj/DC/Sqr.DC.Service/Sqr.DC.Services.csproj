@@ -5,6 +5,43 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Security\**" />
+    <EmbeddedResource Remove="Security\**" />
+    <None Remove="Security\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="AccountActionRelationBusiness.cs" />
+    <Compile Remove="AccountActionRelationBusiness.Generated.cs" />
+    <Compile Remove="AccountRolesRelationBusiness.cs" />
+    <Compile Remove="AccountRolesRelationBusiness.Generated.cs" />
+    <Compile Remove="AccountsBusiness.cs" />
+    <Compile Remove="AccountsBusiness.Generated.cs" />
+    <Compile Remove="ActionInfoBusiness.cs" />
+    <Compile Remove="ActionInfoBusiness.Generated.cs" />
+    <Compile Remove="BannerInfoBusiness.cs" />
+    <Compile Remove="BannerInfoBusiness.Generated.cs" />
+    <Compile Remove="BaseService.cs" />
+    <Compile Remove="BusinessModule.cs" />
+    <Compile Remove="DicInfoBusiness.cs" />
+    <Compile Remove="DicInfoBusiness.Generated.cs" />
+    <Compile Remove="KeyValueInfoBusiness.cs" />
+    <Compile Remove="KeyValueInfoBusiness.Generated.cs" />
+    <Compile Remove="NewsCategoryBusiness.cs" />
+    <Compile Remove="NewsCategoryBusiness.Generated.cs" />
+    <Compile Remove="NewsInfoBusiness.cs" />
+    <Compile Remove="NewsInfoBusiness.Generated.cs" />
+    <Compile Remove="ProductCategoryBusiness.cs" />
+    <Compile Remove="ProductCategoryBusiness.Generated.cs" />
+    <Compile Remove="ProductInfoBusiness.cs" />
+    <Compile Remove="ProductInfoBusiness.Generated.cs" />
+    <Compile Remove="RolesBusiness.cs" />
+    <Compile Remove="RolesBusiness.Generated.cs" />
+    <Compile Remove="SsoSitesBusiness.cs" />
+    <Compile Remove="SsoSitesBusiness.Generated.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Common\Sqr.Common\Sqr.Common.csproj" />
     <ProjectReference Include="..\Sqr.DC.Entities\Sqr.DC.Entities.csproj" />
     <ProjectReference Include="..\Sqr.DC.Repositories\Sqr.DC.Repositories.csproj" />

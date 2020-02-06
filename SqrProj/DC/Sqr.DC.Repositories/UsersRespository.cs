@@ -8,7 +8,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using Sqr.DC.Entities;
-
+using System.Threading.Tasks;
 
 namespace Sqr.DC.Repositories
 {
@@ -17,6 +17,14 @@ namespace Sqr.DC.Repositories
     /// </summary>   
     public partial class UsersRepository :BaseRepository<  Users>
     {
-		
+		public async Task<Users> GetByAccoutAsync(string account)
+        {
+            return await GetSingleOrDefaultAsync(c => c.Account == account && c.IsDeleted == 0);
+        }
+
+        public int UpdatePwd(Users entity)
+        {
+            return Update(c => new { c.Password }, w => w.Id == entity.Id);
+        }
 	}
 }

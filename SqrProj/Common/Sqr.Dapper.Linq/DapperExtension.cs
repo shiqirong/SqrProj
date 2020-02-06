@@ -27,7 +27,7 @@ namespace Sqr.Dapper.Linq
 
         public static void Test()
         {
-            QuerySigle<KeyValuePair<string, string>, TMo>(c => c.From<TMo>().Where(a => a.id == ""));
+            QuerySigle<KeyValuePair<string, string>, TMo>(c => c.Where(a => a.id == ""));
         }
 
     }

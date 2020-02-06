@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sqr.Common.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,39 +7,31 @@ using System.Threading.Tasks;
 
 namespace Sqr.Common.Cache
 {
-    public class CacheManager
+    public sealed class CacheManager
     {
-        ICache cache = new RedisCache();
+        private static ICache _cache = null;
+        private static object _lockObj = new object();
+        public static ICache CurrentCache()
+        {
+            if (_cache == null)
+            {
+                lock (_lockObj)
+                {
+                    if (_cache == null)
+                    {
+                        string _cacheName = ConfigUtil.GetSection("CacheSetting").Value;
+                        if ("Default".Equals(_cacheName, StringComparison.CurrentCultureIgnoreCase))
+                            _cache = new DefaultCache();
+                        else
+                            _cache = new RedisCache();
+                    }
+                }
+
+            }
+            return _cache;
+
+        }
         
-
-        public double Decrease(string key, double num)
-        {
-            return cache.Decrease(key, num);
-        }
-
-        public T Get<T>(string key, Func<string, T> factory = null)
-        {
-            return cache.Get<T>(key, factory);
-        }
-
-        public double Increase(string key, double num)
-        {
-            return cache.Increase(key, num);
-        }
-
-        public bool Remove(string key)
-        {
-            return cache.Remove(key);
-        }
-
-        public void Set<T>(string key, T value, TimeSpan? slidingExpireTime = default(TimeSpan?))
-        {
-            cache.Set<T>(key, value, slidingExpireTime);
-        }
-
-        public bool SetNX<T>(string key, T value, TimeSpan? slidingExpireTime = default(TimeSpan?))
-        {
-            return cache.SetNX(key, value, slidingExpireTime);
-        }
+        
     }
 }

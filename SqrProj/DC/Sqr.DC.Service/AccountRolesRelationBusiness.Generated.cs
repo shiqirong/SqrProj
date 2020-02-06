@@ -9,7 +9,6 @@
 //-----------------------------------------------------------------------
 using Sqr.Common;
 using Sqr.Common.Paging;
-using Sqr.DC.BLL.Security.DTO;
 using Sqr.DC.Entities;
 using Sqr.DC.Repositories;
 using System.Collections.Generic;
@@ -23,49 +22,5 @@ namespace Sqr.DC.Services
     public partial class AccountRolesRelationBusiness :BaseService
     {
 		
-        public PagingOutput<AccountRolesRelation> GetPageList(PagingInput input)
-        {
-            return AutofacConfig.Resolve<AccountRolesRelationRepository>().GetPageList(
-                input.PageIndex,
-                input.PageSize,
-                null,
-                a => a.CreateTime,
-                true
-            );
-        }
-
-        public List<AccountRolesRelation> GeList()
-        {
-            return AutofacConfig.Resolve<AccountRolesRelationRepository>().GetMany(null);
-        }
-
-        public AccountRolesRelation GetById(long id)
-        {
-            return AutofacConfig.Resolve<AccountRolesRelationRepository>().GetById(id);
-        }
-
-        public long Add(AccountRolesRelation model)
-        {
-            model.Id = IdHelper.GetNewId();
-            if (AutofacConfig.Resolve<AccountRolesRelationRepository>().Add(model) > 0)
-                return model.Id;
-            return 0;
-        }
-
-        public int Add(List<AccountRolesRelation> models)
-        {
-            models.ForEach(c => c.Id = IdHelper.GetNewId());
-            return AutofacConfig.Resolve<AccountRolesRelationRepository>().Add(models);
-        }
-
-        public bool Update(AccountRolesRelation model)
-        {
-            return AutofacConfig.Resolve<AccountRolesRelationRepository>().Update(model)>0;
-        }
-
-        public int Update(List<AccountRolesRelation> models)
-        {
-            return AutofacConfig.Resolve<AccountRolesRelationRepository>().Update(models) ;
-        }
 	}
 }

@@ -17,7 +17,7 @@ namespace Sqr.Dapper.Linq
 
     public class Linq2SqlHelper
     {
-        public static string _paramPrix = ":";
+        public static string _paramPrix = "@";
 
         public static string CreateInsertSql<T>(T model)
         {
@@ -201,6 +201,12 @@ namespace Sqr.Dapper.Linq
                     var paramName = $"{_paramPrix}p_{paramsList.Count + 1}";
                     paramsList.Add(new KeyValuePair<string, object>(paramName, containsP1));
                     return $" {DealExpress(exp.Arguments[0], paramsList, commandType)} in({paramName})  ";
+                case "IfWhere":
+                    var ifWhereArg1 = Convert.ToBoolean( DealExpress(exp.Arguments[0], paramsList, commandType));
+                    if (ifWhereArg1)
+                        return DealExpress(exp.Arguments[1], paramsList, commandType);
+                    else
+                        return " 1=1 ";
                 default:
                     throw new NotSupportedException($"not Supported method:{exp.Method.Name}.");
 

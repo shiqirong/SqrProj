@@ -1,0 +1,37 @@
+﻿@model Sqr.SSO.Web.Models.Account.VM_Login
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+<div>
+    @using (Html.BeginForm())
+    {
+    <div>
+        <div>登录账户：</div>
+        <div>
+            @Html.TextBoxFor(c=>c.Account)
+            <p>
+                @Html.ValidationMessageFor(c => c.Account)
+            </p>
+        </div>
+    </div>
+    <div>
+        <div>登录密码：</div>
+        <div>
+            @Html.TextBoxFor(c => c.Password)
+            <p>
+                @Html.ValidationMessageFor(c => c.Password)
+            </p>
+        </div>
+    </div>
+    <div>
+        <button>提交</button>
+        <input type="reset" value="重置" />
+        <div>
+            @Html.ValidationSummary(true)
+        </div>
+    </div>
+    }
+</div>

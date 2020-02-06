@@ -1,51 +1,80 @@
-﻿using Sqr.SSO.Application;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Sqr.Common.Logger;
+using Sqr.SSO.Web.Account.VModels;
+using Sqr.SSO.Web.API.DC;
 
 namespace Sqr.SSO.Web.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController :  Controller
     {
-        // GET: Account
-        public ActionResult Login(string from)
+        
+        public async Task<IActionResult> Login(string backUrl)
         {
-            return View();
+            var LoginCode = HttpContext.Session.GetString("LoginCode");
+            if (!string.IsNullOrWhiteSpace(LoginCode)){
+                var retAccessCode=await DcAPI.Instance.GetOrCreateAccessCode(LoginCode);
+                return RedirectToAction("LoginSuccess");
+            }
+            return View(new VM_Login()
+            {
+                BackUrl=backUrl
+            });
         }
 
         [HttpPost]
-        public ActionResult Login(Sqr.SSO.Web.Models.Account.VM_Login model)
+        public async Task<IActionResult> Login([FromForm]VM_Login vmodel)
         {
-            if (ModelState.IsValid)
+            if (vmodel != null)
             {
-                var response=new UserService().ValidAndGet(model.Account, model.Password);
-                if (1==response.Code)
+                var validateCode = HttpContext.Session.GetString("ValidateCode");
+                if (!validateCode.Equals(vmodel.ValidCode,StringComparison.CurrentCultureIgnoreCase))
                 {
-                    HttpCookie cookie= new HttpCookie("SsoToken");
-                    cookie.Value = response.Tag.ToString();
-                    Request.Cookies.Add(cookie);
-                    return RedirectToActionPermanent("setCookie", new {token=response.Tag, returnUrl= Request.Params["returnUrl"] });
-                }
-                else
-                {
-                    ModelState.AddModelError("", response.Msg);
+                    ModelState.AddModelError("ValidCode", "验证码不正确");
                 }
             }
-            return View(model);
+            if (!ModelState.IsValid)
+            {
+                return View(vmodel);
+            }
+            
+            var result=await API.DC.DcAPI.Instance.Login(new API.DC.Dtos.LoginInput()
+            {
+                Account = vmodel.Account,
+                Password = vmodel.Password
+            });
+            if (result.IsSuccess)
+                return Redirect("http://www.baidu.com");
+            return View(vmodel);
         }
 
-        public ActionResult SetCookie(string token,string returnUrl)
+        /// <summary>
+        /// 登录验证码
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetImg()
         {
-            var siteList=new SsoSiteService().GetSsoSiteList();
-            if (siteList == null)
-            {
-                siteList = new List<Application.SsoWcfService.SsoSite>();
-            }
-            ViewBag.token = token;
-            ViewBag.returnUrl = returnUrl;
-            return View(siteList);
+            int width = 100;
+            int height = 40;
+            int fontsize = 20;
+            string code = string.Empty;
+            byte[] bytes = Common.Helper.ValidateCodeHelper.CreateValidateGraphic(out code, 4, width, height, fontsize);
+            HttpContext.Session.SetString("ValidateCode", code);
+            return File(bytes, @"image/jpeg");
+        }
+
+        public ActionResult LoginSuccess()
+        {
+            return View();
         }
     }
 }

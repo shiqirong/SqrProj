@@ -13,13 +13,13 @@ namespace Sqr.Common.Logger
 
     public interface  ILogger
     {
-        void Info(string message,string system= "default", string module="default",string tag="");
+        void Info(string message,string logKey="");
 
-        void Error(string message, string system = "default", string module = "default", string tag = "");
+        void Error(string message, string logKey = "");
 
-        void Debug(string message, string system = "default", string module = "default", string tag = "");
+        void Debug(string message, string logKey = "");
 
-        void Warn(string message, string system = "default", string module = "default", string tag = "");
+        void Warn(string message, string logKey = "");
 
     }
 }

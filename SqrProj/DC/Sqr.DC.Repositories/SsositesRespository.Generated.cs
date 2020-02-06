@@ -15,7 +15,7 @@ namespace Sqr.DC.Repositories
     /// <summary>
     /// ssosites Respository
     /// </summary>   
-    public partial class SsositesRepository :BaseRepository<  Ssosites>
+    public partial class SsoSitesRepository :BaseRepository<  SsoSites>
     {
 		
 	}

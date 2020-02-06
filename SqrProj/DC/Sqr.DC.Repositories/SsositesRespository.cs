@@ -7,6 +7,7 @@
 // * history : Created by T4 03/11/2019 21:19:09 
 // </copyright>
 //-----------------------------------------------------------------------
+using Sqr.Dapper.Linq.Common;
 using Sqr.DC.Entities;
 
 
@@ -15,8 +16,16 @@ namespace Sqr.DC.Repositories
     /// <summary>
     /// ssosites Respository
     /// </summary>   
-    public partial class SsositesRepository :BaseRepository<  Ssosites>
+    public partial class SsoSitesRepository :BaseRepository<SsoSites>
     {
-		
+		public SsoSites GetBySiteCode(string siteCode)
+        {
+            return QuerySingleOrDefault<SsoSites>(w => w.IsDeleted == 0 && w.Sitecode == siteCode);
+        }
+
+        public PagedList<SsoSites> GetPaged(int pageIndex,int pageSize)
+        {
+            return GetPaged(c => true, new PagedQueryParams() { PageIndex = pageIndex, PageSize = pageSize });
+        }
 	}
 }

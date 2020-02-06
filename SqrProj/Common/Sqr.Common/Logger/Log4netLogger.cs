@@ -14,30 +14,29 @@ namespace Sqr.Common.Logger
         static log4net.ILog log = null;
         static Log4netLogger()
         {
-
             ILoggerRepository repository = log4net.LogManager.CreateRepository("NETCoreRepository");
             XmlConfigurator.Configure(repository, new FileInfo("log4net.config"));
             log = log4net.LogManager.GetLogger(repository.Name, "NETCorelog4net");
         }
 
-        public void Debug(string message, string system = "default", string module = "default", string tag = "")
+        public void Debug(string message,  string logKey = "")
         {
-            log.Debug($"system:{system},module:{module},tag:{tag},category:debug,mssage:{message}");
+            log.Debug($"time:{DateTime.Now.ToLongTimeString()},longKey:{logKey},message:{message}");
         }
 
-        public void Error(string message, string system = "default", string module = "default", string tag = "")
+        public void Error(string message, string logKey = "")
         {
-            log.Error($"system:{system},module:{module},tag:{tag},category:error,mssage:{message}");
+            log.Error($"time:{DateTime.Now.ToLongTimeString()},longKey:{logKey},message:{message}");
         }
 
-        public void Info(string message, string system = "default", string module = "default", string tag = "")
+        public void Info(string message, string logKey = "")
         {
-            log.Info($"system:{system},module:{module},tag:{tag},category:info,mssage:{message}");
+            log.Info($"time:{DateTime.Now.ToLongTimeString()},longKey:{logKey},message:{message}");
         }
 
-        public void Warn(string message, string system = "default", string module = "default", string tag = "")
+        public void Warn(string message, string logKey = "")
         {
-            log.Warn($"system:{system},module:{module},tag:{tag},category:warn,mssage:{message}");
+            log.Warn($"time:{DateTime.Now.ToLongTimeString()},longKey:{logKey},message:{message}");
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Sqr.Common.Cache
         /// <param name="key">Key</param>
         /// <param name="factory">Factory method to create cache item if not exists</param>
         /// <returns>Cached item</returns>
-        T Get<T>(string key, Func<string, T> factory = null);
+        T Get<T>(string key, Func<T> factory = null,TimeSpan ts=default(TimeSpan));
 
         /// <summary>
         /// Saves/Overrides an item in the cache by a key.
@@ -21,9 +21,9 @@ namespace Sqr.Common.Cache
         /// <param name="key">Key</param>
         /// <param name="value">Value</param>
         /// <param name="slidingExpireTime">Sliding expire time</param>
-        void Set<T>(string key, T value, TimeSpan? slidingExpireTime = null);
+        bool Set<T>(string key, T value, TimeSpan slidingExpireTime = default(TimeSpan));
 
-        bool SetNX<T>(string key, T value, TimeSpan? slidingExpireTime = null);
+        bool SetNX<T>(string key, T value, TimeSpan slidingExpireTime = default(TimeSpan));
 
         double Increase(string key, double num);
 

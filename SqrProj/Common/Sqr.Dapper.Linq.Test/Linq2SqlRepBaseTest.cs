@@ -12,10 +12,7 @@ namespace Sqr.Dapper.Linq.Test
         public void Select()
         {
             var rep = new Linq2SqlRepBase(_connectionString);
-           var actionInfo= rep.QuerySingleOrDefault<Actioninfo, Actioninfo>(c => 
-            c.Select(s =>s)
-             .From<Actioninfo>()
-             .Where(w => w.Id > 0));
+           var actionInfo= rep.QuerySingleOrDefault<Actioninfo>(w => w.Id > 0);
             Assert.NotNull(actionInfo);
         }
 

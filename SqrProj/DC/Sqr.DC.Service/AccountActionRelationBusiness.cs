@@ -9,7 +9,6 @@
 //-----------------------------------------------------------------------
 using Sqr.Common;
 using Sqr.Common.Paging;
-using Sqr.DC.BLL.Security.DTO;
 using Sqr.DC.Entities;
 using Sqr.DC.Repositories;
 using System.Collections.Generic;

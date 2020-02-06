@@ -14,7 +14,7 @@ namespace Sqr.DC.Entities
     /// <summary>
     /// Ssosites Entity Model
     /// </summary>    
-    public class Ssosites:BaseMo
+    public class SsoSites:BaseMo
     {
       
 			/// <summary>

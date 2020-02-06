@@ -14,37 +14,37 @@ namespace Sqr.DC.Entities
     /// <summary>
     /// Users Entity Model
     /// </summary>    
-    public class Users:BaseMo
+    public class Users : BaseMo
     {
-      
-			/// <summary>
-			/// 
-			/// </summary>
-						public string Account { get; set; }
 
-      
-			/// <summary>
-			/// 
-			/// </summary>
-						public string Email { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Account { get; set; }
 
-      
-			/// <summary>
-			/// 
-			/// </summary>
-						public string Mobile { get; set; }
 
-      
-			/// <summary>
-			/// 
-			/// </summary>
-						public string Name { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Email { get; set; }
 
-      
-			/// <summary>
-			/// 
-			/// </summary>
-						public string Password { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Mobile { get; set; }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Name { get; set; }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Password { get; set; }
 
     }
 }

@@ -9,4 +9,8 @@
     <PackageReference Include="MySql.Data" Version="8.0.18" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Sqr.Dapper.Linq.Common\Sqr.Dapper.Linq.Common.csproj" />
+  </ItemGroup>
+
 </Project>

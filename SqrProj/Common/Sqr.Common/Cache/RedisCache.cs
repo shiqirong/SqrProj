@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Sqr.Common.Utils;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace Sqr.Common.Cache
 
         public RedisCache()
         {
-            var redisConnectStr = string.Empty;// System.Configuration.ConfigurationManager.AppSettings.Get("redis");
+            var redisConnectStr =ConfigUtil.GetSection("redis").Value;
 
             _redisConnections = ConnectionMultiplexer.Connect(redisConnectStr);
             _database = _redisConnections.GetDatabase();
@@ -27,13 +28,9 @@ namespace Sqr.Common.Cache
                     PreserveReferencesHandling = PreserveReferencesHandling.Objects
                 };
         }
+        
 
-        public double Decrease(string key, double num)
-        {
-            return _database.StringDecrement(key, num);
-        }
-
-        public T Get<T>(string key, Func<string, T> factory = null)
+        public T Get<T>(string key, Func<T> factory = null,TimeSpan ts =default(TimeSpan))
         {
             var redisObject = _database.StringGet(key);
             if (redisObject.HasValue)
@@ -44,44 +41,34 @@ namespace Sqr.Common.Cache
             }
             if (factory != null)
             {
-                var value = factory(key);
+                var value = factory();
                 if (value != null)
                 {
-                    Set(key, value);
+                    Set(key, value,ts);
 
                     return value;
                 }
             }
             return default(T);
         }
-
-        public double Increase(string key, double num)
-        {
-            return _database.StringIncrement(key, num);
-        }
-
-        public bool Remove(string key)
-        {
-            return _database.KeyDelete(key);
-        }
-
-        public void Set<T>(string key, T value, TimeSpan? slidingExpireTime = default(TimeSpan?))
+        
+        public bool Set<T>(string key, T value, TimeSpan slidingExpireTime = default(TimeSpan))
         {
             if (value == null)
             {
                 throw new Exception("Can not insert null values to the cache!");
             }
 
-            _database.StringSet(
+            return _database.StringSet(
                 key,
                 JsonConvert.SerializeObject(
                     value,
                     Formatting.Indented,
                     _jsonSerializerSettings),
-                slidingExpireTime ?? _defaultExpireTimeSpan);
+                slidingExpireTime );
         }
 
-        public bool SetNX<T>(string key, T value, TimeSpan? slidingExpireTime = default(TimeSpan?))
+        public bool SetNX<T>(string key, T value, TimeSpan slidingExpireTime = default(TimeSpan))
         {
             if (value == null)
             {
@@ -93,11 +80,22 @@ namespace Sqr.Common.Cache
                     value,
                     Formatting.Indented,
                     _jsonSerializerSettings),
-                slidingExpireTime ?? _defaultExpireTimeSpan,
+                slidingExpireTime ,
                 When.NotExists
             );
         }
-
+        public double Increase(string key, double num)
+        {
+            return _database.StringIncrement(key, num);
+        }
+        public double Decrease(string key, double num)
+        {
+            return _database.StringDecrement(key, num);
+        }
+        public bool Remove(string key)
+        {
+            return _database.KeyDelete(key);
+        }
         public void Dispose()
         {
             _redisConnections.Close();

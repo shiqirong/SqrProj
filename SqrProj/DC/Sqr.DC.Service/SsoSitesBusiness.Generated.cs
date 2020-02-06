@@ -14,6 +14,7 @@ using Sqr.DC.Entities;
 using Sqr.DC.Repositories;
 using System.Collections.Generic;
 using Sqr.Common.IOC;
+using System.Transactions;
 
 namespace Sqr.DC.Services
 {
@@ -23,16 +24,16 @@ namespace Sqr.DC.Services
     public partial class SsoSitesBusiness :BaseService
     {
 		
-        public PagingOutput<SsoSites> GetPageList(PagingInput input)
-        {
-            return AutofacConfig.Resolve<SsoSitesRepository>().GetPageList(
-                input.PageIndex,
-                input.PageSize,
-                null,
-                a => a.CreateTime,
-                true
-            );
-        }
+        //public PagingOutput<SsoSites> GetPageList(PagingInput input)
+        //{
+        //    return AutofacConfig.Resolve<SsoSitesRepository>().(
+        //        input.PageIndex,
+        //        input.PageSize,
+        //        null,
+        //        a => a.CreateTime,
+        //        true
+        //    );
+        //}
 
         public List<SsoSites> GeList()
         {
@@ -47,15 +48,24 @@ namespace Sqr.DC.Services
         public long Add(SsoSites model)
         {
             model.Id = IdHelper.GetNewId();
-            if (AutofacConfig.Resolve<SsoSitesRepository>().Add(model) > 0)
+            if (AutofacConfig.Resolve<SsoSitesRepository>().Insert(model) > 0)
                 return model.Id;
             return 0;
         }
 
-        public int Add(List<SsoSites> models)
+        public bool Add(List<SsoSites> models)
         {
             models.ForEach(c => c.Id = IdHelper.GetNewId());
-            return AutofacConfig.Resolve<SsoSitesRepository>().Add(models);
+            var rep = AutofacConfig.Resolve<SsoSitesRepository>();
+            using (System.Transactions.TransactionScope ts = new System.Transactions.TransactionScope())
+            {
+                foreach(var m in models)
+                {
+                    rep.Insert(m);
+                }
+                ts.Complete();
+            }
+            return true;
         }
 
         public bool Update(SsoSites model)

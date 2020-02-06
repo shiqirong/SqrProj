@@ -19,9 +19,9 @@ namespace Sqr.Dapper.Linq
         {
             get {
                 if (IsPaged)
-                    return _select + _from + _join + _where + _order;
+                    return _select + _from + _join + _where + _order +_paged;
                 else
-                    return "";
+                    return _select + _from + _join + _where + _order;
             }
             protected set { }
         }
@@ -39,36 +39,31 @@ namespace Sqr.Dapper.Linq
     }
     public class SelectSqlFactory<T1> : SelectSqlFactory
     {
-        public SelectSqlFactory<T1> From<T>()
-        {
-            var type = typeof(T);
-            _from = $" From {type.Name} {GetAlias(type.FullName)}";
-            return this;
-        }
 
-        public SelectSqlFactory<T1> LeftJoin<T>(Expression<Func<T1, bool>> joinConditon)
+        public SelectSqlFactory<T1> Where(Expression<Func<T1, bool>> whereExp)
         {
-            var type = typeof(T);
-            _join += $" LEFT JOIN {type.Name} {GetAlias(type.FullName)} ON  {ReplaceAlias(Linq2SqlHelper.DealExpress(joinConditon, _paramsList), joinConditon.Parameters)}";
-            return this;
-        }
+            var alias=whereExp.Parameters.First();
 
-        public SelectSqlFactory<T1> InnerJoin<T>(Expression<Func<T1, bool>> joinConditon)
-        {
-            var type = typeof(T);
-            _join += $" JOIN {type.Name} {GetAlias(type.FullName)} ON  {ReplaceAlias(Linq2SqlHelper.DealExpress(joinConditon, _paramsList), joinConditon.Parameters)}";
-            return this;
-        }
+            var type = typeof(T1);
+            _from = $" from {type.Name} {alias.Name}";
 
-        public SelectSqlFactory<T1> Select(Expression<Func<T1, dynamic>> joinConditon)
-        {
-            _select = $" SELECT  {ReplaceAlias(Linq2SqlHelper.DealExpress(joinConditon, _paramsList), joinConditon.Parameters)} ";
-            return this;
-        }
+            var i = 0;
+            var ps = type.GetProperties();
+            foreach (var p in ps)
+            {
+                if (i == 0)
+                {
+                    _select += $"{alias.Name}.{p.Name}";
+                }
+                else
+                {
+                    _select += $",{alias.Name}.{p.Name}";
+                }
+                i++;
+            }
+            _select = $"SELECT {_select}";
 
-        public SelectSqlFactory<T1> Where(Expression<Func<T1, dynamic>> joinConditon)
-        {
-            _where = $" WHERE  {ReplaceAlias(Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList), joinConditon.Parameters)} ";
+            _where = $" WHERE  {Linq2SqlHelper.DealMemberExpresion(whereExp, _paramsList)} ";
             return this;
         }
 
@@ -117,9 +112,9 @@ namespace Sqr.Dapper.Linq
             _select = $" SELECT  {ReplaceAlias(Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList), joinConditon.Parameters)} ";
             return this;
         }
-        public SelectSqlFactory<T1, T2> Where(Expression<Func<T1, T2, dynamic>> joinConditon)
+        public SelectSqlFactory<T1, T2> Where(Expression<Func<T1, T2, bool>> whereExp)
         {
-            _where = $" WHERE  {ReplaceAlias(Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList), joinConditon.Parameters)} ";
+            _where = $" WHERE  {ReplaceAlias(Linq2SqlHelper.DealMemberExpresion(whereExp, _paramsList), whereExp.Parameters)} ";
             return this;
         }
 
@@ -165,9 +160,9 @@ namespace Sqr.Dapper.Linq
             _select = $" SELECT  {ReplaceAlias(Linq2SqlHelper.DealExpress(joinConditon, _paramsList), joinConditon.Parameters)} ";
             return this;
         }
-        public SelectSqlFactory<T1, T2, T3> Where(Expression<Func<T1, T2, T3, bool>> joinConditon)
+        public SelectSqlFactory<T1, T2, T3> Where(Expression<Func<T1, T2, T3, bool>> whereExp)
         {
-            _where = $" WHERE  {ReplaceAlias(Linq2SqlHelper.DealExpress(joinConditon, _paramsList), joinConditon.Parameters)} ";
+            _where = $" WHERE  {ReplaceAlias(Linq2SqlHelper.DealExpress(whereExp, _paramsList), whereExp.Parameters)} ";
             return this;
         }
 
@@ -215,9 +210,9 @@ namespace Sqr.Dapper.Linq
             _select = $" SELECT  {ReplaceAlias(Linq2SqlHelper.DealExpress(joinConditon, _paramsList), joinConditon.Parameters)} ";
             return this;
         }
-        public SelectSqlFactory<T1, T2, T3, T4> Where(Expression<Func<T1, T2, T3, T4>> joinConditon)
+        public SelectSqlFactory<T1, T2, T3, T4> Where(Expression<Func<T1, T2, T3, T4, bool>> whereExp)
         {
-            _where = $" WHERE  {ReplaceAlias(Linq2SqlHelper.DealExpress(joinConditon, _paramsList), joinConditon.Parameters)} ";
+            _where = $" WHERE  {ReplaceAlias(Linq2SqlHelper.DealExpress(whereExp, _paramsList), whereExp.Parameters)} ";
             return this;
         }
 
