@@ -24,6 +24,25 @@ namespace Sqr.DC.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title= "数据中心接口文档"
+                });
+
+                var baseDirectory = AppContext.BaseDirectory;
+                var currentNamespace = "Sqr.DC.WebApi";
+                var xmlFiles = new[]
+                {
+                    $"{baseDirectory}/{currentNamespace}/Sqr.DC.WebApi.xml"
+                };
+                foreach (var xml in xmlFiles)
+                {
+                    if (System.IO.File.Exists(xml))
+                        c.IncludeXmlComments(xml);
+                }
+            });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -34,7 +53,11 @@ namespace Sqr.DC.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseSwagger();
+            app.UseSwaggerUI(c=>
+            {
+                c.SwaggerEndpoint("/swagger/v2/swagger.json", "数据中心api文档");
+            });
             app.UseMvc();
         }
     }

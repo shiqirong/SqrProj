@@ -14,37 +14,37 @@ namespace Sqr.DC.Entities
     /// <summary>
     /// Ssosites Entity Model
     /// </summary>    
-    public class SsoSites:BaseMo
+    public class SsoSites : BaseMo
     {
-      
-			/// <summary>
-			/// 
-			/// </summary>
-						public string Sitecode { get; set; }
 
-      
-			/// <summary>
-			/// 
-			/// </summary>
-						public string Siteloginurl { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Sitecode { get; set; }
 
-      
-			/// <summary>
-			/// 
-			/// </summary>
-						public string Sitelogouturl { get; set; }
 
-      
-			/// <summary>
-			/// 
-			/// </summary>
-						public string Sitename { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Siteloginurl { get; set; }
 
-      
-			/// <summary>
-			/// 
-			/// </summary>
-						public string Siteurl { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Sitelogouturl { get; set; }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Sitename { get; set; }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Siteurl { get; set; }
 
     }
 }

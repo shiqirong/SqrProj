@@ -38,7 +38,7 @@ namespace Sqr.Admin.Web.Filters
             /*---------------------------------------------------------
              * 这里可进行相关自定义业务处理，比如日志记录等
              ---------------------------------------------------------*/
-            LoggerManager.Error(exception.ToString());
+            LoggerManager.CurrentLogger().Error(exception.ToString());
             //设置异常已经处理,否则会被其他异常过滤器覆盖
             filterContext.ExceptionHandled = true;
 

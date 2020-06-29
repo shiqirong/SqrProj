@@ -9,6 +9,7 @@ namespace Sqr.DC.Services.Account.Dtos
     {
         public string Account { get;  set; }
         public string Password { get;  set; }
+        public string LoginId { get; set; }
     }
 
     public class LoginOutput

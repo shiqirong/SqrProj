@@ -1,33 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Sqr.Common.Logger;
-using Sqr.SSO.Web.Account.VModels;
 using Sqr.SSO.Web.API.DC;
+using Sqr.SSO.Web.Models.Account;
+using System.Linq;
 
 namespace Sqr.SSO.Web.Controllers
 {
+    [AllowAnonymous]
     public class AccountController :  Controller
     {
-        
-        public async Task<IActionResult> Login(string backUrl)
+        [HttpGet]
+        public async Task<IActionResult> Login(string returnUrl)
         {
-            var LoginCode = HttpContext.Session.GetString("LoginCode");
-            if (!string.IsNullOrWhiteSpace(LoginCode)){
-                var retAccessCode=await DcAPI.Instance.GetOrCreateAccessCode(LoginCode);
-                return RedirectToAction("LoginSuccess");
+            //如果用户已经登录，直接跳转到登录成功页面
+            if (User.Identity.IsAuthenticated)
+            {
+                return await LoginSuccess(returnUrl);
             }
             return View(new VM_Login()
             {
-                BackUrl=backUrl
+                ReturnUrl = returnUrl
             });
         }
 
@@ -50,13 +48,41 @@ namespace Sqr.SSO.Web.Controllers
             var result=await API.DC.DcAPI.Instance.Login(new API.DC.Dtos.LoginInput()
             {
                 Account = vmodel.Account,
-                Password = vmodel.Password
+                Password = vmodel.Password,
+                LoginId= HttpContext.Session.Id
             });
             if (result.IsSuccess)
-                return Redirect("http://www.baidu.com");
+            {
+                var claims = new List<Claim>()
+                {
+                    new Claim(ClaimTypes.Name,result.NotNullData().UserInfo.Name),
+                    new Claim(ClaimTypes.Sid,result.NotNullData().UserInfo.Id.ToString())
+                };
+                ClaimsIdentity identity = new ClaimsIdentity(claims,"SsoLogin");
+                ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+                await HttpContext.SignOutAsync();
+                await HttpContext.SignInAsync(principal);
+
+                return await LoginSuccess(vmodel.ReturnUrl, result.NotNullData().UserInfo.Id);
+            }
+
             return View(vmodel);
         }
 
+        async Task<IActionResult> LoginSuccess(string returnUrl,long userId=0)
+        {
+            if(userId==0)
+                userId = long.Parse(User.Claims.First(c => ClaimTypes.Sid.Equals(c.Type, StringComparison.CurrentCultureIgnoreCase)).Value);
+            var ssoSites = await DcAPI.Instance.GetSSOSites();
+            var retAccessCode = await DcAPI.Instance.GetOrCreateAccessCode(userId);
+
+            return View("LoginSuccess", new VM_LoginSuccess()
+            {
+                AuthCode = retAccessCode.NotNullData().AccessCode,
+                SSOSites = ssoSites.NotNullData(),
+                ReturnUrl=string.IsNullOrWhiteSpace(returnUrl)? $"{Request.Scheme}://{Request.Host}" :returnUrl
+            });
+        }
         /// <summary>
         /// 登录验证码
         /// </summary>
@@ -71,10 +97,6 @@ namespace Sqr.SSO.Web.Controllers
             HttpContext.Session.SetString("ValidateCode", code);
             return File(bytes, @"image/jpeg");
         }
-
-        public ActionResult LoginSuccess()
-        {
-            return View();
-        }
+        
     }
 }

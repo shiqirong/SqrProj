@@ -29,12 +29,17 @@ namespace Sqr.SSO.Web.API.DC
 
         internal async Task<ResultMo<LoginOutput>> Login(LoginInput input)
         {
-            return await Post<ResultMo<LoginOutput>>($"{_baseUrl}Account/LogIn", input);
+            return await Post<LoginOutput>($"{_baseUrl}Account/LogIn", input);
         }
 
-        internal async Task<ResultMo<dynamic>> GetOrCreateAccessCode(string loginCode)
+        internal async Task<ResultMo<GetOrCreateAccessCode>> GetOrCreateAccessCode(long userId)
         {
-            return await Get<ResultMo<dynamic>>($"{_baseUrl}Account/LogIn?loginCode={loginCode}");
+            return await Get<GetOrCreateAccessCode>($"{_baseUrl}Account/GetOrCreateAccessCode?userId={userId}");
+        }
+
+        internal async Task<ResultMo<IList<M_SSOSite>>> GetSSOSites()
+        {
+            return await Get<IList<M_SSOSite>>($"{_baseUrl}Account/GetSSOSites");
         }
     }
 }

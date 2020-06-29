@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Sqr.SSO.Web.Account.VModels
+namespace Sqr.SSO.Web.Models.Account
 {
     public class VM_Login
     {
@@ -21,6 +21,6 @@ namespace Sqr.SSO.Web.Account.VModels
         [Required(AllowEmptyStrings=false, ErrorMessage="请输入验证码")]
         public string ValidCode { get; set; }
 
-        public string BackUrl { get; set; }
+        public string ReturnUrl { get; internal set; }
     }
 }

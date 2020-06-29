@@ -72,6 +72,10 @@ namespace Sqr.Common
         //参数检查
         public const int ParamsIncrect = 12000;
         public const int DataNotExists=13000;
-        public static int PasswordIncrect=130001;
+        public const int PasswordIncrect=130001;
+
+        public const int JsonTransferError = 140000;
+
+        public const int NotLogin = 10110;
     }
 }

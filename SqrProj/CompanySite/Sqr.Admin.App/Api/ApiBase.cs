@@ -31,12 +31,12 @@ namespace Sqr.Admin.App.Api
                 {
                     return (await response.Content.ReadAsStringAsync()).ToObject<ResponseModel<T>>().Data;
                 }
-                LoggerManager.Warn($"调用接口返回失败(post)。{(new { url, input = data, output = response }).ToJson()}", SystemInfo.SystemId, "Api");
+                LoggerManager.CurrentLogger().Warn($"调用接口返回失败(post)。{(new { url, input = data, output = response }).ToJson()}");
                 return default(T);
             }
             catch (Exception ex)
             {
-                LoggerManager.Error($"调用接口返回失败(post)。{(new { url, input = data, exception = ex }).ToJson()}", SystemInfo.SystemId, "Api");
+                LoggerManager.CurrentLogger().Error($"调用接口返回失败(post)。{(new { url, input = data, exception = ex }).ToJson()}");
                 return default(T);
             }
         }
@@ -60,12 +60,12 @@ namespace Sqr.Admin.App.Api
                     var result = await response.Content.ReadAsStringAsync();
                     return result.ToObject<ResponseModel<T>>().Data;
                 }
-                LoggerManager.Warn($"调用接口返回失败(get)。{(new { url, input = data, output = response }).ToJson()}", SystemInfo.SystemId, "Api");
+                LoggerManager.CurrentLogger().Warn($"调用接口返回失败(get)。{(new { url, input = data, output = response }).ToJson()}");
                 return default(T);
             }
             catch (Exception ex)
             {
-                LoggerManager.Error($"调用接口返回失败(get)。{(new { url, input = data, exception = ex }).ToJson()}", SystemInfo.SystemId, "Api");
+                LoggerManager.CurrentLogger().Error($"调用接口返回失败(get)。{(new { url, input = data, exception = ex }).ToJson()}");
                 return default(T);
             }
         }

@@ -6,11 +6,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Sqr.Common\Sqr.Common.csproj" />
+    <ProjectReference Include="..\..\SSO\Sqr.SSO.LoginHelper\Sqr.SSO.LoginHelper.csproj" />
     <ProjectReference Include="..\Sqr.Admin.App\Sqr.Admin.App.csproj" />
   </ItemGroup>
 

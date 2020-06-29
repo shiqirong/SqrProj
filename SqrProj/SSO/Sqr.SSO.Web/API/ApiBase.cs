@@ -13,27 +13,27 @@ namespace Sqr.SSO.Web.API
     public class ApiBase
     {
 
-        protected async Task<T> Get<T>(string url)
+        protected async Task<ResultMo<T>> Get<T>(string url)
         {
             return await SendRequest<T>(url,"GET");
         }
 
-        protected async Task<T> Post<T>(string url,object body)
+        protected async Task<ResultMo<T>> Post<T>(string url,object body)
         {
             return await SendRequest<T>(url, "POST", body);
         }
 
-        protected async Task<T> Put<T>(string url, object body)
+        protected async Task<ResultMo<T>> Put<T>(string url, object body)
         {
             return await SendRequest<T>(url, "PUT", body);
         }
 
-        protected async Task<T> Delete<T>(string url, object body)
+        protected async Task<ResultMo<T>> Delete<T>(string url, object body)
         {
             return await SendRequest<T>(url, "DELETE", body);
         }
 
-        private static async Task<T> SendRequest<T>(string url,string method,object body=null)
+        private static async Task<ResultMo<T>> SendRequest<T>(string url,string method,object body=null)
         {
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
             request.Method = method;
@@ -45,11 +45,11 @@ namespace Sqr.SSO.Web.API
             }
             catch(WebException wExp)
             {
-                return default(T);
+                return new ResultMo<T>(ResultCode.IntenetEror,wExp.Message);
             }
             if(response.StatusCode!= HttpStatusCode.OK)
             {
-                return default(T);
+                return new ResultMo<T>(ResultCode.RequestEror,$"请求失败，StatusCode：{response.StatusCode}");
             }
             var responseText = string.Empty;
             using (var stream = response.GetResponseStream())
@@ -59,11 +59,11 @@ namespace Sqr.SSO.Web.API
             }
             try
             {
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(responseText);
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<ResultMo<T>>(responseText);
             }
             catch(Exception ex)
             {
-                return default(T);
+                return new ResultMo<T>(ResultCode.JsonTransferError,$"JSON转换失败。{ex.Message}");
             }
 
         }

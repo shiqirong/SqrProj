@@ -142,6 +142,13 @@ namespace Sqr.Dapper.Linq
             if (exp is LambdaExpression)
             {
                 LambdaExpression l_exp = exp as LambdaExpression;
+                if (l_exp.Body is ConstantExpression)
+                {
+                    if ("true".Equals((l_exp.Body as ConstantExpression).Value.ToString(), StringComparison.CurrentCultureIgnoreCase))
+                        return " 1 = 1 ";
+                    else
+                        return " 1 = 2 ";
+                }
                 return DealExpress(l_exp.Body, paramsList, commandType);
             }
             if (exp is BinaryExpression)

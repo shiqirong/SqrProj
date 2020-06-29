@@ -9,7 +9,8 @@
 //-----------------------------------------------------------------------
 using Sqr.Dapper.Linq.Common;
 using Sqr.DC.Entities;
-
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sqr.DC.Repositories
 {
@@ -26,6 +27,11 @@ namespace Sqr.DC.Repositories
         public PagedList<SsoSites> GetPaged(int pageIndex,int pageSize)
         {
             return GetPaged(c => true, new PagedQueryParams() { PageIndex = pageIndex, PageSize = pageSize });
+        }
+
+        public async Task<IList<SsoSites>> GetAllAsync()
+        {
+            return await GetListAsync(c=>1==1);
         }
 	}
 }

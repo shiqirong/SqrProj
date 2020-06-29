@@ -20,10 +20,10 @@ namespace Sqr.Common.Cache
                     if (_cache == null)
                     {
                         string _cacheName = ConfigUtil.GetSection("CacheSetting").Value;
-                        if ("Default".Equals(_cacheName, StringComparison.CurrentCultureIgnoreCase))
-                            _cache = new DefaultCache();
-                        else
+                        if ("Redis".Equals(_cacheName, StringComparison.CurrentCultureIgnoreCase))
                             _cache = new RedisCache();
+                        else
+                            _cache = new DefaultCache();
                     }
                 }
 

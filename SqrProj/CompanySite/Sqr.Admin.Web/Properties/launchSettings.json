@@ -7,7 +7,7 @@
       "sslPort": 0
     },
     "iisExpress": {
-      "applicationUrl": "http://localhost:62492",
+      "applicationUrl": "http://localhost:8002",
       "sslPort": 0
     }
   },
@@ -20,7 +20,7 @@
       }
     },
     "Sqr.Admin.Web": {
-      "commandName": "IIS",
+      "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

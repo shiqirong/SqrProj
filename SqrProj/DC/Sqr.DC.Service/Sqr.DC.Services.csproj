@@ -42,6 +42,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Common\Sqr.Common\Sqr.Common.csproj" />
     <ProjectReference Include="..\Sqr.DC.Entities\Sqr.DC.Entities.csproj" />
     <ProjectReference Include="..\Sqr.DC.Repositories\Sqr.DC.Repositories.csproj" />

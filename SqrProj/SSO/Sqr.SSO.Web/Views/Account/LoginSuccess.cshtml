@@ -1,0 +1,55 @@
+﻿@model Sqr.SSO.Web.Models.Account.VM_LoginSuccess
+@{
+    ViewData["Title"] = "LoginSuccess";
+}
+
+<h2>登录成功</h2>
+<h3>跳转中...</h3>
+@section Scripts{
+<script>
+    var sites = [
+    @{
+        var isFirst = true;
+        foreach(var site in Model.SSOSites)
+        {
+            if (!site.Siteloginurl.Contains("?")) { site.Siteloginurl = site.Siteloginurl + "?AccessCode=" + Model.AuthCode; }
+            else { site.Siteloginurl = site.Siteloginurl + "&AccessCode=" + Model.AuthCode; }
+            if (isFirst)
+            {
+                <text>            { "url": '@site.Siteloginurl' }            </text>
+            }
+            else
+            {
+                <text >            ,{ "url": '@site.Siteloginurl' }            </text>
+            }
+        }
+    }
+    ];
+
+    var ssositeCount = 0;
+    for (var i = 0; i < sites.length; i++) {
+        alert(i);
+        $.ajax({
+            url: sites[i].url,
+            dataType: "json",
+            xhrFields: {
+                withCredentials: true
+            },
+            complete: function () {//不管成功还是失败 都会进这个函数
+                alert(i + "Complete");
+                //var cookie = new Cookie("key", "value");
+                //cookie.setMaxAge(-1);
+                //cookie.setDomain("localhost:8002.com");
+                //cookie.setSecure(false);
+                //cookie.setPath("/")    
+                ssositeCount++;
+                alert(ssositeCount + "," + sites.length);
+                if (ssositeCount >= sites.length) {
+                    window.location.href = '@Model.ReturnUrl';
+                }
+            }
+        });
+    }
+</script>
+}
+
