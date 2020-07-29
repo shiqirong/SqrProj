@@ -208,7 +208,7 @@ namespace Sqr.Dapper.Linq
                     var paramName = $"{_paramPrix}p_{paramsList.Count + 1}";
                     paramsList.Add(new KeyValuePair<string, object>(paramName, containsP1));
                     return $" {DealExpress(exp.Arguments[0], paramsList, commandType)} in({paramName})  ";
-                case "IfWhere":
+                case "WhereIf":
                     var ifWhereArg1 = Convert.ToBoolean( DealExpress(exp.Arguments[0], paramsList, commandType));
                     if (ifWhereArg1)
                         return DealExpress(exp.Arguments[1], paramsList, commandType);

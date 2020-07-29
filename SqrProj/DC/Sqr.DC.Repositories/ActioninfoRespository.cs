@@ -7,16 +7,42 @@
 // * history : Created by T4 03/11/2019 21:19:09 
 // </copyright>
 //-----------------------------------------------------------------------
+using Sqr.Common.Paging;
+using Sqr.Dapper.Linq.Common;
+using Sqr.DC.Dtos.Account;
 using Sqr.DC.Entities;
-
+using System.Threading.Tasks;
 
 namespace Sqr.DC.Repositories
 {
     /// <summary>
     /// actioninfo Respository
     /// </summary>   
-    public partial class ActioninfoRepository :BaseRepository<  Actioninfo>
+    public partial class ActioninfoRepository :BaseRepository<ActioninfoRepository,  Actioninfo>
     {
-		
-	}
+        public async Task<PagingOutput<Actioninfo>> GetActionPaged(GetActionPagedInput input)
+        {
+            var output= await QueryPagedAsync<Actioninfo>(c =>
+            WhereIf< Actioninfo>(string.IsNullOrWhiteSpace(input.Action),wi=>wi.Action == input.Action)
+            && WhereIf< Actioninfo>(string.IsNullOrWhiteSpace(input.Controller), wi => wi.Controller == input.Controller)
+            && WhereIf<Actioninfo>(string.IsNullOrWhiteSpace(input.Category), wi => wi.Category == input.Category)
+            && WhereIf<Actioninfo>(string.IsNullOrWhiteSpace(input.Name), wi => wi.Category.Contains(input.Name)),
+            
+            new PagedQueryParams()
+            {
+                PageIndex = input.PageIndex,
+                PageSize = input.PageSize
+            });
+
+            return new PagingOutput<Actioninfo>()
+            {
+                Total = output.Total,
+                PageIndex = input.PageIndex,
+                PageSize = input.PageSize,
+                Rows = output.Data
+            };
+
+        }
+
+    }
 }

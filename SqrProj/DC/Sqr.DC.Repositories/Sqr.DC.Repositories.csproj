@@ -8,6 +8,7 @@
     <ProjectReference Include="..\..\Common\Sqr.Common\Sqr.Common.csproj" />
     <ProjectReference Include="..\..\Common\Sqr.Dapper.Linq.Common\Sqr.Dapper.Linq.Common.csproj" />
     <ProjectReference Include="..\..\Common\Sqr.Dapper.Linq\Sqr.Dapper.Linq.csproj" />
+    <ProjectReference Include="..\Sqr.DC.Dtos\Sqr.DC.Dtos.csproj" />
     <ProjectReference Include="..\Sqr.DC.Entities\Sqr.DC.Entities.csproj" />
   </ItemGroup>
 

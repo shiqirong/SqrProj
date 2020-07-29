@@ -15,7 +15,7 @@ namespace Sqr.DC.Repositories
     /// <summary>
     /// productcategory Respository
     /// </summary>   
-    public partial class ProductcategoryRepository :BaseRepository<  Productcategory>
+    public partial class ProductcategoryRepository :BaseRepository<ProductcategoryRepository,  Productcategory>
     {
 		
 	}

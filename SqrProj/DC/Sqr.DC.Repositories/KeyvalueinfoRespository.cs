@@ -15,7 +15,7 @@ namespace Sqr.DC.Repositories
     /// <summary>
     /// keyvalueinfo Respository
     /// </summary>   
-    public partial class KeyvalueinfoRepository :BaseRepository<  Keyvalueinfo>
+    public partial class KeyvalueinfoRepository :BaseRepository<KeyvalueinfoRepository,  Keyvalueinfo>
     {
 		
 	}

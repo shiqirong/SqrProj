@@ -15,7 +15,7 @@ namespace Sqr.DC.Repositories
     /// <summary>
     /// actioninforolesrelation Respository
     /// </summary>   
-    public partial class ActioninforolesrelationRepository :BaseRepository<  Actioninforolesrelation>
+    public partial class ActioninforolesrelationRepository :BaseRepository<ActioninforolesrelationRepository, Actioninforolesrelation>
     {
 		
 	}

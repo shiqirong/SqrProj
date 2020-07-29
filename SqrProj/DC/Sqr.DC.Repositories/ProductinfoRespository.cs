@@ -15,7 +15,7 @@ namespace Sqr.DC.Repositories
     /// <summary>
     /// productinfo Respository
     /// </summary>   
-    public partial class ProductinfoRepository :BaseRepository<  Productinfo>
+    public partial class ProductinfoRepository :BaseRepository<ProductinfoRepository,  Productinfo>
     {
 		
 	}

@@ -24,5 +24,16 @@
             <param name="input"></param>
             <returns></returns>
         </member>
+        <member name="T:Sqr.DC.WebApi.Fillter.GlobalExceptionFilter">
+            <summary>
+            全局异常过滤器
+            </summary>
+        </member>
+        <member name="M:Sqr.DC.WebApi.Fillter.GlobalExceptionFilter.OnException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <summary>
+            错误处理
+            </summary>
+            <param name="filterContext"></param>
+        </member>
     </members>
 </doc>

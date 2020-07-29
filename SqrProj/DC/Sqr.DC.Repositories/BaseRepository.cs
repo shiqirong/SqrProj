@@ -10,12 +10,29 @@ using Sqr.DC.Entities;
 
 namespace Sqr.DC.Repositories
 {
-    public class BaseRepository<TEntity> : Linq2SqlRepBase where TEntity : BaseMo
+    public class BaseRepository<TRespositry, TEntity> : Linq2SqlRepBase where TEntity : BaseMo where TRespositry:class ,new()
     {
-
+        static TRespositry _instance = null;
+        public static TRespositry Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new TRespositry();
+                return _instance;
+            }
+        }
         public BaseRepository()
         {
             _connectionString = ConfigUtil.GetConnectionString("comp");
+        }
+
+    
+
+        protected bool WhereIf<T>(bool condition, Expression<Func<T, bool>> where)
+        {
+            return true;
+
         }
 
         public TEntity GetByIdSingle(long Id)

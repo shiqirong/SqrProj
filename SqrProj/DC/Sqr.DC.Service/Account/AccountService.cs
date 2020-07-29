@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Sqr.DC.Services.Account
 {
-    public class AccountService:ServiceBase
+    public class AccountService:ServiceBase<AccountService>
     {
         public async Task<ResultMo<LoginOutput>> Login(LoginInput input)
         {

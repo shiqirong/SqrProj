@@ -15,7 +15,7 @@ namespace Sqr.DC.Repositories
     /// <summary>
     /// newscategory Respository
     /// </summary>   
-    public partial class NewscategoryRepository :BaseRepository<  Newscategory>
+    public partial class NewscategoryRepository :BaseRepository<NewscategoryRepository,  Newscategory>
     {
 		
 	}

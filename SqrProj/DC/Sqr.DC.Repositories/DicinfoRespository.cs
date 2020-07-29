@@ -15,7 +15,7 @@ namespace Sqr.DC.Repositories
     /// <summary>
     /// dicinfo Respository
     /// </summary>   
-    public partial class DicinfoRepository :BaseRepository<  Dicinfo>
+    public partial class DicinfoRepository :BaseRepository<DicinfoRepository, Dicinfo>
     {
 		
 	}

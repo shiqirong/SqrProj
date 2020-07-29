@@ -30,6 +30,7 @@ namespace Sqr.SSO.LoginHelper
                 ClaimsIdentity identity = new ClaimsIdentity(claims,"SsoLogin");
                 ClaimsPrincipal principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(principal);
+
                 return new EmptyResult();
             }
             else

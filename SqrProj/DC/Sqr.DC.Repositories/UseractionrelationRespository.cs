@@ -15,7 +15,7 @@ namespace Sqr.DC.Repositories
     /// <summary>
     /// useractionrelation Respository
     /// </summary>   
-    public partial class UseractionrelationRepository :BaseRepository<  Useractionrelation>
+    public partial class UseractionrelationRepository :BaseRepository<UseractionrelationRepository,  Useractionrelation>
     {
 		
 	}

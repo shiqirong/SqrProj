@@ -12,7 +12,7 @@ namespace Sqr.Common.Paging
 
         public int PageSize { get; set; }
 
-        public int Total { get; set; }
+        public long Total { get; set; }
 
         public IList<T> Rows { get; set; }
              

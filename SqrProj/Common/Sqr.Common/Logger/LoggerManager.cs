@@ -20,10 +20,10 @@ namespace Sqr.Common.Logger
                     if (_logger == null)
                     {
                         string _cacheName = ConfigUtil.GetSection("LoggerSetting").Value;
-                        if ("Default".Equals(_cacheName, StringComparison.CurrentCultureIgnoreCase))
-                            _logger = new DefaultLogger();
-                        else
+                        if ("Log4net".Equals(_cacheName, StringComparison.CurrentCultureIgnoreCase))
                             _logger = new Log4netLogger();
+                        else
+                            _logger = new DefaultLogger();
                     }
                 }
 

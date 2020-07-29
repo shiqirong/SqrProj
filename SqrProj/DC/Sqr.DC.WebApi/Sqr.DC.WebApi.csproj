@@ -20,7 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\Sqr.Common.Web\Sqr.Common.Web.csproj" />
     <ProjectReference Include="..\..\Common\Sqr.Common\Sqr.Common.csproj" />
+    <ProjectReference Include="..\Sqr.DC.Dtos\Sqr.DC.Dtos.csproj" />
     <ProjectReference Include="..\Sqr.DC.Entities\Sqr.DC.Entities.csproj" />
     <ProjectReference Include="..\Sqr.DC.Service\Sqr.DC.Services.csproj" />
   </ItemGroup>

@@ -17,7 +17,7 @@ namespace Sqr.DC.Repositories
     /// <summary>
     /// ssosites Respository
     /// </summary>   
-    public partial class SsoSitesRepository :BaseRepository<SsoSites>
+    public partial class SsoSitesRepository :BaseRepository<SsoSitesRepository,SsoSites>
     {
 		public SsoSites GetBySiteCode(string siteCode)
         {

@@ -6,15 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Sqr.DC.WebApi.Controllers
 {
+    [Produces("json/application")]
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public dynamic Get()
         {
-            return new string[] { "value1", "value2" };
+            throw new Exception("test error");
+            return new { name = "shiqr", Email = "shiqr@zhogan.com.cn" };
         }
 
         // GET api/values/5

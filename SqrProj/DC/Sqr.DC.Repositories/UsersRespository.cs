@@ -15,7 +15,7 @@ namespace Sqr.DC.Repositories
     /// <summary>
     /// users Respository
     /// </summary>   
-    public partial class UsersRepository :BaseRepository<  Users>
+    public partial class UsersRepository :BaseRepository<UsersRepository,  Users>
     {
 		public async Task<Users> GetByAccoutAsync(string account)
         {

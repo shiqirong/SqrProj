@@ -18,7 +18,7 @@ namespace Sqr.DC.Services
     /// <summary>
     /// sso_sites Respository
     /// </summary>   
-    public partial class SsoSitesService : ServiceBase
+    public partial class SsoSitesService : ServiceBase<SsoSitesService>
     {
         public async Task<ResultMo<IList<SsoSites>>> GetSSOSites()
         {

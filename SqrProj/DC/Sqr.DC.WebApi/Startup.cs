@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Sqr.DC.WebApi.Fillter;
 
 namespace Sqr.DC.WebApi
 {
@@ -43,7 +44,13 @@ namespace Sqr.DC.WebApi
                         c.IncludeXmlComments(xml);
                 }
             });
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            Action<MvcOptions> filters = new Action<MvcOptions>(r =>
+            {
+                r.Filters.Add(typeof(GlobalExceptionFilter));
+                r.Filters.Add(typeof(GlobalActionFilter));
+            });
+            services.AddMvc(filters).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
