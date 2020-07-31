@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Sqr.Admin.App.Api.DC
 {
-    public class NewsApi:ApiBase
+    public class NewsApi:ApiBase<NewsApi>
     {
         public async Task<PageResult<GetNewsListOutput>> GetNewsList(GetNewsListInput input)
         {

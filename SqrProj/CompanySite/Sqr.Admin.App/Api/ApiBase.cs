@@ -16,9 +16,19 @@ namespace Sqr.Admin.App.Api
         public T Data { get; set; }
     }
 
-    public abstract class ApiBase
+    public abstract class ApiBase<T> where T : class ,new()
     {
-        public string ApiUrl { get; set; } = "http://localhost:9000/";
+        static T _instance = null;
+        public static T Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new T();
+                return _instance;
+            }
+        }
+        protected string ApiUrl { get; set; } = "http://localhost:8001/";
 
         public async virtual Task<T> Post<T>(string url, object data)
         {

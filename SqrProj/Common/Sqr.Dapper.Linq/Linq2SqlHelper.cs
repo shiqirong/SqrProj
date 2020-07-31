@@ -209,11 +209,20 @@ namespace Sqr.Dapper.Linq
                     paramsList.Add(new KeyValuePair<string, object>(paramName, containsP1));
                     return $" {DealExpress(exp.Arguments[0], paramsList, commandType)} in({paramName})  ";
                 case "WhereIf":
-                    var ifWhereArg1 = Convert.ToBoolean( DealExpress(exp.Arguments[0], paramsList, commandType));
+                    var ifWhereArg1 = Convert.ToBoolean(Expression.Lambda(exp.Arguments[0], null).Compile().DynamicInvoke());
                     if (ifWhereArg1)
                         return DealExpress(exp.Arguments[1], paramsList, commandType);
                     else
                         return " 1=1 ";
+                    
+                case "IsNullOrWhiteSpace":
+                    var nullExp=Expression.Constant(null);
+                    var leftExp = Expression.Equal(exp.Arguments[0], nullExp);
+                    var emptyExp = Expression.Constant("");
+                    var rightExp = Expression.Equal(exp.Arguments[0], emptyExp);
+                    var r=Expression.Or(leftExp, rightExp);
+                    return "true";
+                    
                 default:
                     throw new NotSupportedException($"not Supported method:{exp.Method.Name}.");
 

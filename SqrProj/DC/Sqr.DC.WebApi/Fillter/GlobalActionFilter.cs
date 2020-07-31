@@ -24,7 +24,7 @@ namespace Sqr.DC.WebApi.Fillter
             sb.Append("接口地址：");
             sb.Append(RequestHelper.GetAbsoluteUri(context.HttpContext.Request));
             sb.Append("接口输入内容：");
-            sb.Append(context.HttpContext.Request.Body.);
+            sb.Append(context.HttpContext.Request.Body);//to do
         }
 
         public void OnResultExecuted(ResultExecutedContext context)

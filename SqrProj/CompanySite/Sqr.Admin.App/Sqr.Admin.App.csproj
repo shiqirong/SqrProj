@@ -5,7 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Security\SecurityBusiness.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Common\Sqr.Common\Sqr.Common.csproj" />
+    <ProjectReference Include="..\..\DC\Sqr.DC.Dtos\Sqr.DC.Dtos.csproj" />
   </ItemGroup>
 
 </Project>

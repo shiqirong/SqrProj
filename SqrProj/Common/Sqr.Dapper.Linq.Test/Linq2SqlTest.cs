@@ -45,7 +45,6 @@ namespace Sqr.Dapper.Linq.Test
                 && l.Id.ToString()==l.Name 
                 && lstStr.Contains(l.Id.ToString())
                 && l.Name.StartsWith("hello")
-                && Linq2SqlMethod.IfWhere<Student>(true,c=>c.Id!=1)
                 ).Sql;
             var siu = sql;
         }

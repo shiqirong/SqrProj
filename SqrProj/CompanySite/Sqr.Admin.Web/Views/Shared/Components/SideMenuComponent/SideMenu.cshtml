@@ -1,0 +1,39 @@
+﻿@model System.Collections.Generic.List<Sqr.Admin.App.Api.DC.Dtos.ActionInfo>
+@using Microsoft.AspNetCore.Html
+
+@functions{
+    public static IHtmlContent RendChild(System.Collections.Generic.List<Sqr.Admin.App.Api.DC.Dtos.ActionInfo> actionList, Sqr.Admin.App.Api.DC.Dtos.ActionInfo pAction)
+    {
+        var outputHtml = string.Empty;
+        var childAction = actionList.Where(c => c.ParentId == pAction.Id).ToList();
+        if (childAction != null && childAction.Any())
+        {
+            outputHtml += $"<li>";
+            outputHtml += $"<a> <i class=\"fa fa-pencil-square-o fa-fw\"></i><cite>表单</cite><i class=\"fa fa-angle-down fa-fw nav_right\"></i></a>";
+            outputHtml += "</li>";
+            outputHtml += "<ul class=\"sub-menu\">";
+            foreach (var child in childAction)
+            {
+                outputHtml += RendChild(actionList, child);
+            }
+            outputHtml += "</ul>";
+        }
+        else
+        {
+            outputHtml += $"<li class=\"sub-tab\" hg-title=\"{pAction.Name}\" hg-nav=\"component/form/element.html\">";
+            outputHtml += $"<a><i class=\"fa fa-file-text fa-fw\"></i><cite>{pAction.Name}</cite></a>";
+            outputHtml += "</li>";
+        }
+        return new HtmlString( outputHtml);
+    }
+}
+@if (Model != null && Model.Any())
+{
+    var topMenu = Model.Where(c => c.ParentId == 0).ToList();
+    <ul id="nav" class="layui-tab-item layui-show">
+        @foreach(var m in topMenu)
+        {
+            @RendChild(Model, m)
+        }
+    </ul>
+}

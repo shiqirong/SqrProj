@@ -1,4 +1,7 @@
 ﻿using Sqr.Admin.App.Api.DC.Dtos;
+using Sqr.Common.Paging;
+using Sqr.Common.Utils;
+using Sqr.DC.Dtos.Account;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -7,32 +10,39 @@ using System.Threading.Tasks;
 
 namespace Sqr.Admin.App.Api.DC
 {
-    public  class SecurityApi : ApiBase
+    public  class SecurityApi : ApiBase<SecurityApi>
     {
-        public  async Task<List<GetMenuListOutput>> GetMenuList(long accountId,string systemId)
+        public SecurityApi()
         {
-            return await Get<List<GetMenuListOutput>>(ApiUrl + "Api/Security/GetMenuList", new { accountId, systemId });
+            ApiUrl = ConfigUtil.GetSection("DCConfig").GetSection("BaseUrl").Value;
         }
 
-        public async Task<List<GetMenuListOutput>> GetAllMenu()
+        #region action
+        public async Task<PagingOutput<ActionInfo>> GetActionPaged(GetActionPagedInput input)
         {
-            return await Get<List<GetMenuListOutput>>(ApiUrl + "Api/Security/GetAllMenu",null);
+            return await Get<PagingOutput<ActionInfo>>(ApiUrl + "Api/Action/GetActionPaged", input);
+        }
+
+        public async Task<List<GetMenuListOutput>> DeleteAction(long id)
+        {
+            return await Get<List<GetMenuListOutput>>(ApiUrl + "Api/Action/Delete?id={id}", null);
         }
 
         public async Task<ActionInfo> GetActionInfo(long id)
         {
-            return await Get<ActionInfo>(ApiUrl + $"Api/Security/GetActionInfo?id={id}",null );
+            return await Get<ActionInfo>(ApiUrl + $"Api/Action/Get?id={id}",null );
         }
 
-        public async Task<long> AddActionInfo(ActionInfo model)
+        public async Task<long> AddAction(ActionInfo model)
         {
-            return await Post<long>(ApiUrl + $"Api/Security/AddActionInfo", model);
+            return await Post<long>(ApiUrl + $"Api/Action/Update", model);
         }
 
         public async Task<bool> UpdateActionInfo(ActionInfo model)
         {
-            return await Post<bool>(ApiUrl + $"Api/Security/UpdateActionInfo", model);
+            return await Post<bool>(ApiUrl + $"Api/Action/UpdateActionInfo", model);
         }
+        #endregion
 
     }
 }

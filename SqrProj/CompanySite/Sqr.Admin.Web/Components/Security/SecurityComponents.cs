@@ -26,9 +26,9 @@ namespace Sqr.Admin.Web.Components.Security
         }
         async Task<IViewComponentResult> GetMenuList()
         {
-            var model = await new SecurityBusiness().GetMenuList(1, SystemInfo.SystemId);
-            var items= model?.MapTo<List<GetMenuListOutput>>();
-            return View("TopMenu", items);
+            //var model = await new SecurityBusiness().GetMenuList(1, SystemInfo.SystemId);
+            //var items= model?.MapTo<List<GetMenuListOutput>>();
+            return View("TopMenu");
         }
     }
 }

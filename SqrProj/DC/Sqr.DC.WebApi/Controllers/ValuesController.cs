@@ -15,7 +15,6 @@ namespace Sqr.DC.WebApi.Controllers
         [HttpGet]
         public dynamic Get()
         {
-            throw new Exception("test error");
             return new { name = "shiqr", Email = "shiqr@zhogan.com.cn" };
         }
 

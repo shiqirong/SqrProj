@@ -11,6 +11,7 @@ using Sqr.Common.Paging;
 using Sqr.Dapper.Linq.Common;
 using Sqr.DC.Dtos.Account;
 using Sqr.DC.Entities;
+using System;
 using System.Threading.Tasks;
 
 namespace Sqr.DC.Repositories
@@ -18,15 +19,15 @@ namespace Sqr.DC.Repositories
     /// <summary>
     /// actioninfo Respository
     /// </summary>   
-    public partial class ActioninfoRepository :BaseRepository<ActioninfoRepository,  Actioninfo>
+    public partial class ActioninfoRepository :BaseRepository<ActioninfoRepository, ActionInfo>
     {
-        public async Task<PagingOutput<Actioninfo>> GetActionPaged(GetActionPagedInput input)
+        public async Task<PagingOutput<ActionInfo>> GetActionPaged(GetActionPagedInput input)
         {
-            var output= await QueryPagedAsync<Actioninfo>(c =>
-            WhereIf< Actioninfo>(string.IsNullOrWhiteSpace(input.Action),wi=>wi.Action == input.Action)
-            && WhereIf< Actioninfo>(string.IsNullOrWhiteSpace(input.Controller), wi => wi.Controller == input.Controller)
-            && WhereIf<Actioninfo>(string.IsNullOrWhiteSpace(input.Category), wi => wi.Category == input.Category)
-            && WhereIf<Actioninfo>(string.IsNullOrWhiteSpace(input.Name), wi => wi.Category.Contains(input.Name)),
+            var output= await  QueryPagedAsync<ActionInfo>(c =>
+            WhereIf<ActionInfo>(!string.IsNullOrWhiteSpace(input.Action),()=>c.Action == input.Action)
+            && WhereIf<ActionInfo>(!string.IsNullOrWhiteSpace(input.Controller), () => c.Controller == input.Controller)
+            && WhereIf<ActionInfo>(!string.IsNullOrWhiteSpace(input.Category), () => c.Category == input.Category)
+            && WhereIf<ActionInfo>(!string.IsNullOrWhiteSpace(input.Name), () => c.Category.Contains(input.Name)),
             
             new PagedQueryParams()
             {
@@ -34,7 +35,7 @@ namespace Sqr.DC.Repositories
                 PageSize = input.PageSize
             });
 
-            return new PagingOutput<Actioninfo>()
+            return new PagingOutput<ActionInfo>()
             {
                 Total = output.Total,
                 PageIndex = input.PageIndex,
@@ -43,6 +44,22 @@ namespace Sqr.DC.Repositories
             };
 
         }
+
+        public async Task<int> Update(ActionInfo input)
+        {
+            return Update(c => new
+            {
+                input.Action,
+                input.Category,
+                input.Controller,
+                input.Name,
+                input.Parameters,
+                input.Parentid,
+                input.UpdateTime,
+                input.UpdateUser,
+            }, c => c.Id == input.Id);
+        }
+
 
     }
 }

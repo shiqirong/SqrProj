@@ -29,7 +29,7 @@ namespace Sqr.DC.Repositories
 
     
 
-        protected bool WhereIf<T>(bool condition, Expression<Func<T, bool>> where)
+        protected bool WhereIf<T>(bool condition, Expression<Func<bool>> where)
         {
             return true;
 
@@ -118,6 +118,16 @@ namespace Sqr.DC.Repositories
         public int Delete(Expression<Func<TEntity, bool>> whereExp)
         {
             return Delete<TEntity>(whereExp);
+        }
+
+        public async Task<int> Delete<TEntity>(TEntity mo) where TEntity : BaseMo
+        {
+            return await UpdateAsync<TEntity>(c => new { IsDeleted=1,mo.DeleteUser,DeleteTime=DateTime.Now},c=>c.Id==mo.Id);
+        }
+
+        public async Task<int> Remove<TEntity>(long id) where TEntity : BaseMo
+        {
+            return await DeleteAsync(c => c.Id == id);
         }
 
         public async Task<int> DeleteAsync(Expression<Func<TEntity, bool>> whereExp)

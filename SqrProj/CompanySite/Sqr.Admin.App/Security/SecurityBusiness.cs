@@ -14,7 +14,7 @@ namespace Sqr.Admin.App.Security
     {
         public async Task<List<GetMenuListOutput>> GetMenuList(long accountId, string systemId)
         {
-            return await new SecurityApi().GetMenuList(accountId, systemId);
+            return await SecurityApi.Instance.GetMenuList(accountId, systemId);
         }
 
         public async Task<List<MenuTree>> GetAllMenuTree()

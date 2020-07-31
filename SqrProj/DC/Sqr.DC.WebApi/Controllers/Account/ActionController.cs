@@ -12,9 +12,35 @@ namespace Sqr.DC.WebApi.Controllers.Account
     [ApiController]
     public class ActionController : ControllerBase
     {
-        public async Task<PagingOutput<Actioninfo>> GetActionPaged(GetActionPagedInput input)
+        [HttpGet]
+        public async Task<PagingOutput<ActionInfo>> GetActionPaged([FromQuery]GetActionPagedInput input)
         {
             return await ActionService.Instance.GetActionPaged(input);
         }
+
+        [HttpGet]
+        public async Task<ActionInfo> Get(long id)
+        {
+            return await ActionService.Instance.Get(id);
+        }
+
+        [HttpPost]
+        public async Task<bool> AddAction(ActionInfo input)
+        {
+            return await ActionService.Instance.AddAction(input);
+        }
+
+        [HttpPost]
+        public async Task<bool> Update(ActionInfo input)
+        {
+            return await ActionService.Instance.Update(input);
+        }
+
+        [HttpPost]
+        public async Task<bool> Delete(ActionInfo input)
+        {
+            return await ActionService.Instance.Delete(input);
+        }
+        
     }
 }

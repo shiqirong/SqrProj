@@ -116,6 +116,7 @@
         <!-- 左侧菜单 -->
         <div class="layui-left-nav scrollBox">
             <div id="side-nav">
+                @await Component.InvokeAsync("SideMenuComponent")
                 <!-- meun_id=0；UI组件 -->
                 <ul id="nav" class="layui-tab-item layui-show">
                     <li class="open">

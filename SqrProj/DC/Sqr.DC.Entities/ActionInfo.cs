@@ -14,7 +14,7 @@ namespace Sqr.DC.Entities
     /// <summary>
     /// Actioninfo Entity Model
     /// </summary>    
-    public class Actioninfo:BaseMo
+    public class ActionInfo:BaseMo
     {
       
 			/// <summary>
