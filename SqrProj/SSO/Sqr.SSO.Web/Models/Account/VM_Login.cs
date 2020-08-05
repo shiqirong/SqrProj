@@ -21,6 +21,6 @@ namespace Sqr.SSO.Web.Models.Account
         [Required(AllowEmptyStrings=false, ErrorMessage="请输入验证码")]
         public string ValidCode { get; set; }
 
-        public string ReturnUrl { get; internal set; }
+        public string ReturnUrl { get;  set; }
     }
 }

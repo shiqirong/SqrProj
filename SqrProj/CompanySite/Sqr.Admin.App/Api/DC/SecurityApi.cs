@@ -2,10 +2,8 @@
 using Sqr.Common.Paging;
 using Sqr.Common.Utils;
 using Sqr.DC.Dtos.Account;
-using System;
+using Sqr.DC.Dtos.Security;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sqr.Admin.App.Api.DC
@@ -23,9 +21,9 @@ namespace Sqr.Admin.App.Api.DC
             return await Get<PagingOutput<ActionInfo>>(ApiUrl + "Api/Action/GetActionPaged", input);
         }
 
-        public async Task<List<GetMenuListOutput>> DeleteAction(long id)
+        public async Task<bool> DeleteAction(long id)
         {
-            return await Get<List<GetMenuListOutput>>(ApiUrl + "Api/Action/Delete?id={id}", null);
+            return await Post<bool>(ApiUrl + $"Api/Action/Delete?id={id}", null);
         }
 
         public async Task<ActionInfo> GetActionInfo(long id)
@@ -35,12 +33,18 @@ namespace Sqr.Admin.App.Api.DC
 
         public async Task<long> AddAction(ActionInfo model)
         {
-            return await Post<long>(ApiUrl + $"Api/Action/Update", model);
+            return await Post<long>(ApiUrl + $"Api/Action/Add", model);
         }
 
         public async Task<bool> UpdateActionInfo(ActionInfo model)
         {
-            return await Post<bool>(ApiUrl + $"Api/Action/UpdateActionInfo", model);
+            return await Post<bool>(ApiUrl + $"Api/Action/Update", model);
+        }
+
+        public async Task<List<SsoSites>> GetSSOSites()
+        {
+            return await Get<List<SsoSites>>(ApiUrl + $"Api/Account/GetSSOSites",null);
+
         }
         #endregion
 

@@ -127,10 +127,10 @@ namespace Sqr.DC.Repositories
 
         public async Task<int> Remove<TEntity>(long id) where TEntity : BaseMo
         {
-            return await DeleteAsync(c => c.Id == id);
+            return await RemoveAsync(c => c.Id == id);
         }
 
-        public async Task<int> DeleteAsync(Expression<Func<TEntity, bool>> whereExp)
+        public async Task<int> RemoveAsync(Expression<Func<TEntity, bool>> whereExp)
         {
             return await DeleteAsync<TEntity>(whereExp);
         }

@@ -24,7 +24,8 @@ namespace Sqr.DC.Repositories
         public async Task<PagingOutput<ActionInfo>> GetActionPaged(GetActionPagedInput input)
         {
             var output= await  QueryPagedAsync<ActionInfo>(c =>
-            WhereIf<ActionInfo>(!string.IsNullOrWhiteSpace(input.Action),()=>c.Action == input.Action)
+            c.IsDeleted==0
+            && WhereIf<ActionInfo>(!string.IsNullOrWhiteSpace(input.Action),()=>c.Action == input.Action)
             && WhereIf<ActionInfo>(!string.IsNullOrWhiteSpace(input.Controller), () => c.Controller == input.Controller)
             && WhereIf<ActionInfo>(!string.IsNullOrWhiteSpace(input.Category), () => c.Category == input.Category)
             && WhereIf<ActionInfo>(!string.IsNullOrWhiteSpace(input.Name), () => c.Category.Contains(input.Name)),
@@ -54,9 +55,11 @@ namespace Sqr.DC.Repositories
                 input.Controller,
                 input.Name,
                 input.Parameters,
-                input.Parentid,
-                input.UpdateTime,
+                input.ParentId,
+                UpdateTime=DateTime.Now,
                 input.UpdateUser,
+                input.SystemId,
+                input.SystemName
             }, c => c.Id == input.Id);
         }
 

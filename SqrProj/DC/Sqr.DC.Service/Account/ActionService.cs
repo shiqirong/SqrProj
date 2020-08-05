@@ -19,10 +19,13 @@ namespace Sqr.DC.Services.Account
                 
         }
 
-        public async Task<bool> AddAction(ActionInfo input)
+        public async Task<bool> Add(ActionInfo input)
         {
             if (input.Id == 0)
                 input.Id = NumUtil.SnowNum();
+            var siteInfo=await SsoSitesRepository.Instance.GetByIdSingleAsync(input.SystemId);
+            input.SystemName = siteInfo.Sitename;
+            input.CreateTime = DateTime.Now;
             return await ActioninfoRepository.Instance.InsertAsync(input)>0;
             
         }
@@ -33,12 +36,14 @@ namespace Sqr.DC.Services.Account
         }
 
         public async Task<bool> Update(ActionInfo input){
+            var siteInfo = await SsoSitesRepository.Instance.GetByIdSingleAsync(input.SystemId);
+            input.SystemName = siteInfo.Sitename;
             return await ActioninfoRepository.Instance.Update(input) > 0;
         }
 
-        public async Task<bool> Delete(ActionInfo input)
+        public async Task<bool> Delete(long id)
         {
-            return await ActioninfoRepository.Instance.Delete(input)>0;
+            return await ActioninfoRepository.Instance.DeleteIncludeSub( new ActionInfo() { Id=id})>0;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Sqr.SSO.Web.API.DC
     {
         string _baseUrl = string.Empty;
         private DcAPI() {
-            var config = ConfigUtil.GetSection("DcApiConfig");
+            var config = ConfigUtil.GetSection("DCConfig");
             _baseUrl = config.GetSection("BaseUrl").Value;
         }
 
@@ -30,22 +30,22 @@ namespace Sqr.SSO.Web.API.DC
 
         internal async Task<ResultMo<CheckIsLoginOutput>> CheckIsLogin(string accessCode)
         {
-            return await Post<CheckIsLoginOutput>($"{_baseUrl}Account/CheckIsLogin", new CheckIsLoginInput { AccessCode=accessCode });
+            return await Post<CheckIsLoginOutput>($"{_baseUrl}api/Account/CheckIsLogin", new CheckIsLoginInput { AccessCode=accessCode });
         }
 
         internal async Task<ResultMo<LoginOutput>> Login(LoginInput input)
         {
-            return await Post<LoginOutput>($"{_baseUrl}Account/LogIn", input);
+            return await Post<LoginOutput>($"{_baseUrl}api/Account/LogIn", input);
         }
 
         internal async Task<ResultMo<GetOrCreateAccessCode>> GetOrCreateAccessCode(string LoginId)
         {
-            return await Get<GetOrCreateAccessCode>($"{_baseUrl}Account/GetOrCreateAccessCode?LoginId={LoginId}");
+            return await Get<GetOrCreateAccessCode>($"{_baseUrl}api/Account/GetOrCreateAccessCode?LoginId={LoginId}");
         }
 
         internal async Task<ResultMo<IList<M_SSOSite>>> GetSSOSites()
         {
-            return await Get<IList<M_SSOSite>>($"{_baseUrl}Account/GetSSOSites");
+            return await Get<IList<M_SSOSite>>($"{_baseUrl}api/Account/GetSSOSites");
         }
     }
 }

@@ -15,8 +15,10 @@ namespace Sqr.SSO.LoginHelper
     {
 
         [HttpGet]
-        public async Task<IActionResult> SsoLogin(string accessCode)
+        public async Task<IActionResult> SsoLogin(string accessCode,string returnUrl)
         {
+            if(string.IsNullOrWhiteSpace(accessCode))
+                return Redirect($"SSO/account/login?returnUrl={returnUrl}");
             //如果用户已经登录，直接跳转到登录成功页面
             var checkResult=await DcAPI.Instance.CheckIsLogin(accessCode);
             if (!checkResult.IsSuccess)
@@ -31,11 +33,11 @@ namespace Sqr.SSO.LoginHelper
                 ClaimsPrincipal principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(principal);
 
-                return new EmptyResult();
+                return Redirect(returnUrl);
             }
             else
             {
-                return new JsonResult(new ResultMo(ResultCode.NotLogin, "您还未登录。"));
+                return Redirect($"SSO/account/login?returnUrl={returnUrl}");
             }
 
         }
@@ -43,7 +45,7 @@ namespace Sqr.SSO.LoginHelper
         public IActionResult Login(string returnUrl)
         {
             var ssoLoginUrl=Sqr.Common.Utils.ConfigUtil.GetSection("SsoConfig").GetSection("LoginUrl").Value;
-            return Redirect($"{ssoLoginUrl}?returnUrl={Common.Web.RequestHelper.GetAbsoluteUri(HttpContext.Request,returnUrl)}");
+            return Redirect($"{ssoLoginUrl}?returnUrl={System.Web.HttpUtility.UrlEncode(Common.Web.RequestHelper.GetAbsoluteUri(HttpContext.Request, $"/SSO/Account/SSOLogin?returnUrl={System.Web.HttpUtility.UrlEncode(returnUrl)}"))}");
         }
     }
 }

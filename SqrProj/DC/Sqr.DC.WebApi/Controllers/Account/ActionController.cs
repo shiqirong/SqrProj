@@ -25,9 +25,9 @@ namespace Sqr.DC.WebApi.Controllers.Account
         }
 
         [HttpPost]
-        public async Task<bool> AddAction(ActionInfo input)
+        public async Task<bool> Add(ActionInfo input)
         {
-            return await ActionService.Instance.AddAction(input);
+            return await ActionService.Instance.Add(input);
         }
 
         [HttpPost]
@@ -37,9 +37,9 @@ namespace Sqr.DC.WebApi.Controllers.Account
         }
 
         [HttpPost]
-        public async Task<bool> Delete(ActionInfo input)
+        public async Task<bool> Delete(long id)
         {
-            return await ActionService.Instance.Delete(input);
+            return await ActionService.Instance.Delete(id);
         }
         
     }

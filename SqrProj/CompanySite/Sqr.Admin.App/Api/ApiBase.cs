@@ -39,7 +39,13 @@ namespace Sqr.Admin.App.Api
                 var response = await client.PostAsync(url, new StringContent(data.ToJson(),Encoding.UTF8,"application/json"));
                 if (response.IsSuccessStatusCode)
                 {
-                    return (await response.Content.ReadAsStringAsync()).ToObject<ResponseModel<T>>().Data;
+                    var resultMo=(await response.Content.ReadAsStringAsync()).ToObject<ResponseModel<T>>();
+                    if (resultMo.StatusCode != 0)
+                    {
+                        LoggerManager.CurrentLogger().Warn($"调用接口返回失败(get)。{(new { url, input = data, output = response }).ToJson()}");
+                        return default(T);
+                    }
+                    return resultMo.Data;
                 }
                 LoggerManager.CurrentLogger().Warn($"调用接口返回失败(post)。{(new { url, input = data, output = response }).ToJson()}");
                 return default(T);
@@ -68,7 +74,13 @@ namespace Sqr.Admin.App.Api
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
-                    return result.ToObject<ResponseModel<T>>().Data;
+                    var resultMo= result.ToObject<ResponseModel<T>>();
+                    if (resultMo.StatusCode != 0)
+                    {
+                        LoggerManager.CurrentLogger().Warn($"调用接口返回失败(get)。{(new { url, input = data, output = response }).ToJson()}");
+                        return default(T);
+                    }
+                    return resultMo.Data;
                 }
                 LoggerManager.CurrentLogger().Warn($"调用接口返回失败(get)。{(new { url, input = data, output = response }).ToJson()}");
                 return default(T);

@@ -39,6 +39,7 @@ namespace Sqr.Dapper.Linq
                     _valueNames += $",{Linq2SqlHelper._paramPrix}{p.Name}";
                     _paramsList.Add(new KeyValuePair<string, object>(p.Name, p.GetValue(entity)));
                 }
+                i++;
             }
             return this;
         }

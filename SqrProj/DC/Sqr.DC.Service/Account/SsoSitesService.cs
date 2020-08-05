@@ -20,10 +20,9 @@ namespace Sqr.DC.Services
     /// </summary>   
     public partial class SsoSitesService : ServiceBase<SsoSitesService>
     {
-        public async Task<ResultMo<IList<SsoSites>>> GetSSOSites()
+        public async Task<IList<SsoSites>> GetSSOSites()
         {
-            var list= await new SsoSitesRepository().GetAllAsync();
-            return new ResultMo<IList<SsoSites>>(list);
+            return await new SsoSitesRepository().GetAllAsync();
         }
 
     }

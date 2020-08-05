@@ -8,7 +8,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using Sqr.DC.Entities;
-
+using System;
+using System.Threading.Tasks;
 
 namespace Sqr.DC.Repositories
 {
@@ -17,6 +18,10 @@ namespace Sqr.DC.Repositories
     /// </summary>   
     public partial class ActioninfoRepository :BaseRepository<ActioninfoRepository,  ActionInfo>
     {
+        public async Task<int> DeleteIncludeSub(ActionInfo input)
+        {
+            return await UpdateAsync<ActionInfo>(c=>new { IsDeleted=1,DeleteTime=DateTime.Now,DeleteUser=input.DeleteUser }, c => c.Id == input.Id || c.ParentId == input.Id);
+        }
 		
 	}
 }

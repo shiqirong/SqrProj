@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sqr.Admin.App.Api.DC.Dtos
+namespace Sqr.DC.Dtos.Security
 {
     public class ActionInfo
     {
@@ -19,49 +19,63 @@ namespace Sqr.Admin.App.Api.DC.Dtos
         /// 删除时间
         /// </summary>
         public DateTime? DeleteTime { get; set; }
-
         /// <summary>
-        /// 创建时间
+        /// 删除者
         /// </summary>
-        public DateTime CreateTime { get; set; }
-
+        public int DeleteUser { get; set; }
         /// <summary>
         /// 更新时间
         /// </summary>
         public DateTime? UpdateTime { get; set; }
         /// <summary>
-        /// 名称
-        /// </summary>
-        public string Name { get; set; }
-
-
         /// <summary>
-        /// Controller
+        /// 更新者
         /// </summary>
-        public string Controller { get; set; }
-
-
+        public int UpdateUser { get; set; }
+        /// 创建时间
+        /// </summary>
+        public DateTime CreateTime { get; set; }
         /// <summary>
-        /// Action
+        /// 创建者
+        /// </summary>
+        public int CreateUser { get; set; }
+        /// <summary>
+        /// 
         /// </summary>
         public string Action { get; set; }
 
 
         /// <summary>
-        /// 地址参数
+        /// 
+        /// </summary>
+        public string Category { get; set; }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Controller { get; set; }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Name { get; set; }
+
+
+        /// <summary>
+        /// 
         /// </summary>
         public string Parameters { get; set; }
 
 
         /// <summary>
-        /// 类型（1：分类，2：菜单，3：动作）
+        /// 
         /// </summary>
-        public short Category { get; set; }
+        public int ParentId { get; set; }
 
+        public long SystemId { get; set; }
 
-        /// <summary>
-        /// 邮箱地址
-        /// </summary>
-        public long ParentId { get; set; }
+        public string SystemName { get; set; }
     }
 }

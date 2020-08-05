@@ -298,7 +298,7 @@ namespace Sqr.Dapper.Linq
         }
         public static string DealMemberExpression(MemberExpression exp,IList<KeyValuePair<string,object>> paramsList, CommandType commandType = CommandType.SELECT)
         {
-            if (exp.Expression.NodeType == ExpressionType.Parameter)
+            if (exp.Expression?.NodeType == ExpressionType.Parameter)
                 return $" {exp.ToString()} ";
             else
             {

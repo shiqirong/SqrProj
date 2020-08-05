@@ -64,7 +64,7 @@ namespace Sqr.Common
 
     public sealed class ResultCode
     {
-        public const int Success = 10000;
+        public const int Success = 0;
         public const int Error = 11000;
         public const int IntenetEror = 11001;
         public const int RequestEror = 11002;

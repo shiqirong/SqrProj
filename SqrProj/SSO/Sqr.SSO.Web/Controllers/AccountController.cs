@@ -75,13 +75,17 @@ namespace Sqr.SSO.Web.Controllers
                 userId = long.Parse(User.Claims.First(c => ClaimTypes.Sid.Equals(c.Type, StringComparison.CurrentCultureIgnoreCase)).Value);
             var ssoSites = await DcAPI.Instance.GetSSOSites();
             var retAccessCode = await DcAPI.Instance.GetOrCreateAccessCode(userId);
-
-            return View("LoginSuccess", new VM_LoginSuccess()
-            {
-                AuthCode = retAccessCode.NotNullData().AccessCode,
-                SSOSites = ssoSites.NotNullData(),
-                ReturnUrl=string.IsNullOrWhiteSpace(returnUrl)? $"{Request.Scheme}://{Request.Host}" :returnUrl
-            });
+            if (returnUrl.Contains("?"))
+                returnUrl = returnUrl + "&AccessCode=" + retAccessCode.NotNullData().AccessCode;
+            else
+                returnUrl = returnUrl + "?AccessCode=" + retAccessCode.NotNullData().AccessCode;
+            return Redirect(returnUrl);
+            //return View("LoginSuccess", new VM_LoginSuccess()
+            //{
+            //    AuthCode = retAccessCode.NotNullData().AccessCode,
+            //    SSOSites = ssoSites.NotNullData(),
+            //    ReturnUrl=string.IsNullOrWhiteSpace(returnUrl)? $"{Request.Scheme}://{Request.Host}" :returnUrl
+            //});
         }
         /// <summary>
         /// 登录验证码

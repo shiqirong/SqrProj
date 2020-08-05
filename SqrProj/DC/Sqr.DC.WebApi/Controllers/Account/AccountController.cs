@@ -38,10 +38,10 @@ namespace Sqr.DC.WebApi.Controllers.Account
         }
 
         [HttpPost]
-        public async Task<ResultMo<LoginOutput>> Login(LoginInput input)
+        public async Task<LoginOutput> Login(LoginInput input)
         {
             if (!ModelState.IsValid)
-                return new ResultMo<LoginOutput>(ResultCode.ParamsIncrect,string.Join('\n',ModelState.Select(c=>c.Value)));
+                throw new ArgumentException(string.Join('\n',ModelState.Select(c=>c.Value)));
             return await _accountService.Login(input);
         }
 
@@ -51,7 +51,7 @@ namespace Sqr.DC.WebApi.Controllers.Account
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResultMo<dynamic>> GetOrCreateAccessCode(long userId)
+        public async Task<dynamic> GetOrCreateAccessCode(long userId)
         {
             return await _accountService.GetOrCreateAccessCode(userId);
         }
@@ -61,7 +61,7 @@ namespace Sqr.DC.WebApi.Controllers.Account
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResultMo<IList<SsoSites>>> GetSSOSites()
+        public async Task<IList<SsoSites>> GetSSOSites()
         {
             return await new SsoSitesService().GetSSOSites();
         }
@@ -72,7 +72,7 @@ namespace Sqr.DC.WebApi.Controllers.Account
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ResultMo<CheckIsLoginOutput>> CheckIsLogin(CheckIsLoginInput input)
+        public async Task<CheckIsLoginOutput> CheckIsLogin(CheckIsLoginInput input)
         {
             return await _accountService.CheckIsLogin(input);
         }

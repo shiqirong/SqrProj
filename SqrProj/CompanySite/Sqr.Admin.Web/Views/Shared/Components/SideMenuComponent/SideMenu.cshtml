@@ -1,26 +1,26 @@
-﻿@model System.Collections.Generic.List<Sqr.Admin.App.Api.DC.Dtos.ActionInfo>
+﻿@model System.Collections.Generic.List<Sqr.DC.Dtos.Security.ActionInfo>
 @using Microsoft.AspNetCore.Html
 
 @functions{
-    public static IHtmlContent RendChild(System.Collections.Generic.List<Sqr.Admin.App.Api.DC.Dtos.ActionInfo> actionList, Sqr.Admin.App.Api.DC.Dtos.ActionInfo pAction)
+    public static IHtmlContent RendChild(System.Collections.Generic.List<Sqr.DC.Dtos.Security.ActionInfo> actionList, Sqr.DC.Dtos.Security.ActionInfo pAction)
     {
         var outputHtml = string.Empty;
         var childAction = actionList.Where(c => c.ParentId == pAction.Id).ToList();
         if (childAction != null && childAction.Any())
         {
             outputHtml += $"<li>";
-            outputHtml += $"<a> <i class=\"fa fa-pencil-square-o fa-fw\"></i><cite>表单</cite><i class=\"fa fa-angle-down fa-fw nav_right\"></i></a>";
-            outputHtml += "</li>";
+            outputHtml += $"<a> <i class=\"fa fa-pencil-square-o fa-fw\"></i><cite>{pAction.Name}</cite><i class=\"fa fa-angle-down fa-fw nav_right\"></i></a>";
             outputHtml += "<ul class=\"sub-menu\">";
             foreach (var child in childAction)
             {
                 outputHtml += RendChild(actionList, child);
             }
             outputHtml += "</ul>";
+            outputHtml += "</li>";
         }
         else
         {
-            outputHtml += $"<li class=\"sub-tab\" hg-title=\"{pAction.Name}\" hg-nav=\"component/form/element.html\">";
+            outputHtml += $"<li class=\"sub-tab\" hg-title=\"{pAction.Name}\" hg-nav=\"{pAction.Controller}/{pAction.Action}?{pAction.Parameters}\">";
             outputHtml += $"<a><i class=\"fa fa-file-text fa-fw\"></i><cite>{pAction.Name}</cite></a>";
             outputHtml += "</li>";
         }
@@ -28,12 +28,118 @@
     }
 }
 @if (Model != null && Model.Any())
-{
-    var topMenu = Model.Where(c => c.ParentId == 0).ToList();
-    <ul id="nav" class="layui-tab-item layui-show">
-        @foreach(var m in topMenu)
-        {
-            @RendChild(Model, m)
-        }
-    </ul>
+    {
+        var topMenu = Model.Where(c => c.ParentId == 0).ToList();
+<ul id = "nav" class="layui-tab-item layui-show">
+    @foreach (var m in topMenu)
+    {
+        @RendChild(Model, m)
+    }
+
+    <li class="open">
+        <a class="border active">
+            <i class="fa fa-cog fa-fw"></i><cite>组件</cite><i class="fa fa-angle-up fa-fw nav_right"></i>
+        </a>
+        <ul class="sub-menu" style="display: block;">
+            <li class="sub-tab" hg-title="按钮" hg-nav="component/button/index.html">
+                <a><i class="fa fa-tag fa-fw"></i><cite>按钮</cite></a>
+            </li>
+            <li>
+                <a>
+                    <i class="fa fa-pencil-square-o fa-fw"></i><cite>表单</cite><i class="fa fa-angle-down fa-fw nav_right"></i>
+                </a>
+                <ul class="sub-menu">
+                    <li class="sub-tab" hg-title="表单元素" hg-nav="component/form/element.html">
+                        <a><i class="fa fa-file-text fa-fw"></i><cite>表单元素</cite></a>
+                    </li>
+                    <li class="sub-tab" hg-title="表单组合" hg-nav="component/form/group.html">
+                        <a><i class="fa fa-file-text fa-fw"></i><cite>表单组合</cite></a>
+                    </li>
+                </ul>
+            </li>
+            <li class="sub-tab" hg-title="面板" hg-nav="component/panel/index.html">
+                <a><i class="fa fa-clone fa-fw"></i><cite>面板</cite></a>
+            </li>
+            <li class="sub-tab" hg-title="导航" hg-nav="component/nav/index.html">
+                <a><i class="fa fa-flag fa-fw"></i><cite>导航</cite></a>
+            </li>
+            <li class="sub-tab" hg-title="选项卡" hg-nav="component/tabs/index.html">
+                <a><i class="fa fa-exchange fa-fw"></i><cite>选项卡</cite></a>
+            </li>
+            <li class="sub-tab" hg-title="徽章" hg-nav="component/badge/index.html">
+                <a><i class="fa fa-bookmark fa-fw"></i><cite>徽章</cite></a>
+            </li>
+            <li class="sub-tab" hg-title="时间线" hg-nav="component/timeline/index.html">
+                <a><i class="fa fa-clock-o fa-fw"></i><cite>时间线</cite></a>
+            </li>
+            <li class="sub-tab" hg-title="辅助" hg-nav="component/auxiliar/index.html">
+                <a><i class="fa fa-sliders fa-fw"></i><cite>辅助</cite></a>
+            </li>
+            <li>
+                <a>
+                    <i class="fa fa-cloud-upload fa-fw"></i><cite>上传</cite><i class="fa fa-angle-down fa-fw nav_right"></i>
+                </a>
+                <ul class="sub-menu">
+                    <li class="sub-tab" hg-title="上传演示一" hg-nav="component/upload/demo1.html">
+                        <a><i class="fa fa-folder-open fa-fw"></i><cite>上传演示一</cite></a>
+                    </li>
+                    <li class="sub-tab" hg-title="上传演示二" hg-nav="component/upload/demo2.html">
+                        <a><i class="fa fa-folder-open fa-fw"></i><cite>上传演示二</cite></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a>
+            <i class="fa fa-font fa-fw"></i><cite>字体图标</cite><i class="fa fa-angle-down fa-fw nav_right"></i>
+        </a>
+        <ul class="sub-menu">
+            <li class="sub-tab" hg-title="字体图标" hg-nav="fonts/icon.html">
+                <a><i class="fa fa-anchor fa-fw"></i><cite>字体图标</cite></a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a>
+            <i class="fa fa-gavel fa-fw"></i><cite>layui第三方组件</cite><i class="fa fa-angle-down fa-fw nav_right"></i>
+        </a>
+        <ul class="sub-menu">
+            <li class="sub-tab" hg-title="富文本编辑器" hg-nav="https://fly.layui.com/extend/tinymce/">
+                <a><i class="fa fa-file-code-o fa-fw"></i><cite>富文本编辑器</cite></a>
+            </li>
+            <li class="sub-tab" hg-title="下拉多选" hg-nav="https://fly.layui.com/extend/xmSelect/">
+                <a><i class="fa fa-check-square fa-fw"></i><cite>xmSelect下拉多选</cite></a>
+            </li>
+            <li class="sub-tab" hg-title="多选框" hg-nav="https://fly.layui.com/extend/formSelects/">
+                <a><i class="fa fa-list-alt fa-fw"></i><cite>formSelects 4.x 多选框</cite></a>
+            </li>
+            <li class="sub-tab" hg-title="树形表格" hg-nav="https://fly.layui.com/extend/treeTable/">
+                <a><i class="fa fa-table fa-fw"></i><cite>treeTable 树形表格</cite></a>
+            </li>
+            <li class="sub-tab" hg-title="下拉表格" hg-nav="https://fly.layui.com/extend/tableSelect/">
+                <a><i class="fa fa-th-list fa-fw"></i><cite>下拉表格选择器</cite></a>
+            </li>
+            <li class="sub-tab" hg-title="图片截取上传" hg-nav="https://fly.layui.com/extend/croppers/">
+                <a><i class="fa fa-picture-o fa-fw"></i><cite>cropper 图片截取上传</cite></a>
+            </li>
+            <li class="sub-tab" hg-title="通知控件" hg-nav="https://fly.layui.com/extend/notice/">
+                <a><i class="fa fa-volume-up fa-fw"></i><cite>notice 通知控件</cite></a>
+            </li>
+            <li class="sub-tab" hg-title="分步表单" hg-nav="https://fly.layui.com/extend/step-lay/">
+                <a><i class="fa fa-calendar-o fa-fw"></i><cite>step-lay 分步表单</cite></a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a>
+            <i class="fa fa-paper-plane fa-fw"></i><cite>帮助</cite><i class="fa fa-angle-down fa-fw nav_right"></i>
+        </a>
+        <ul class="sub-menu">
+            <li class="sub-tab" hg-title="使用文档" hg-nav="readme.html">
+                <a><i class="fa fa-question-circle fa-fw"></i><cite>HG使用文档</cite></a>
+            </li>
+        </ul>
+    </li>
+</ul>
 }
