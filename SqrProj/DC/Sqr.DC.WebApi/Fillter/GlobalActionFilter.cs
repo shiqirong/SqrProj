@@ -36,14 +36,18 @@ namespace Sqr.DC.WebApi.Fillter
         {
             if (context.Result is ObjectResult)
             {
+
                 var currentJsonResult = context.Result as ObjectResult;
-                context.Result = new JsonResult(new ResultMo<object>()
+                if (currentJsonResult.DeclaredType != typeof(ResultMo) && !currentJsonResult.DeclaredType.IsSubclassOf( typeof(ResultMo)))
                 {
-                    Code= ResultCode.Success,
-                    Data= currentJsonResult.Value
-                });
+                    context.Result = new JsonResult(new ResultMo<object>()
+                    {
+                        Code = ResultCode.Success,
+                        Data = currentJsonResult.Value
+                    });
+                }
             }
-            else if(context.Result is JsonResult)
+            else if (context.Result is JsonResult)
             {
                 var currentJsonResult = context.Result as JsonResult;
                 context.Result = new JsonResult(new ResultMo<object>()

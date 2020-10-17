@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Sqr.Common.Helper;
+using Sqr.Common.Utils;
+using Sqr.Common;
 
 namespace Sqr.Admin.App.Api
 {
@@ -28,9 +30,14 @@ namespace Sqr.Admin.App.Api
                 return _instance;
             }
         }
-        protected string ApiUrl { get; set; } = "http://localhost:8001/";
+        protected static string ApiUrl { get; set; } = "http://localhost:8001/";
 
-        public async virtual Task<T> Post<T>(string url, object data)
+        static void Init()
+        {
+            ApiUrl = ConfigUtil.GetSection("DCConfig").GetSection("BaseUrl").Value;
+        }
+
+        public async virtual Task<ResultMo<T>> Post<T>(string url, object data)
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
@@ -39,25 +46,20 @@ namespace Sqr.Admin.App.Api
                 var response = await client.PostAsync(url, new StringContent(data.ToJson(),Encoding.UTF8,"application/json"));
                 if (response.IsSuccessStatusCode)
                 {
-                    var resultMo=(await response.Content.ReadAsStringAsync()).ToObject<ResponseModel<T>>();
-                    if (resultMo.StatusCode != 0)
-                    {
-                        LoggerManager.CurrentLogger().Warn($"调用接口返回失败(get)。{(new { url, input = data, output = response }).ToJson()}");
-                        return default(T);
-                    }
-                    return resultMo.Data;
+                    var str = await response.Content.ReadAsStringAsync();
+                    return (str).ToObject<ResultMo<T>>();
                 }
-                LoggerManager.CurrentLogger().Warn($"调用接口返回失败(post)。{(new { url, input = data, output = response }).ToJson()}");
-                return default(T);
+                LoggerManager.CurrentLogger().Warn($"远程接口调用返回异常(post)。{(new { url, input = data, output = response }).ToJson()}");
+                return ResultMo<T>.Error("远程接口调用返回异常");
             }
             catch (Exception ex)
             {
-                LoggerManager.CurrentLogger().Error($"调用接口返回失败(post)。{(new { url, input = data, exception = ex }).ToJson()}");
-                return default(T);
+                LoggerManager.CurrentLogger().Error($"接口调用异常(post)。{(new { url, input = data, exception = ex }).ToJson()}");
+                return ResultMo<T>.Error("接口调用异常");
             }
         }
 
-        public async virtual Task<T> Get<T>(string url, object data)
+        public async virtual Task<ResultMo<T>> Get<T>(string url, object data)
         {
             if (data != null)
             {
@@ -74,21 +76,15 @@ namespace Sqr.Admin.App.Api
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
-                    var resultMo= result.ToObject<ResponseModel<T>>();
-                    if (resultMo.StatusCode != 0)
-                    {
-                        LoggerManager.CurrentLogger().Warn($"调用接口返回失败(get)。{(new { url, input = data, output = response }).ToJson()}");
-                        return default(T);
-                    }
-                    return resultMo.Data;
+                    return result.ToObject<ResultMo<T>>();
                 }
-                LoggerManager.CurrentLogger().Warn($"调用接口返回失败(get)。{(new { url, input = data, output = response }).ToJson()}");
-                return default(T);
+                LoggerManager.CurrentLogger().Warn($"远程接口调用返回异常(get)。{(new { url, input = data, output = response }).ToJson()}");
+                return ResultMo<T>.Error("远程接口调用返回异常");
             }
             catch (Exception ex)
             {
-                LoggerManager.CurrentLogger().Error($"调用接口返回失败(get)。{(new { url, input = data, exception = ex }).ToJson()}");
-                return default(T);
+                LoggerManager.CurrentLogger().Error($"接口调用异常(get)。{(new { url, input = data, exception = ex }).ToJson()}");
+                return ResultMo<T>.Error("接口调用异常");
             }
         }
 

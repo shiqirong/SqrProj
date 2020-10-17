@@ -12,8 +12,8 @@ namespace Sqr.DC.WebApi.Controllers.Account
     [ApiController]
     public class ActionController : ControllerBase
     {
-        [HttpGet]
-        public async Task<PagingOutput<ActionInfo>> GetActionPaged([FromQuery]GetActionPagedInput input)
+        [HttpPost]
+        public async Task<PagingOutput<ActionDto>> GetActionPaged(PagingInput<ActionDto> input)
         {
             return await ActionService.Instance.GetActionPaged(input);
         }

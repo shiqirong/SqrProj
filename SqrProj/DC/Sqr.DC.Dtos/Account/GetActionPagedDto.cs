@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sqr.Common.Paging;
+using System;
 using System.Collections.Generic;
 using System.Text;
 

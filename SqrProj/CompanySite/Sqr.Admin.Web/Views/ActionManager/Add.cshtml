@@ -80,13 +80,13 @@
             // 异步加载方式：get/post，默认get
             type: 'get',
             // 占位符
-            placeholder: '修改默认提示信息',
+            placeholder: '请选择父节点',
             // 是否开启搜索功能：true/false，默认false
             search: true,
             // 一些可定制的样式
             style: {
                 folder: {
-                    enable: true
+                    enable: false
                 },
                 line: {
                     enable: true
@@ -132,7 +132,7 @@
                 data: data.field,
                 dataType: 'JSON',
                 success: function (res) {
-                    if (res.code = '0') {
+                    if (res.code == 0) {
                         parent.closeAdd(res.msg);
                     }
                     else

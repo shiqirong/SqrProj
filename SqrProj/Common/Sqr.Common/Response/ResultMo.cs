@@ -11,11 +11,14 @@ namespace Sqr.Common
     {
         public ResultMo() { }
 
-        public ResultMo(int code =ResultCode.Success, string message=null)
+        public ResultMo(int code =ResultCode.Success, string message="",bool isError=false)
         {
             this.Code = code;
             this.Message = message;
+            this.IsError = isError;
         }
+
+        public bool IsError { get; set; }
 
         public int Code { get; set; }
 
@@ -25,6 +28,23 @@ namespace Sqr.Common
         public bool IsSuccess
         {
             get { return Code == ResultCode.Success; }
+        }
+
+        
+
+        public static ResultMo Success()
+        {
+            return new ResultMo();
+        }
+
+        public static ResultMo Fail(string message="操作失败",int code=ResultCode.Fail)
+        {
+            return new ResultMo(code,message);
+        }
+
+        public static ResultMo Error(string message="操作异常",int code = ResultCode.Error)
+        {
+            return new ResultMo(code, message);
         }
     }
 
@@ -40,6 +60,26 @@ namespace Sqr.Common
             Data = data;
         }
 
+        public static new ResultMo<T> Success(T data)
+        {
+            return new ResultMo<T>(data);
+        }
+
+        public static new ResultMo<T> Fail(string message = "操作失败", int code = ResultCode.Fail)
+        {
+            return new ResultMo<T>(code, message);
+        }
+
+        public static new ResultMo<T> Error(string message = "操作异常", int code = ResultCode.Error)
+        {
+            return new ResultMo<T>(code, message);
+        }
+
+        [JsonIgnore]
+        public bool IsHasData
+        {
+            get { return Code == ResultCode.Success && Data!=null; }
+        }
 
         public T Data { get; set; }
 
@@ -56,15 +96,13 @@ namespace Sqr.Common
             return Data;
         }
 
-        public static ResultMo<T> Error (string message,int code=ResultCode.Error)
-        {
-            return new ResultMo<T>(code, message);
-        }
+        
     }
 
     public sealed class ResultCode
     {
         public const int Success = 0;
+        public const int Fail = 10000;
         public const int Error = 11000;
         public const int IntenetEror = 11001;
         public const int RequestEror = 11002;
@@ -72,7 +110,8 @@ namespace Sqr.Common
         //参数检查
         public const int ParamsIncrect = 12000;
         public const int DataNotExists=13000;
-        public const int PasswordIncrect=130001;
+        public const int DataExists = 13001;
+        public const int PasswordIncrect=130002;
 
         public const int JsonTransferError = 140000;
 

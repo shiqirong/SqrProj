@@ -11,7 +11,13 @@ namespace Sqr.Dapper.Linq
 
         protected string _paged = string.Empty;
 
-        public string TotalSql { get; set; }
+        public string TotalSql {
+            get
+            {
+                return $"SELECT COUNT(1) FROM ({ _select + _from + _join + _where }) PageTab";;
+            }
+            protected set { }
+        }
 
         public bool IsPaged { get; set; }
 
@@ -31,8 +37,6 @@ namespace Sqr.Dapper.Linq
         {
             _paged = $" LIMIT {(pageIndex - 1) * pageSize},{pageSize}";
             IsPaged = true;
-
-            TotalSql = $"SELECT COUNT(1) FROM ({Sql}) PageTab";
 
             return this;
         }
@@ -83,8 +87,6 @@ namespace Sqr.Dapper.Linq
 
     public class SelectSqlFactory<T1, T2> : SelectSqlFactory
     {
-
-        List<string> _myTypes = null;
 
         public SelectSqlFactory<T1, T2> From<T>()
         {

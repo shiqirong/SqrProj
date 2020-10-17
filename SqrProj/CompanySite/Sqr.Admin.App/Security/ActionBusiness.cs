@@ -1,4 +1,5 @@
 ﻿using Sqr.Admin.App.Api.DC;
+using Sqr.Common;
 using Sqr.Common.Paging;
 using Sqr.DC.Dtos.Account;
 using Sqr.DC.Dtos.Security;
@@ -9,35 +10,38 @@ namespace Sqr.Admin.App.Security
 {
     public class ActionBusiness:BaseBusiness<ActionBusiness>
     {
-        public async Task<PagingOutput<ActionInfo>> MenuList()
+        public async Task<PagingOutput<ActionDto>> MenuList()
         {
-            return await SecurityApi.Instance.GetActionPaged(new GetActionPagedInput()
+            var result= await SecurityApi.Instance.GetActionPaged(new PagingInput<ActionDto>()
             {
-                SystemId = "1",
-                Category = "1",
-                PageIndex=1,
-                PageSize=int.MaxValue
+                InputData=new ActionDto()
+                {
+                    SystemId = 1,
+                    Category = "1",
+                },
+                Page=1,
+                Limit=int.MaxValue
             });
-           
+            return result.Data;
         }
         
 
-        public async Task<ActionInfo> GetActionInfo(long id)
+        public async Task<ResultMo<ActionInfo>> GetActionInfo(long id)
         {
             return await SecurityApi.Instance.GetActionInfo(id);
         }
 
-        public async Task< bool> Update(ActionInfo input)
+        public async Task<ResultMo<bool>> Update(ActionInfo input)
         {
             return await SecurityApi.Instance.UpdateActionInfo(input);
         }
 
-        public async Task<long> Add(ActionInfo input)
+        public async Task<ResultMo<long>> Add(ActionInfo input)
         {
             return await SecurityApi.Instance.AddAction(input);
         }
 
-        public async Task<bool> Delete(long id)
+        public async Task<ResultMo<bool>> Delete(long id)
         {
             return await SecurityApi.Instance.DeleteAction(id);
         }

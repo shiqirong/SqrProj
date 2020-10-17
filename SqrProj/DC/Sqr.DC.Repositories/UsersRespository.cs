@@ -7,7 +7,13 @@
 // * history : Created by T4 03/11/2019 21:19:09 
 // </copyright>
 //-----------------------------------------------------------------------
+using Sqr.Common.Helper;
+using Sqr.Common.Paging;
+using Sqr.Dapper.Linq.Common;
+using Sqr.DC.Dtos.Account;
 using Sqr.DC.Entities;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sqr.DC.Repositories
@@ -22,9 +28,52 @@ namespace Sqr.DC.Repositories
             return await GetSingleOrDefaultAsync(c => c.Account == account && c.IsDeleted == 0);
         }
 
-        public int UpdatePwd(Users entity)
+        public async Task<int> Update(UserDto input)
         {
-            return Update(c => new { c.Password }, w => w.Id == entity.Id);
+            return await UpdateAsync(c => new
+            {
+                input.Account,
+                input.Email,
+                input.Mobile,
+                input.Name,
+                input.UpdateTime,
+                input.UpdateUser,
+            }, c => c.Id == input.Id);
         }
-	}
+
+        public async Task<PagingOutput<UserDto>> GetUserPaged(GetUserPagedInput input)
+        {
+            var output = await QueryPagedAsync<Users>(c =>
+            c.IsDeleted == 0
+            && WhereIf<Users>(!string.IsNullOrWhiteSpace(input.Name), () => c.Name == input.Name)
+            && WhereIf<Users>(!string.IsNullOrWhiteSpace(input.Account), () => c.Account == input.Account)
+            && WhereIf<Users>(!string.IsNullOrWhiteSpace(input.Email), () => c.Email == input.Email)
+            && WhereIf<Users>(!string.IsNullOrWhiteSpace(input.Mobile), () => c.Mobile==input.Mobile),
+
+            new PagedQueryParams()
+            {
+                PageIndex = input.Page,
+                PageSize = input.Limit
+            });
+
+            return new PagingOutput<UserDto>()
+            {
+                Total = output.Total,
+                PageIndex = input.Page,
+                PageSize = input.Limit,
+                Rows = output.Data.MapTo<List<UserDto>>()
+            };
+
+        }
+
+        public async Task<int> ResetPwd(UserDto input)
+        {
+            return await UpdateAsync(c => new
+            {
+                input.Password,
+                input.UpdateTime,
+                input.UpdateUser,
+            }, c => c.Id == input.Id);
+        }
+    }
 }

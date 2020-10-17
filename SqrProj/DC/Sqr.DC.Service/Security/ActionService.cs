@@ -13,7 +13,7 @@ namespace Sqr.DC.Services.Account
 {
     public class ActionService:ServiceBase<ActionService>
     {
-        public async Task<PagingOutput<ActionInfo>> GetActionPaged(GetActionPagedInput input)
+        public async Task<PagingOutput<ActionDto>> GetActionPaged(PagingInput<ActionDto> input)
         {
             return await ActioninfoRepository.Instance.GetActionPaged(input);
                 

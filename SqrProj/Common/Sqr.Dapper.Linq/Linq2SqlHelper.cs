@@ -204,10 +204,10 @@ namespace Sqr.Dapper.Linq
                     var endWithP2 = DealExpress(exp.Arguments[0], paramsList, commandType);
                     return $"  {endWithP1} like {endWithP2.Insert(1,"%")}) ";
                 case "Contains":
-                    var containsP1 = DealExpress(exp.Object, paramsList, commandType);
-                    var paramName = $"{_paramPrix}p_{paramsList.Count + 1}";
-                    paramsList.Add(new KeyValuePair<string, object>(paramName, containsP1));
-                    return $" {DealExpress(exp.Arguments[0], paramsList, commandType)} in({paramName})  ";
+                    //var containsP1 = DealExpress(exp.Object, paramsList, commandType);
+                    //var paramName = $"{_paramPrix}p_{paramsList.Count + 1}";
+                    //paramsList.Add(new KeyValuePair<string, object>(paramName, containsP1));
+                    return $" { DealExpress(exp.Object, paramsList, commandType)} in({DealExpress(exp.Arguments[0], paramsList, commandType)})  ";
                 case "WhereIf":
                     var ifWhereArg1 = Convert.ToBoolean(Expression.Lambda(exp.Arguments[0], null).Compile().DynamicInvoke());
                     if (ifWhereArg1)

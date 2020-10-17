@@ -1,11 +1,10 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sqr.DC.Dtos.Account
+namespace Sqr.DC.Dtos
 {
-    public class UserDto
+    public class DbBaseMo
     {
         /// <summary>
         /// 主键
@@ -40,40 +39,5 @@ namespace Sqr.DC.Dtos.Account
         /// 创建者
         /// </summary>
         public int CreateUser { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Account { get; set; }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Email { get; set; }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Mobile { get; set; }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Name { get; set; }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [JsonIgnore]
-        public string Password { get; set; }
-
-        /// <summary>
-        /// 状态。1正常，2禁用
-        /// </summary>
-        public int Status { get; set; }
     }
 }

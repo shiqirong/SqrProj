@@ -7,11 +7,14 @@
 // * history : Created by T4 03/11/2019 21:19:09 
 // </copyright>
 //-----------------------------------------------------------------------
+using Sqr.Common.Helper;
 using Sqr.Common.Paging;
 using Sqr.Dapper.Linq.Common;
 using Sqr.DC.Dtos.Account;
 using Sqr.DC.Entities;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sqr.DC.Repositories
@@ -21,27 +24,27 @@ namespace Sqr.DC.Repositories
     /// </summary>   
     public partial class ActioninfoRepository :BaseRepository<ActioninfoRepository, ActionInfo>
     {
-        public async Task<PagingOutput<ActionInfo>> GetActionPaged(GetActionPagedInput input)
+        public async Task<PagingOutput<ActionDto>> GetActionPaged(PagingInput<ActionDto> input)
         {
             var output= await  QueryPagedAsync<ActionInfo>(c =>
             c.IsDeleted==0
-            && WhereIf<ActionInfo>(!string.IsNullOrWhiteSpace(input.Action),()=>c.Action == input.Action)
-            && WhereIf<ActionInfo>(!string.IsNullOrWhiteSpace(input.Controller), () => c.Controller == input.Controller)
-            && WhereIf<ActionInfo>(!string.IsNullOrWhiteSpace(input.Category), () => c.Category == input.Category)
-            && WhereIf<ActionInfo>(!string.IsNullOrWhiteSpace(input.Name), () => c.Category.Contains(input.Name)),
+            && WhereIf<ActionInfo>(!string.IsNullOrWhiteSpace(input.InputData.Action),()=>c.Action == input.InputData.Action)
+            && WhereIf<ActionInfo>(!string.IsNullOrWhiteSpace(input.InputData.Controller), () => c.Controller == input.InputData.Controller)
+            && WhereIf<ActionInfo>(!string.IsNullOrWhiteSpace(input.InputData.Category), () => c.Category == input.InputData.Category)
+            && WhereIf<ActionInfo>(!string.IsNullOrWhiteSpace(input.InputData.Name), () => c.Category.Contains(input.InputData.Name)),
             
             new PagedQueryParams()
             {
-                PageIndex = input.PageIndex,
-                PageSize = input.PageSize
+                PageIndex = input.Page,
+                PageSize = input.Limit
             });
 
-            return new PagingOutput<ActionInfo>()
+            return new PagingOutput<ActionDto>()
             {
                 Total = output.Total,
-                PageIndex = input.PageIndex,
-                PageSize = input.PageSize,
-                Rows = output.Data
+                PageIndex = input.Page,
+                PageSize = input.Limit,
+                Rows = output.Data.MapTo<IList<ActionDto>>()
             };
 
         }

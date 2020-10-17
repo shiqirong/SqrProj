@@ -14,13 +14,13 @@ namespace Sqr.DC.Entities
     /// <summary>
     /// Roles Entity Model
     /// </summary>    
-    public class Roles:BaseMo
+    public class Roles : BaseMo
     {
-      
-			/// <summary>
-			/// 
-			/// </summary>
-						public string Name { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Name { get; set; }
 
     }
 }

@@ -5,12 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Security\**" />
-    <EmbeddedResource Remove="Security\**" />
-    <None Remove="Security\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="AccountActionRelationBusiness.cs" />
     <Compile Remove="AccountActionRelationBusiness.Generated.cs" />
     <Compile Remove="AccountRolesRelationBusiness.cs" />

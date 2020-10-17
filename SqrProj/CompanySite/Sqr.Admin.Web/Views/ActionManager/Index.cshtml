@@ -3,19 +3,17 @@
     ViewData["Title"] = "Index";
 }
 
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button id="add" onclick="openAdd();" class="layui-btn layui-btn-sm"  lay-event="add"><i class="layui-icon">&#xe608;</i>添加</button>
+        <button id="btn-expand" onclick="openAllTreeNodes();" class="layui-btn layui-btn-sm" lay-event="expand">全部展开</button>
+        <button id="btn-fold" onclick="closeAllTreeNodes();"  class="layui-btn layui-btn-sm" lay-event="fold">全部折叠</button>
+    </div>
+</script>
+
 <div class="xm">
     <div class="xm-d2">
-        <div class="xm-d2-hang1">
-            <div class="pzright" style="width:101%;display: flex;justify-content: flex-start;float:right;">
-                <p class="xm-d1-p2">
-                    <button id="add" onclick="openAdd()" class="layui-btn layui-btn-radius btnys"><i class="layui-icon">&#xe608;</i>添加</button>
-                    <button class="layui-btn" id="btn-expand">全部展开</button>
-                    <button class="layui-btn" id="btn-fold">全部折叠</button>
-                    <button class="layui-btn" id="btn-refresh">刷新表格</button>
-                </p>
-            </div>
-            <div class="clear"></div>
-        </div>
+
         <div class="xm-d2-hang2">
             <table id="permissionTable" class="layui-table" lay-filter="permissionTable"></table>
         </div>
@@ -45,6 +43,7 @@
                     treeColIndex: 1,//树形图标显示在第几列
                     treeSpid: 0,//最上级的父级id
                     treeIdName: 'id',//id字段的名称
+                    toolbar: '#toolbar', //开启头部工具栏，并为其绑定左侧模板
                     treePidName: 'parentId',//pid字段的名称
                     treeDefaultClose: false,//是否默认折叠
                     treeLinkage: true,//父级展开时是否自动展开所有子级
@@ -79,20 +78,6 @@
 
             renderTable();
 
-            //触发三个button按钮
-            $('#btn-expand').click(function () {
-                treetable.expandAll('#permissionTable');
-            });
-
-            $('#btn-fold').click(function () {
-                treetable.foldAll('#permissionTable');
-            });
-
-            $('#btn-refresh').click(function () {
-                renderTable();
-            });
-
-
             function complain(d) {//操作中显示的内容
                 if (d != null) {
                     return [
@@ -106,21 +91,15 @@
                 }
 
             }
-            //监听工具条
-            table.on('tool(permissionTable)', function (obj) {
-                var data = obj.data;
-                var layEvent = obj.event;
-                if (data.permissionName != null) {
-                    if (layEvent === 'del') {
-                        layer.msg('删除' + data.id);
-                    } else if (layEvent === 'edit') {
-                        layer.msg('修改' + data.id);
-                    }
-                }
-            });
+        });
 
-            });
+        function openAllTreeNodes() {
+            layui.treetable.expandAll('#permissionTable');
+        }
 
+        function closeAllTreeNodes() {
+            layui.treetable.foldAll('#permissionTable');
+        }
 
         var editHandler ;
         function openEdit(id) {
@@ -164,7 +143,6 @@
                      data: { "id": id },
                      dataType: 'JSON',
                      success: function (res) {
-                         debugger;
                          if (res.code = '0') {
                              renderTable();
                          }

@@ -1,8 +1,8 @@
-﻿@model System.Collections.Generic.List<Sqr.DC.Dtos.Security.ActionInfo>
+﻿@model System.Collections.Generic.List<Sqr.DC.Dtos.Account.ActionDto>
 @using Microsoft.AspNetCore.Html
 
 @functions{
-    public static IHtmlContent RendChild(System.Collections.Generic.List<Sqr.DC.Dtos.Security.ActionInfo> actionList, Sqr.DC.Dtos.Security.ActionInfo pAction)
+    public static IHtmlContent RendChild(System.Collections.Generic.List<Sqr.DC.Dtos.Account.ActionDto> actionList, Sqr.DC.Dtos.Account.ActionDto pAction)
     {
         var outputHtml = string.Empty;
         var childAction = actionList.Where(c => c.ParentId == pAction.Id).ToList();

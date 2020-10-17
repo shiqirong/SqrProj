@@ -4,4 +4,22 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Account\GetActionPagedDto.cs" />
+    <Compile Remove="Paging\PagingInput.cs" />
+    <Compile Remove="Paging\PagingOutput.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Paging\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Sqr.Common\Sqr.Common.csproj" />
+  </ItemGroup>
+
 </Project>

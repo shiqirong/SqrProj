@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace Sqr.Common.Paging
 {
-    public class PagingInput
+    public class PagingInput<T>
     {
-        public int PageIndex { get; set; }
+        public int Page { get; set; }
 
-        public int PageSize { get; set; }
+        public int Limit { get; set; }
+
+        public T InputData { get; set; }
 
 
     }

@@ -4,6 +4,7 @@ using Sqr.Admin.App.Security;
 using Sqr.Admin.Web.Models;
 using Sqr.Admin.Web.Models.ActionManager;
 using Sqr.Common;
+using Sqr.DC.Dtos.Account;
 using Sqr.DC.Dtos.Security;
 using System;
 using System.Collections.Generic;
@@ -41,12 +42,14 @@ namespace Sqr.Admin.Web.Controllers
             var root = new TreeNode()
             {
                 Id = 0,
-                Name = "根节点"
+                Name = "根节点",
+                Open=true
+                
             };
             var output = ActionBusiness.Instance.MenuList().Result;
             if (output != null && output.Rows != null && output.Rows.Any())
             {
-                Action<List<ActionInfo>, TreeNode> fillTreeNode = null;
+                Action<List<ActionDto>, TreeNode> fillTreeNode = null;
                 fillTreeNode = (lst, p) =>
                   {
                       p.Children = lst.Where(c => c.ParentId == p.Id).Select(c => new TreeNode()
@@ -78,11 +81,11 @@ namespace Sqr.Admin.Web.Controllers
         public IActionResult Edit(long id)
         {
             var sites = SecurityApi.Instance.GetSSOSites().GetAwaiter().GetResult();
-            var actionInfo = ActionBusiness.Instance.GetActionInfo(id).Result;
+            var actionInfoResult = ActionBusiness.Instance.GetActionInfo(id).Result;
             VM_ActionInfo_Edit model = new VM_ActionInfo_Edit()
             {
-                ActionInfo=actionInfo,
-                Sites = sites?.Select(c => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem()
+                ActionInfo= actionInfoResult.Data,
+                Sites = sites.Data?.Select(c => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem()
                 {
                     Value = c.Id.ToString(),
                     Text = c.Sitename
@@ -96,15 +99,15 @@ namespace Sqr.Admin.Web.Controllers
         {
            var output=  ActionBusiness.Instance.Update(input).Result;
 
-            if (!output)
+            if (output.IsError)
             {
                 return Json(new ResultMo()
                 {
                     Code = ResultCode.Error,
-                    Message = "操作失败！"
+                    Message = "操作异常！"
                 });
             }
-            return Json(new ResultMo());
+            return Json(output);
         }
 
         [HttpGet]
@@ -113,7 +116,7 @@ namespace Sqr.Admin.Web.Controllers
             var sites = SecurityApi.Instance.GetSSOSites().GetAwaiter().GetResult();
             var model = new VM_ActionInfo_Add
             {
-                Sites = sites?.Select(c=>new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem()
+                Sites = sites.Data?.Select(c=>new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem()
                 {
                      Value=c.Id.ToString(),
                      Text=c.Sitename
@@ -127,30 +130,30 @@ namespace Sqr.Admin.Web.Controllers
         {
             var output = ActionBusiness.Instance.Add(input).Result;
 
-            if (output<=0)
+            if (output.IsError)
             {
                 return Json(new ResultMo()
                 {
                     Code = ResultCode.Error,
-                    Message = "操作失败！"
+                    Message = "操作异常！"
                 });
             }
-            return Json(new ResultMo());
+            return Json(output);
         }
 
         public JsonResult Delete(long id)
         {
             var output = ActionBusiness.Instance.Delete(id).Result;
 
-            if (!output )
+            if (output.IsError)
             {
                 return Json(new ResultMo()
                 {
                     Code = ResultCode.Error,
-                    Message = "操作失败！"
+                    Message = "操作异常！"
                 });
             }
-            return Json(new ResultMo());
+            return Json(output);
         }
     }
 }

@@ -20,12 +20,16 @@ namespace Sqr.Admin.Web.Components.News
 
         async Task<PageResult<VM_News>> NewsWindow()
         {
-            var model = await new NewsBusiness().GetNewsList(new Sqr.Admin.App.Api.DC.Dtos.GetNewsListInput()
+            var rm = await new NewsBusiness().GetNewsList(new Sqr.Admin.App.Api.DC.Dtos.GetNewsListInput()
             {
                 PageIndex = 1,
                 PageSize = 20
             });
-            return model?.MapTo<PageResult<VM_News>>();
+
+            if (rm.IsSuccess)
+                return rm.Data?.MapTo<PageResult<VM_News>>();
+            else
+                return null;
         }
     }
 }

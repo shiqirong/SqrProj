@@ -7,6 +7,13 @@
 // * history : Created by T4 03/11/2019 21:19:09 
 // </copyright>
 //-----------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Sqr.Common.Helper;
+using Sqr.Common.Paging;
+using Sqr.Dapper.Linq.Common;
+using Sqr.DC.Dtos.Account;
 using Sqr.DC.Entities;
 
 
@@ -15,8 +22,43 @@ namespace Sqr.DC.Repositories
     /// <summary>
     /// roles Respository
     /// </summary>   
-    public partial class RolesRepository :BaseRepository<RolesRepository, Roles>
+    public partial class RolesRepository : BaseRepository<RolesRepository, Roles>
     {
-		
-	}
+        public async Task<PagingOutput<RolesDto>> GetPaged(PagingInput<RolesDto> input)
+        {
+            var output = await QueryPagedAsync<Roles>(c =>
+           c.IsDeleted == 0
+           && WhereIf<Roles>(input.InputData!=null && !string.IsNullOrWhiteSpace(input.InputData.Name), () => c.Name.Contains(input.InputData.Name)),
+
+           new PagedQueryParams()
+           {
+               PageIndex = input.Page,
+               PageSize = input.Limit
+           });
+
+            return new PagingOutput<RolesDto>()
+            {
+                Total = output.Total,
+                PageIndex = input.Page,
+                PageSize = input.Limit,
+                Rows = output.Data.MapTo<List<RolesDto>>()
+            };
+        }
+
+        public async Task<IList<Roles>> QueryListByName(long id,string name)
+        {
+            return await QueryListAsync<Roles>(c => c.IsDeleted==0 && c.Id!=id && c.Name.Contains(name));
+        }
+
+        public async Task<int> Update(RolesDto input)
+        {
+            return await UpdateAsync(c => new
+            {
+                input.Name,
+                input.UpdateTime,
+                input.UpdateUser,
+            }, c => c.Id == input.Id);
+        }
+
+    }
 }

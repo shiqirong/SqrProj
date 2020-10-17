@@ -1,0 +1,163 @@
+﻿
+@{
+    ViewData["Title"] = "权限组管理";
+}
+
+<div class="xm">
+    <div class="xm-d2">
+        <div class="xm-d2-hang2">
+            <table class="layui-hide" id="dg" lay-filter="dg"></table>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts{
+    <script>
+        var renderTable = null;
+        /*使用模块加载的方式 加载文件*/
+        layui.config({
+            base: '/lib/layui/lay//modules/'
+        }).extend({
+            treetable: 'treetable-lay/treetable'
+        }).use(['layer', 'table', 'treetable'], function () {
+            var $ = layui.jquery;
+            var table = layui.table;
+            var layer = layui.layer;
+            var treetable = layui.treetable;
+
+            var tableCols = [
+                [{ type: 'numbers' }
+                ,{
+                    field: 'name',
+                    width: 200,
+                    title: '权限组名称',
+                    style: 'color: #ff5722;'
+                }, {
+                    field: 'createTime',
+                    width: 200,
+                    title: '创建时间',
+                    sort: true
+                }, {
+                    field: 'updateTime',
+                    width: 200,
+                    title: '更新时间'
+                },{
+                    field: 'right',
+                    width: 120,
+                    title: '操作',
+                    templet: function (d) {
+                        return '<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a> <a class="layui-btn layui-btn-danger layui-btn-xs"  lay-event="del">删除</a>'
+                    }
+                }]
+            ];
+            var toolbar = [{
+                text: '添加',
+                layuiicon: '&#xe608;',
+                handler: function () {
+                    openAdd();
+                }
+            },
+            {
+                text: '修改',
+                layuiicon: '&#xe642;',
+                handler: function (obj, row) {
+                    if (row) {
+                        hg.open('修改用户' + row.data.username, 'Edit', 600, 400);
+                    } else {
+                        hg.msg('请选中一行数据，再操作！');
+                    }
+                }
+            }, {
+                text: '删除',
+                layuiicon: '&#xe640;',
+                handler: function (obj, row) {
+                    if (row) {
+                        hg.confirm("删除当前选中的用户，确定要删除吗？", function () {
+                            row.del(); //只删本地数据
+                            hg.msg('删除成功！');
+                            //obj.reload();
+                        });
+                    } else {
+                        hg.msg('请选中一行数据，再操作！');
+                    }
+                }
+            }
+            ];
+            renderTable = hg.table.datatable('dg', '权限组', 'GetPaged', {}, tableCols, toolbar, true, 'full-140', ['filter', 'print', 'exports']);
+
+            //监听行工具事件
+            table.on('tool(dg)', function (obj) {
+                var data = obj.data;
+                if (obj.event === "add") {
+                    openAdd();
+                }
+                else if (obj.event === 'del') {
+                    layer.confirm('确定要删除权限组【' + data.name + '】?', function (index) {
+                        $.ajax({
+                            url: 'delete',
+                            method: 'post',
+                            data: { "id": data.id },
+                            dataType: 'JSON',
+                            success: function (res) {
+                                if (res.code == 0) {
+                                    renderTable.reload();
+                                }
+                                else
+                                    layer.msg(res.message);
+                            },
+                            error: function (err) {
+                                layer.msg(res.message);
+                            },
+                            complete: function () {
+                                layer.close(index);
+                            }
+
+                        });
+                    });
+                } else if (obj.event === 'edit') {
+                    openEdit(data.id);
+                }
+            });
+            });
+
+
+        var editHandler ;
+        function openEdit(id) {
+            editHandler=layer.open({
+                type: 2,
+                area: ['700px', '550px'],
+                fixed: false, //不固定
+                maxmin: true,
+                content: 'Edit?id=' + id,
+                title:"修改菜单"
+            });
+        }
+
+        function closeEdit() {
+            layer.close(editHandler);
+            renderTable.reload("GetPaged");
+        }
+
+        var addHandler;
+        function openAdd() {
+            addHandler = layer.open({
+                type: 2,
+                area: ['500px', '350px'],
+                fixed: false, //不固定
+                maxmin: true,
+                content: 'Add',
+                title: "添加权限组"
+            });
+        }
+
+        function closeAdd() {
+            layer.close(addHandler);
+            renderTable.reload("GetPaged");
+        }
+
+    </script>
+}
+
+
