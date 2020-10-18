@@ -1,0 +1,85 @@
+﻿@model  Sqr.Admin.Web.Models.RoleManager.VM_Role_Add
+@{
+    ViewData["Title"] = "分配权限";
+}
+
+
+<form class="layui-form" asp-action="AssignPower">
+    <input type="hidden" name="id" value="@Model.Id"/>
+    <div class="layui-form-item">
+        <div id="treeid" class="demo-tree demo-tree-box"></div>
+    </div>
+    <div class="layui-form-item layui-layout-admin">
+        <div class="layui-input-block">
+            <div class="layui-footer" style="left: 0;padding: 10px 0;text-align: center;background-color: #fff;">
+                <button class="layui-btn" lay-submit="" lay-filter="tj">立即提交</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+
+    function getTreeData() {
+        var data = [];
+        $.ajax({
+            url: "/ActionManager/RoleMenuTree?roleId=" + @Model.Id,    //后台数据请求地址
+            type: "get",
+            async: false,
+            success: function (resut) {
+                data = resut;
+            }
+        });
+        return data;
+    }
+
+
+    layui.use(['form', 'layer'], function () {
+        //treeid
+        var tree = hg.tree.datatree('treeid', getTreeData(), true);
+
+        //实例重载
+        function reload() {
+            tree.reload();
+            hg.msg('重载成功！')
+        }
+
+        //监听表单提交事件
+        layui.form.on('submit(tj)', function (data) {
+            debugger;
+            var submitData = {};
+            submitData.Id = data.field.id;
+            submitData.ActionInfos = tree.getChecked();
+            $.ajax({
+                url: 'AssignPower',
+                method: 'post',
+                data: submitData,
+                dataType: 'JSON',
+                success: function (res) {
+
+                    if (res.code == 0) {
+                        parent.closeAssignPower();
+                    }
+                    else
+                        layer.msg(res.message);
+                },
+                error: function (err) {
+                    layer.msg(err);
+                }
+            });
+            return false;
+        });
+
+
+
+        const getmap = (target, result = []) => {
+            layui.each(target, (i, e) => {
+                e.id && result.push({ id: e.id, title: e.title });
+                e.children && getmap(e.children, result);
+            });
+            let titles = result.map(e => { return e.title });
+            return { value: titles, result: result };
+        };
+    });
+</script>
+

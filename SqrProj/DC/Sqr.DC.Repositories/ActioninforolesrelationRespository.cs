@@ -8,7 +8,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using Sqr.DC.Entities;
-
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sqr.DC.Repositories
 {
@@ -17,6 +18,14 @@ namespace Sqr.DC.Repositories
     /// </summary>   
     public partial class ActioninforolesrelationRepository :BaseRepository<ActioninforolesrelationRepository, Actioninforolesrelation>
     {
-		
+		public async Task<IList<Actioninforolesrelation>> GetByRoleId(long roleId)
+        {
+            return await QueryListAsync<Actioninforolesrelation>(c => c.Roleid == roleId && c.IsDeleted == 0);
+        }
+
+        public async Task<int> RemoveByRoleId(long roleId)
+        {
+            return await RemoveAsync(c => c.Roleid == roleId);
+        }
 	}
 }

@@ -61,6 +61,15 @@ namespace Sqr.Dapper.Linq
             return sql;
         }
 
+        protected string RemoveAlias(string sql, IList<ParameterExpression> paramers)
+        {
+            for (var i = 0; i < paramers.Count; i++)
+            {
+                sql = sql.Replace($" {paramers[i].Name}.", $" ");
+            }
+            return sql;
+        }
+
         protected string GetAlias(string typeFullName)
         {
             for (var i = 0; i < _myTypes.Count; i++)

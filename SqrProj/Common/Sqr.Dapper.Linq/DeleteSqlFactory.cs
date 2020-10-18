@@ -20,10 +20,10 @@ namespace Sqr.Dapper.Linq
         public DeleteSqlFactory<T> Delete(Expression<Func<T, bool>> whereExpression)
         {
             var type = typeof(T);
-            _from = $" FROM {type.Name} {GetAlias(type.FullName)}";
+            _from = $" FROM {type.Name} ";
 
 
-            _where = ReplaceAlias(Linq2SqlHelper.DealExpress(whereExpression, _paramsList), whereExpression.Parameters);
+            _where = RemoveAlias(Linq2SqlHelper.DealExpress(whereExpression, _paramsList), whereExpression.Parameters);
 
             return this;
         }

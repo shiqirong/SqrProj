@@ -105,5 +105,66 @@ namespace Sqr.Admin.Web.Controllers
                 return Json(output);
             }
         }
+
+        
+        [HttpGet]
+        public IActionResult AssignPower(long id)
+        {
+            return View(new VM_Role_Add()
+            {
+                Id=id
+            });
+        }
+
+        [HttpPost]
+        public JsonResult AssignPower(VM_Role_AssignPower model)
+        {
+            if (ModelState.IsValid)
+            {
+               Action<List<ActionInfoRolesRelationDto>, TreeNode> getChildren = (l, p) =>
+               {
+                   if(p.Children!=null && p.Children.Any())
+                   {
+                       foreach (var actionInfo in p.Children)
+                       {
+                           l.Add(new ActionInfoRolesRelationDto()
+                           {
+                               ActionInfoId = actionInfo.Id,
+                               RoleId = model.Id
+                           });
+                       }
+                   }
+               };
+                List <ActionInfoRolesRelationDto> lst = new List<ActionInfoRolesRelationDto>();
+                if (model.ActionInfos != null)
+                {
+                    foreach (var actionInfo in model.ActionInfos)
+                    {
+                        lst.Add(new ActionInfoRolesRelationDto()
+                        {
+                            ActionInfoId = actionInfo.Id,
+                            RoleId = model.Id
+                        });
+                        getChildren(lst, actionInfo);
+                    }
+                }
+                return Json(ActionInfoRolesRelationApi.Instance.AssignPower(model.Id,lst).GetAwaiter().GetResult());
+                
+            }
+            return Json(ResultMo.Fail());
+        }
+
+
+        [HttpGet]
+        public IActionResult AssignMember(long id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult AssignMember()
+        {
+            return Json(new { });
+        }
     }
 }

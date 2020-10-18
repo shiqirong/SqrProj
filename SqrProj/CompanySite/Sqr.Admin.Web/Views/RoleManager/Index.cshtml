@@ -43,12 +43,12 @@
                     field: 'updateTime',
                     width: 200,
                     title: '更新时间'
-                },{
+                },{ 
                     field: 'right',
-                    width: 120,
+                    //width: 300,
                     title: '操作',
                     templet: function (d) {
-                        return '<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a> <a class="layui-btn layui-btn-danger layui-btn-xs"  lay-event="del">删除</a>'
+                        return '<a class="layui-btn layui-btn-danger layui-btn-xs"  lay-event="assignPower">设置权限</a><a class="layui-btn layui-btn-danger layui-btn-xs"  lay-event="assignMember">设置成员</a><a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a> <a class="layui-btn layui-btn-danger layui-btn-xs"  lay-event="del">删除</a>'
                     }
                 }]
             ];
@@ -119,6 +119,12 @@
                 } else if (obj.event === 'edit') {
                     openEdit(data.id);
                 }
+                else if (obj.event === "assignPower") {
+                    openAssignPower(data.id);
+                }
+                else if (obj.event === "assignMember") {
+                    openAssignMember(data.id);
+                }
             });
             });
 
@@ -127,7 +133,7 @@
         function openEdit(id) {
             editHandler=layer.open({
                 type: 2,
-                area: ['700px', '550px'],
+                area: ['500px', '350px'],
                 fixed: false, //不固定
                 maxmin: true,
                 content: 'Edit?id=' + id,
@@ -155,6 +161,22 @@
         function closeAdd() {
             layer.close(addHandler);
             renderTable.reload("GetPaged");
+        }
+
+        var assignPowerHandler;
+        function openAssignPower(id) {
+            assignPowerHandler = layer.open({
+                type: 2,
+                area: ['700px', '550px'],
+                fixed: false, //不固定
+                maxmin: true,
+                content: 'assignPower?id=' + id,
+                title: "分配权限"
+            });
+        }
+
+        function closeAssignPower() {
+            layer.close(assignPowerHandler);
         }
 
     </script>

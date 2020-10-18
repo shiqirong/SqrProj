@@ -48,7 +48,6 @@ namespace Sqr.DC.Services.Security
                 return ResultMo.Fail( "权限组已经存在",ResultCode.DataExists);
             var iResult= await RolesRepository.Instance.InsertAsync(new Entities.Roles()
             {
-                Id = NumUtil.SnowNum(),
                 CreateTime = DateTime.Now,
                 IsDeleted = 0,
                 Name = input.Name
@@ -71,5 +70,7 @@ namespace Sqr.DC.Services.Security
             else
                 return ResultMo.Fail();
         }
+
+
     }
 }

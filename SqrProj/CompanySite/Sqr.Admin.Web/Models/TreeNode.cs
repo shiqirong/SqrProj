@@ -7,14 +7,14 @@ namespace Sqr.Admin.Web.Models
 {
     public class TreeNode
     {
-        public string Name { get; set; }
-
         public long Id { get; set; }
-
-        public List<TreeNode> Children { get; set; }
-
-        public bool Open { get; set; }
-
+        public string Field { get; set; }
+        public int Level { get; set; }
+        public string Title { get; set; }
+        public bool Lazy { get; set; }
         public bool Checked { get; set; }
+
+        public bool Spread { get; set; }
+        public List<TreeNode> Children { get; set; }
     }
 }

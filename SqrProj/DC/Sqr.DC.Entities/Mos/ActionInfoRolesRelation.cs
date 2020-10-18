@@ -14,19 +14,19 @@ namespace Sqr.DC.Entities
     /// <summary>
     /// Actioninforolesrelation Entity Model
     /// </summary>    
-    public class Actioninforolesrelation:BaseMo
+    public class Actioninforolesrelation : BaseMo
     {
-      
-			/// <summary>
-			/// 
-			/// </summary>
-						public int Actioninfoid { get; set; }
 
-      
-			/// <summary>
-			/// 
-			/// </summary>
-						public int Roleid { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public long Actioninfoid { get; set; }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public long Roleid { get; set; }
 
     }
 }
