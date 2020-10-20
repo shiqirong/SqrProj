@@ -1,7 +1,232 @@
-﻿
+﻿@model Sqr.Admin.Web.Models.RoleManager.VM_Role_Add
 @{
     ViewData["Title"] = "分配成员";
 }
 
 
+<form class="layui-form" asp-action="AssignMember">
+    <input type="hidden" id="hdId" name="id" value="@Model.Id" />
+    <div class="layui-form-item ">
+        <table class="layui-hide" id="tblUser" lay-data="{height: 'full-200'}" lay-filter="tblUser"></table>
+    </div>
+    <div class="layui-form-item layui-layout-admin">
+        <div class="layui-input-block">
+            <div class="layui-footer" style="left: 0;padding: 10px 0;text-align: center;background-color: #fff;">
+                <button class="layui-btn" lay-submit="" lay-filter="tj">立即提交</button>
+            </div>
+        </div>
+    </div>
+</form>
 
+<script type="text/javascript">
+
+    function getRoleUserIds() {
+        var output = new Array();
+        $.ajax({
+            url: 'GetRoleUserIds',
+            method: 'get',
+            data: { roleId: $("#hdId").val() },
+            async:false,
+            dataType: 'JSON',
+            success: function (res) {
+
+                if (res.code == 0) {
+                    output= res.data;
+                }
+                else {
+                    layer.msg(res.message);
+                }
+            },
+            error: function (err) {
+                layer.msg(err);
+            }
+        });
+        layer.msg(JSON.stringify(output));
+        return output;
+    }
+
+    layui.use('table', function () {
+        var table = layui.table;
+        //记录选中的数据:做缓存使用,作为参数传递给后台,然后生成pdf ,压缩
+        var ids = getRoleUserIds();
+        //当前表格中的全部数据:在表格的checkbox全选的时候没有得到数据, 因此用全局存放变量
+        var table_data = new Array();
+
+        var userTable = table.render({
+            elem: '#tblUser'
+            , url: '/UserManager/GetUserPaged'
+            , toolbar: '#toolbar' //开启头部工具栏，并为其绑定左侧模板
+            , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                title: '提示'
+                , layEvent: 'LAYTABLE_TIPS'
+                , icon: 'layui-icon-tips'
+            }]
+            , title: '用户数据表'
+            , cols: [[
+                { type: 'checkbox', fixed: 'left' }
+                , { field: 'id', title: 'ID', width: 80, fixed: 'left', unresize: true, hide: true }
+                , { field: 'account', title: '用户账号', width: 100, unresize: true, }
+                , { field: 'name', title: '用户名', width: 100 }
+                , {
+                    field: 'email', title: '邮箱', width: 150, templet: function (res) {
+                        return '<em>' + res.email + '</em>'
+                    }
+                }
+                , { field: 'mobile', title: '手机号码', width: 150 }
+                , { field: 'createTime', title: '创建时间', width: 200 }
+                , { field: 'updateTime', title: '更新时间', width: 200 }
+            ]]
+            , page: true
+            , done: function (res, curr, count) {
+                //数据表格加载完成时调用此函数
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+
+                //设置全部数据到全局变量
+                table_data = res.data;
+
+                //在缓存中找到id ,然后设置data表格中的选中状态
+                //循环所有数据，找出对应关系，设置checkbox选中状态
+                for (var i = 0; i < res.data.length; i++) {
+                    for (var j = 0; j < ids.length; j++) {
+                        //数据id和要勾选的id相同时checkbox选中
+                        if (res.data[i].id == ids[j]) {
+                            //这里才是真正的有效勾选
+                            res.data[i]["LAY_CHECKED"] = 'true';
+                            //找到对应数据改变勾选样式，呈现出选中效果
+                            var index = res.data[i]['LAY_TABLE_INDEX'];
+                            $('.layui-table-fixed-l tr[data-index=' + index + '] input[type="checkbox"]').prop('checked', true);
+                            $('.layui-table-fixed-l tr[data-index=' + index + '] input[type="checkbox"]').next().addClass('layui-form-checked');
+                        }
+                    }
+                }
+                //设置全选checkbox的选中状态，只有改变LAY_CHECKED的值， table.checkStatus才能抓取到选中的状态
+                var checkStatus = table.checkStatus('my-table');
+                if (checkStatus.isAll) {
+                    $(' .layui-table-header th[data-field="0"] input[type="checkbox"]').prop('checked', true);
+                    $('.layui-table-header th[data-field="0"] input[type="checkbox"]').next().addClass('layui-form-checked');
+                }
+                //得到所有数据
+                console.log(res);
+                //得到当前页码
+                console.log(curr);
+                //得到数据总量
+                console.log(count);
+            }
+        });
+
+        table.on('checkbox(tblUser)', function (obj) {
+            debugger;
+            if (obj.checked == true) {
+                if (obj.type == 'one') {
+                    ids.push(obj.data.id);
+                } else {
+                    for (var i = 0; i < table_data.length; i++) {
+                        ids.push(table_data[i].id);
+                    }
+                }
+            } else {
+                if (obj.type == 'one') {
+                    for (var i = 0; i < ids.length; i++) {
+                        if (ids[i] == obj.data.id) {
+                            ids.splice(i,1);
+                        }
+                    }
+                } else {
+                    for (var i = 0; i < ids.length; i++) {
+                        for (var j = 0; j < table_data.length; j++) {
+                            if (ids[i] == table_data[j].id) {
+                                ids.splice(i, 1);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        //头工具栏事件
+        table.on('toolbar(tblUser)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'add':
+                    openAdd();
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：' + data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选' : '未全选');
+                    break;
+
+                //自定义头工具栏右侧图标 - 提示
+                case 'LAYTABLE_TIPS':
+                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
+                    break;
+            };
+        });
+
+        //监听行工具事件
+        table.on('tool(tblUser)', function (obj) {
+            var data = obj.data;
+            //console.log(obj)
+            if (obj.event === "add") {
+                openAdd();
+            }
+            else if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if (obj.event === 'edit') {
+                layer.prompt({
+                    formType: 2
+                    , value: data.email
+                }, function (value, index) {
+                    obj.update({
+                        email: value
+                    });
+                    layer.close(index);
+                });
+            }
+        });
+
+        layui.form.on('submit(tj)', function (data) {
+            debugger;
+            var tData = table.checkStatus('tblUser').data;
+            var submitData = {};
+            submitData.Id = $('#hdId').val();
+            submitData.UserIds = ids;
+            
+            $.ajax({
+                url: 'AssignMember',
+                method: 'post',
+                data: submitData,
+                dataType: 'JSON',
+                success: function (res) {
+
+                    if (res.code == 0) {
+                        parent.closeAssignMember();
+                    }
+                    else
+                        layer.msg(res.message);
+                },
+                error: function (err) {
+                    layer.msg(err);
+                }
+            });
+            return false;
+        });
+
+        const getmap = (target, result = []) => {
+            layui.each(target, (i, e) => {
+                e.id && result.push( e.id );
+                e.children && getmap(e.children, result);
+            });
+            return result;
+        };
+    });
+
+    
+
+</script>

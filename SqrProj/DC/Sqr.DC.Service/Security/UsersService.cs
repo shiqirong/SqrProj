@@ -21,8 +21,7 @@ namespace Sqr.DC.Services.Security
 
         public async Task<bool> Add(UserDto input)
         {
-            if (input.Id == 0)
-                input.Id = NumUtil.SnowNum();
+            input.Id = 0;
             input.CreateTime = DateTime.Now;
             input.Status = 1;
             input.Password = Md5.EncryptHexString("123456");

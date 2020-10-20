@@ -29,14 +29,14 @@
             , cols: [[
                 { type: 'checkbox', fixed: 'left' }
                 , { field: 'id', title: 'ID', width: 80, fixed: 'left', unresize: true, hide: true }
-                , { field: 'account', title: '用户账号', width: 80,  unresize: true,  }
-                , { field: 'name', title: '用户名', width: 120, edit: 'text' }
+                , { field: 'account', title: '用户账号', width: 120,  unresize: true,  }
+                , { field: 'name', title: '用户名', width: 120 }
                 , {
-                    field: 'email', title: '邮箱', width: 150, edit: 'text', templet: function (res) {
+                    field: 'email', title: '邮箱', width: 150, templet: function (res) {
                         return '<em>' + res.email + '</em>'
                     }
                 }
-                , { field: 'mobile', title: '手机号码', width: 150, edit: 'text',  }
+                , { field: 'mobile', title: '手机号码', width: 150  }
                 , { field: 'createTime', title: '创建时间', width: 200 }
                 , { field: 'updateTime', title: '更新时间', width: 200 }
                 , { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150 }
@@ -106,7 +106,7 @@
 
     function closeAdd() {
         layer.close(addHandler);
-        renderTable();
+        layui.table.reload("tblUser");
     }
     
 </script>

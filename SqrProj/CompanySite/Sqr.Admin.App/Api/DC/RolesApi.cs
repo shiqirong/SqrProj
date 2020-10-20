@@ -35,5 +35,15 @@ namespace Sqr.Admin.App.Api.DC
         {
             return await Post<bool>(ApiUrl + $"Api/Roles/Delete", input);
         }
+
+        public async Task<ResultMo> AssignMember(long roleId, IList<UserRolesRelationDto> lstURR)
+        {
+            return await Post<bool>(ApiUrl + $"Api/Roles/AssignMember?roleId={roleId}", lstURR);
+        }
+
+        public async Task<ResultMo<IList<UserRolesRelationDto>>> GetRoleUsers(long roleId)
+        {
+            return await Get<IList<UserRolesRelationDto>>(ApiUrl + $"Api/Roles/GetRoleUsers?roleId={roleId}",null);
+        }
     }
 }

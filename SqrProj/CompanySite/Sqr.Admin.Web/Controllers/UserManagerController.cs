@@ -38,6 +38,7 @@ namespace Sqr.Admin.Web.Controllers
                     Data = null
                 });
         }
+        
 
         [HttpGet]
         public IActionResult Add()
