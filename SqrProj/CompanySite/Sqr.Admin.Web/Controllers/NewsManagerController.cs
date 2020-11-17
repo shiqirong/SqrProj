@@ -9,8 +9,12 @@ using Sqr.Common.Helper;
 
 namespace Sqr.Admin.Web.Controllers
 {
-    public class NewsController: Controller
+    public class NewsManagerController:  ControllerAdminBase
     {
-
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return View();
+        }
     }
 }
