@@ -14,19 +14,19 @@ namespace Sqr.DC.Entities
     /// <summary>
     /// Userrolesrelation Entity Model
     /// </summary>    
-    public class Userrolesrelation : BaseMo
+    public class Userrolesrelation:BaseMo
     {
+      
+			/// <summary>
+			/// 
+			/// </summary>
+						public int Roleid { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public long RoleId { get; set; }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public long UserId { get; set; }
+      
+			/// <summary>
+			/// 
+			/// </summary>
+						public int Userid { get; set; }
 
     }
 }

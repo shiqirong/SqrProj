@@ -45,16 +45,5 @@ namespace Sqr.DC.WebApi.Controllers.Account
         {
             return await RolesService.Instance.Delete(input);
         }
-
-        [HttpPost]
-        public async Task<ResultMo> AssignMember(long roleId, [FromBody]IList<UserRolesRelationDto> lstURR)
-        {
-            return await UserRolesRelationService.Instance.AssignMember(roleId, lstURR);
-        }
-
-        [HttpGet]
-        public async Task<ResultMo<IList<UserRolesRelationDto>>> GetRoleUsers(long roleId){
-            return await UserRolesRelationService.Instance.GetRoleUsers(roleId);
-        }
     }
 }

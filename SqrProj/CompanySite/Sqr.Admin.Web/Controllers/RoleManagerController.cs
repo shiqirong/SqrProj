@@ -158,43 +158,13 @@ namespace Sqr.Admin.Web.Controllers
         [HttpGet]
         public IActionResult AssignMember(long id)
         {
-            return View(new VM_Role_Add()
-            {
-                Id = id
-            });
+            return View();
         }
 
         [HttpPost]
-        public JsonResult AssignMember(VM_Role_AssignMember model)
+        public JsonResult AssignMember()
         {
-            if (ModelState.IsValid)
-            {
-                List<UserRolesRelationDto> lst = new List<UserRolesRelationDto>();
-                if (model.UserIds != null)
-                {
-                    foreach (var userId in model.UserIds)
-                    {
-                        lst.Add(new UserRolesRelationDto()
-                        {
-                            UserId = userId,
-                            RoleId = model.Id
-                        });
-                    }
-                }
-                return Json(RolesApi.Instance.AssignMember(model.Id, lst).GetAwaiter().GetResult());
-            }
-            return Json(ResultMo.Fail());
-        }
-
-        [HttpGet]
-        public JsonResult GetRoleUserIds(long roleId)
-        {
-            var result=RolesApi.Instance.GetRoleUsers(roleId).GetAwaiter().GetResult();
-            if (result.IsSuccess)
-            {
-                return Json(ResultMo<IList<long>>.Success(result.Data.Select(c => c.UserId).ToList()));
-            }
-            return Json(ResultMo.Fail());
+            return Json(new { });
         }
     }
 }

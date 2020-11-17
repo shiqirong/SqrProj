@@ -120,10 +120,10 @@
                     openEdit(data.id);
                 }
                 else if (obj.event === "assignPower") {
-                    openAssignPower(data.id, data.name);
+                    openAssignPower(data.id);
                 }
                 else if (obj.event === "assignMember") {
-                    openAssignMember(data.id, data.name);
+                    openAssignMember(data.id);
                 }
             });
             });
@@ -164,35 +164,19 @@
         }
 
         var assignPowerHandler;
-        function openAssignPower(id,name) {
+        function openAssignPower(id) {
             assignPowerHandler = layer.open({
                 type: 2,
                 area: ['700px', '550px'],
                 fixed: false, //不固定
                 maxmin: true,
                 content: 'assignPower?id=' + id,
-                title: "分配权限【" + name + "】"
+                title: "分配权限"
             });
         }
 
         function closeAssignPower() {
             layer.close(assignPowerHandler);
-        }
-
-        var assignMemberHandler;
-        function openAssignMember(id,name) {
-            assignMemberHandler = layer.open({
-                type: 2,
-                area: ['1000px', '700px'],
-                fixed: false, //不固定
-                maxmin: true,
-                content: 'assignMember?id=' + id,
-                title: "分配成员【" + name + "】"
-            });
-        }
-
-        function closeAssignMember() {
-            layer.close(assignMemberHandler);
         }
 
     </script>
