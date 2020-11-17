@@ -36,7 +36,7 @@ namespace Sqr.DC.WebApi
                 var currentNamespace = "Sqr.DC.WebApi";
                 var xmlFiles = new[]
                 {
-                    $"{baseDirectory}\\{currentNamespace}\\Sqr.DC.WebApi.xml"
+                    $"{baseDirectory}/{currentNamespace}/Sqr.DC.WebApi.xml"
                 };
                 foreach (var xml in xmlFiles)
                 {

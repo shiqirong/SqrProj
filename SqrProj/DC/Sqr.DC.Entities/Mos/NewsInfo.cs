@@ -14,61 +14,61 @@ namespace Sqr.DC.Entities
     /// <summary>
     /// Newsinfo Entity Model
     /// </summary>    
-    public class Newsinfo : BaseMo
+    public class Newsinfo:BaseMo
     {
+      
+			/// <summary>
+			/// 
+			/// </summary>
+						public string Content { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Content { get; set; }
+      
+			/// <summary>
+			/// 
+			/// </summary>
+						public string Content2 { get; set; }
 
+      
+			/// <summary>
+			/// 
+			/// </summary>
+						public string Imagebig { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Content2 { get; set; }
+      
+			/// <summary>
+			/// 
+			/// </summary>
+						public string Imagesmall { get; set; }
 
+      
+			/// <summary>
+			/// 
+			/// </summary>
+						public string Ishot { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Imagebig { get; set; }
+      
+			/// <summary>
+			/// 
+			/// </summary>
+						public string Ispublished { get; set; }
 
+      
+			/// <summary>
+			/// 
+			/// </summary>
+						public DateTime Publishedtime { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Imagesmall { get; set; }
+      
+			/// <summary>
+			/// 
+			/// </summary>
+						public string Title { get; set; }
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool IsHot { get; set; }
-
-        public int OrderIndex { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool Ispublished { get; set; }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public DateTime Publishedtime { get; set; }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Title { get; set; }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Title2 { get; set; }
+      
+			/// <summary>
+			/// 
+			/// </summary>
+						public string Title2 { get; set; }
 
     }
 }

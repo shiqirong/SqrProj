@@ -73,13 +73,13 @@ namespace Sqr.Dapper.Linq
 
         public SelectSqlFactory<T1> OrderBy(Expression<Func<T1, dynamic>> joinConditon)
         {
-            _order = $" ORDER BY  {Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList)} ";
+            _order = $" ORDER BY  {ReplaceAlias(Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList), joinConditon.Parameters)} ";
             return this;
         }
 
         public SelectSqlFactory<T1> OrderByDesc(Expression<Func<T1, dynamic>> joinConditon)
         {
-            _order = $" ORDER BY  {Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList)} DESC ";
+            _order = $" ORDER BY  {ReplaceAlias(Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList), joinConditon.Parameters)} DESC ";
             return this;
         }
 

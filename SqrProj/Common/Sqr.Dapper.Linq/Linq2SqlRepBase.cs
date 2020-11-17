@@ -92,13 +92,10 @@ namespace Sqr.Dapper.Linq
             }
             return pl;
         }
-        public async Task<PagedList<T>> QueryPagedAsync<T>(Expression<Func<T, bool>> whereExp, PagedQueryParams pagedParams )
+
+        public async Task<PagedList<T>> QueryPagedAsync<T>(Expression<Func<T, bool>> whereExp, PagedQueryParams pagedParams)
         {
-            return await QueryPagedAsync<T>(whereExp, pagedParams);
-        }
-        public async Task<PagedList<T>> QueryPagedAsync<T>(Expression<Func<T, bool>> whereExp, Expression<Func<T, dynamic>> orderBy=null, PagedQueryParams pagedParams=null)
-        {
-            var linq2Sql = new SelectSqlFactory<T>().Where(whereExp).OrderBy(orderBy).Paged(pagedParams.PageIndex, pagedParams.PageSize);
+            var linq2Sql = new SelectSqlFactory<T>().Where(whereExp).Paged(pagedParams.PageIndex, pagedParams.PageSize);
             PagedList<T> pl = new PagedList<T>();
 
             using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
