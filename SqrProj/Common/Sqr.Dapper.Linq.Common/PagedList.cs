@@ -18,6 +18,7 @@ namespace Sqr.Dapper.Linq.Common
 
     public class PagedQueryParams
     {
+
         int _pageIndex = 1;
         int _pageSize = 1;
 
