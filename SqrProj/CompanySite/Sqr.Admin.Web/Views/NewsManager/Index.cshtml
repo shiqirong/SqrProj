@@ -1,0 +1,124 @@
+﻿@model IEnumerable<Sqr.DC.Dtos.Account.UserDto>
+
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon">&#xe608;</i>新增</button>
+    </div>
+</script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<table class="layui-hide" id="tblUser" lay-filter="tblUser"></table>
+
+<script>
+    layui.use('table', function () {
+        var table = layui.table;
+
+        table.render({
+            elem: '#tblUser'
+            , url: 'GetNewsPaged'
+            , toolbar: '#toolbar' //开启头部工具栏，并为其绑定左侧模板
+            , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                title: '提示'
+                , layEvent: 'LAYTABLE_TIPS'
+                , icon: 'layui-icon-tips'
+            }]
+            , title: '用户数据表'
+            , cols: [[
+                { type: 'checkbox', fixed: 'left' }
+                , { field: 'id', title: 'ID', width: 80, fixed: 'left', unresize: true, hide: true }
+                , { field: 'title', title: '大标题', width: 120,  unresize: true,  }
+                , { field: 'title2', title: '小标题', width: 120 }
+                , { field: 'content2', title: '简单内容', width: 120 }
+                , {
+                    field: 'isHot', title: '是否热点', width: 120, templet: function (res) {
+                        if (res.isHot)
+                            return '<input type="checkbox" name="switch" lay-skin="switch" checked disabled/>';
+                        else
+                            return '<input type="checkbox" name="switch" lay-skin="switch"  disabled/>'
+                    }
+                }
+                , {
+                    field: 'isPublished', title: '是否发布', width: 150, templet: function (res) {
+                        if (res.isPublished)
+                            return '<input type="checkbox" name="switch" lay-skin="switch" checked disabled/>';
+                        else
+                            return '<input type="checkbox" name="switch" lay-skin="switch"  disabled/>'
+                    }
+                }
+                , { field: 'publishedTime', title: '发布时间', width: 150  }
+                , { field: 'createTime', title: '创建时间', width: 200 }
+                , { field: 'updateTime', title: '更新时间', width: 200 }
+                , { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150 }
+            ]]
+            , page: true
+        });
+
+        //头工具栏事件
+        table.on('toolbar(tblUser)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'add':
+                    openAdd();
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：' + data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选' : '未全选');
+                    break;
+
+                //自定义头工具栏右侧图标 - 提示
+                case 'LAYTABLE_TIPS':
+                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
+                    break;
+            };
+        });
+
+        //监听行工具事件
+        table.on('tool(tblUser)', function (obj) {
+            var data = obj.data;
+            //console.log(obj)
+            if (obj.event === "add") {
+                openAdd();
+            }
+            else if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if (obj.event === 'edit') {
+                layer.prompt({
+                    formType: 2
+                    , value: data.email
+                }, function (value, index) {
+                    obj.update({
+                        email: value
+                    });
+                    layer.close(index);
+                });
+            }
+        });
+    });
+
+    var addHandler;
+    function openAdd() {
+        addHandler = layer.open({
+            type: 2,
+            area: ['1000px', '650px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: 'Add',
+            title: "添加菜單"
+        });
+    }
+
+    function closeAdd() {
+        layer.close(addHandler);
+        layui.table.reload("tblUser");
+    }
+
+</script>

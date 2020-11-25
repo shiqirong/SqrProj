@@ -25,18 +25,19 @@ namespace Sqr.DC.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(sg =>
             {
-                c.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo()
+                sg.SwaggerDoc("refuge", new Swashbuckle.AspNetCore.Swagger.Info
                 {
-                    Title= "数据中心接口文档"
+                    Title = "我的第一个 Swagger",
+                    Version = "版本1"
                 });
 
                 var baseDirectory = AppContext.BaseDirectory;
                 var currentNamespace = "Sqr.DC.WebApi";
                 var xmlFiles = new[]
                 {
-                    $"{baseDirectory}/{currentNamespace}/Sqr.DC.WebApi.xml"
+                    $"{baseDirectory}\\{currentNamespace}\\Sqr.DC.WebApi.xml"
                 };
                 foreach (var xml in xmlFiles)
                 {
@@ -50,7 +51,7 @@ namespace Sqr.DC.WebApi
                 r.Filters.Add(typeof(GlobalExceptionFilter));
                 r.Filters.Add(typeof(GlobalActionFilter));
             });
-            services.AddMvc(filters).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(filters).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,9 +62,10 @@ namespace Sqr.DC.WebApi
                 app.UseDeveloperExceptionPage();
             }
             app.UseSwagger();
-            app.UseSwaggerUI(c=>
+            app.UseSwaggerUI(s =>
             {
-                c.SwaggerEndpoint("/swagger/v2/swagger.json", "数据中心api文档");
+                s.SwaggerEndpoint("/swagger/refuge/swagger.json", "My API 1.0.1");//注意,中间那段的名字 (refuge) 要和 上面 SwaggerDoc 方法定义的 名字 (refuge)一样
+                s.RoutePrefix = string.Empty; //默认值是 "swagger" ,需要这样请求:https://localhost:44384/swagger
             });
             app.UseMvc();
         }

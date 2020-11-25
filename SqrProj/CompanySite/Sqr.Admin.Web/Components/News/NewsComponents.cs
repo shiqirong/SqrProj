@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Sqr.Common.Helper;
 using Sqr.Common.Response;
+using Sqr.DC.Dtos.News;
 
 namespace Sqr.Admin.Web.Components.News
 {
@@ -20,11 +21,7 @@ namespace Sqr.Admin.Web.Components.News
 
         async Task<PageResult<VM_News>> NewsWindow()
         {
-            var rm = await new NewsBusiness().GetNewsList(new Sqr.Admin.App.Api.DC.Dtos.GetNewsListInput()
-            {
-                PageIndex = 1,
-                PageSize = 20
-            });
+            var rm = await new NewsBusiness().GetNewsList(null,1,20);
 
             if (rm.IsSuccess)
                 return rm.Data?.MapTo<PageResult<VM_News>>();

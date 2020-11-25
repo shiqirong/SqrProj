@@ -73,13 +73,15 @@ namespace Sqr.Dapper.Linq
 
         public SelectSqlFactory<T1> OrderBy(Expression<Func<T1, dynamic>> joinConditon)
         {
-            _order = $" ORDER BY  {ReplaceAlias(Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList), joinConditon.Parameters)} ";
+            if (joinConditon != null)
+                _order = $" ORDER BY  {Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList)} ";
             return this;
         }
 
         public SelectSqlFactory<T1> OrderByDesc(Expression<Func<T1, dynamic>> joinConditon)
         {
-            _order = $" ORDER BY  {ReplaceAlias(Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList), joinConditon.Parameters)} DESC ";
+            if (joinConditon != null)
+                _order = $" ORDER BY  {Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList)} DESC ";
             return this;
         }
 
@@ -122,13 +124,15 @@ namespace Sqr.Dapper.Linq
 
         public SelectSqlFactory<T1, T2> OrderBy(Expression<Func<T1, T2, dynamic>> joinConditon)
         {
-            _order = $" ORDER BY  {ReplaceAlias(Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList), joinConditon.Parameters)} ";
+            if (joinConditon != null)
+                _order = $" ORDER BY  {ReplaceAlias(Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList), joinConditon.Parameters)} ";
             return this;
         }
 
         public SelectSqlFactory<T1, T2> OrderByDesc(Expression<Func<T1, T2, dynamic>> joinConditon)
         {
-            _order = $" ORDER BY  {ReplaceAlias(Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList), joinConditon.Parameters)} DESC ";
+            if (joinConditon != null)
+                _order = $" ORDER BY  {ReplaceAlias(Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList), joinConditon.Parameters)} DESC ";
             return this;
         }
     }
@@ -170,13 +174,15 @@ namespace Sqr.Dapper.Linq
 
         public SelectSqlFactory<T1, T2, T3> OrderBy(Expression<Action<T1, T2, T3>> joinConditon)
         {
-            _order = $" ORDER BY  {ReplaceAlias(Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList), joinConditon.Parameters)} ";
+            if (joinConditon != null)
+                _order = $" ORDER BY  {ReplaceAlias(Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList), joinConditon.Parameters)} ";
             return this;
         }
 
         public SelectSqlFactory<T1, T2, T3> OrderByDesc(Expression<Action<T1, T2, T3>> joinConditon)
         {
-            _order = $" ORDER BY  {ReplaceAlias(Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList), joinConditon.Parameters)} DESC ";
+            if (joinConditon != null)
+                _order = $" ORDER BY  {ReplaceAlias(Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList), joinConditon.Parameters)} DESC ";
             return this;
         }
 
@@ -220,13 +226,15 @@ namespace Sqr.Dapper.Linq
 
         public SelectSqlFactory<T1, T2, T3, T4> OrderBy(Expression<Action<T1, T2, T3, T4>> joinConditon)
         {
-            _order = $" ORDER BY  {ReplaceAlias(Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList), joinConditon.Parameters)} ";
+            if (joinConditon != null)
+                _order = $" ORDER BY  {ReplaceAlias(Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList), joinConditon.Parameters)} ";
             return this;
         }
 
         public SelectSqlFactory<T1, T2, T3, T4> OrderByDesc(Expression<Action<T1, T2, T3, T4>> joinConditon)
         {
-            _order = $" ORDER BY  {ReplaceAlias(Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList), joinConditon.Parameters)} DESC ";
+            if (joinConditon != null)
+                _order = $" ORDER BY  {ReplaceAlias(Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList), joinConditon.Parameters)} DESC ";
             return this;
         }
 

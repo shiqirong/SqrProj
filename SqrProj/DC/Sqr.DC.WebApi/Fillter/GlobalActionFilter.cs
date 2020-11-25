@@ -36,15 +36,26 @@ namespace Sqr.DC.WebApi.Fillter
         {
             if (context.Result is ObjectResult)
             {
-
-                var currentJsonResult = context.Result as ObjectResult;
-                if (currentJsonResult.DeclaredType != typeof(ResultMo) && !currentJsonResult.DeclaredType.IsSubclassOf( typeof(ResultMo)))
+                if (context.Result is BadRequestObjectResult)
                 {
+                    var badResult = context.Result as BadRequestObjectResult;
                     context.Result = new JsonResult(new ResultMo<object>()
                     {
-                        Code = ResultCode.Success,
-                        Data = currentJsonResult.Value
+                        Code = ResultCode.ParamsIncrect,
+                        Message =string.Join("\r\n", (badResult.Value as ValidationProblemDetails).Errors.Select(c => $"{c.Key}:{string.Join("\r\n\t", c.Value)}"))
                     });
+                }
+                else
+                {
+                    var currentJsonResult = context.Result as ObjectResult;
+                    if (currentJsonResult.DeclaredType!=null && currentJsonResult.DeclaredType != typeof(ResultMo) && !currentJsonResult.DeclaredType.IsSubclassOf(typeof(ResultMo)))
+                    {
+                        context.Result = new JsonResult(new ResultMo<object>()
+                        {
+                            Code = ResultCode.Success,
+                            Data = currentJsonResult.Value
+                        });
+                    }
                 }
             }
             else if (context.Result is JsonResult)

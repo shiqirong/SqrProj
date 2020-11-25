@@ -48,13 +48,7 @@ namespace Sqr.Admin.Web.Models.News
         /// <summary>
         /// 是否置顶
         /// </summary>
-        public sbyte Ishot { get; set; }
-
-
-        /// <summary>
-        /// 是否是叶节点
-        /// </summary>
-        public sbyte Isleaf { get; set; }
+        public sbyte IsHot { get; set; }
 
 
         /// <summary>
@@ -67,5 +61,7 @@ namespace Sqr.Admin.Web.Models.News
         /// 状态：1发布，2不发布
         /// </summary>
         public sbyte IsPublished { get; set; }
+
+        public int OrderNum { get; set; }
     }
 }

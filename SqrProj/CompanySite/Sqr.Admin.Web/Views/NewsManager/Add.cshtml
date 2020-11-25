@@ -1,0 +1,333 @@
+﻿@model Sqr.Admin.Web.Models.News.VM_News
+@{
+    ViewData["Title"] = "添加新闻";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form class="layui-form" asp-action="Add">
+            <input type="hidden" name="Id" value="@Model?.Id" />
+
+
+            <div class="layui-form-item ">
+                <div class="layui-col-md6">
+                    <label class="layui-form-label layui-required">新闻标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Title" value="@Model?.Title" id="ParentId"  class="layui-input">
+                    </div>
+                </div>
+
+
+                <div class="layui-col-md6">
+                    <label class="layui-form-label layui-required">新闻标题二</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Title2" value="@Model?.Title2" id="ParentId"  class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item ">
+                <div class="layui-col-md6">
+                    <label class="layui-form-label ">大图标</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Imagebig" value="@Model?.Imagebig" id="ParentId" lay-filter="tree" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-md6">
+                    <label class="layui-form-label">小图标</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Imagesmall" value="@Model?.Imagesmall" id="ParentId" lay-filter="tree" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-col-md6">
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="IsHot" value="@Model?.IsHot" title="是否热门" checked>
+                        @*</div>
+                    <div class="layui-input-block">*@
+                        <input type="checkbox" name="IsPublished" value="@Model?.IsPublished" title="是否发布" checked>
+                    </div>
+                </div>
+                <div class="layui-col-md6">
+                    <label class="layui-form-label">排序</label>
+                    <div class="layui-input-block">
+                        <input type="number" name="OrderNum" value="@Model?.OrderNum" id="ParentId" lay-filter="tree" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-required">新闻内容简介</label>
+                <div class="layui-input-block">
+                    <textarea name="Content2" value="@Model?.Content2" id="contentEdit2"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item ">
+                <label class="layui-form-label layui-required">新闻内容详情</label>
+                <div class="layui-input-block">
+                    <textarea name="Content" value="@Model?.Content" id="contentEdit"></textarea>
+                </div>
+            </div>
+            <div id="layer-tiny" style="display: none;">
+                <textarea name="" id="edit3"></textarea>
+            </div>
+            <div class="layui-form-item layui-layout-admin">
+                <div class="layui-input-block">
+                    <div class="layui-footer" style="left: 0;padding: 10px 0;text-align: center;background-color: #fff;">
+                        <button class="layui-btn" lay-submit="" lay-filter="tj">立即提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+
+    layui.config({
+        base: '/lib/layui/lay/modules/'
+    }).extend({
+        tinymce: 'tinymce'
+    }).use(['tinymce', 'util', 'form', 'layer'], function () {
+        var t = layui.tinymce
+            , util = layui.util
+            , layer = layui.layer
+            , $ = layui.$
+
+        var edit = t.render({
+            elem: "#contentEdit",
+            //skin:'oxide-dark',
+            language: 'zh_CN',
+            plugins: 'print preview searchreplace autolink directionality visualblocks visualchars fullscreen image link media template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern help emoticons autosave bdmap indent2em autoresize lineheight formatpainter axupimgs',
+            toolbar: 'code undo redo restoredraft | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent | \
+                     styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | \
+                     table image media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen | bdmap indent2em lineheight formatpainter axupimgs',
+            height: 650, //编辑器高度
+            min_height: 400,
+            /*content_css: [ //可设置编辑区内容展示的css，谨慎使用
+                '/static/reset.css',
+                '/static/ax.css',
+                '/static/css.css',
+            ],*/
+            fontsize_formats: '12px 14px 16px 18px 24px 36px 48px 56px 72px',
+            font_formats: '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif;仿宋体=FangSong,serif;黑体=SimHei,sans-serif;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats;知乎配置=BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;小米配置=Helvetica Neue,Helvetica,Arial,Microsoft Yahei,Hiragino Sans GB,Heiti SC,WenQuanYi Micro Hei,sans-serif',
+            link_list: [
+                { title: '预置链接1', value: 'http://www.tinymce.com' },
+                { title: '预置链接2', value: 'http://tinymce.ax-z.cn' }
+            ],
+            image_list: [
+                { title: '预置图片1', value: 'https://www.tiny.cloud/images/glyph-tinymce@2x.png' },
+                { title: '预置图片2', value: 'https://www.baidu.com/img/bd_logo1.png' }
+            ],
+            image_class_list: [
+                { title: 'None', value: '' },
+                { title: 'Some class', value: 'class-name' }
+            ],
+            //importcss_append: true,
+            //自定义文件选择器的回调内容
+            file_picker_callback: function (callback, value, meta) {
+                if (meta.filetype === 'file') {
+                    callback('https://www.baidu.com/img/bd_logo1.png', { text: 'My text' });
+                }
+                if (meta.filetype === 'image') {
+                    callback('https://www.baidu.com/img/bd_logo1.png', { alt: 'My alt text' });
+                }
+                if (meta.filetype === 'media') {
+                    callback('movie.mp4', { source2: 'alt.ogg', poster: 'https://www.baidu.com/img/bd_logo1.png' });
+                }
+            },
+            //为内容模板插件提供预置模板
+            templates: [
+                { title: '模板1', description: '介绍文字1', content: '模板内容' },
+                { title: '模板2', description: '介绍文字2', content: '<div class="mceTmpl"><span class="cdate">CDATE</span>，<span class="mdate">MDATE</span>，我的内容</div>' }
+            ],
+            //content_security_policy: "script-src *;",
+            extended_valid_elements: 'script[src]',
+            //
+            template_cdate_format: '[CDATE: %m/%d/%Y : %H:%M:%S]',
+            template_mdate_format: '[MDATE: %m/%d/%Y : %H:%M:%S]',
+            autosave_ask_before_unload: false,
+            toolbar_mode: 'wrap',
+            images_upload_base_path: '/demo',
+            images_upload_handler: function (blobInfo, succFun, failFun) {
+                succFun('/demo/images/img.jpg');
+            },
+                    //icons:'ax-color',
+            // ...
+            // 其余配置可参考官方文档
+        }, function (opt, edit) {
+            //加载完成后回调
+        });
+
+        var edit2=t.render({
+            elem: "#contentEdit2",
+            //skin: 'oxide-dark',
+            language: 'zh_CN',
+            plugins: 'print preview searchreplace autolink directionality visualblocks visualchars fullscreen image link media template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern help emoticons autosave bdmap indent2em autoresize lineheight formatpainter axupimgs',
+            toolbar: 'code undo redo restoredraft | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent | \
+                     styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | \
+                     table image media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen | bdmap indent2em lineheight formatpainter axupimgs',
+            height: 400, //编辑器高度
+            min_height: 200,
+            /*content_css: [ //可设置编辑区内容展示的css，谨慎使用
+                '/static/reset.css',
+                '/static/ax.css',
+                '/static/css.css',
+            ],*/
+            fontsize_formats: '12px 14px 16px 18px 24px 36px 48px 56px 72px',
+            font_formats: '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif;仿宋体=FangSong,serif;黑体=SimHei,sans-serif;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats;知乎配置=BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;小米配置=Helvetica Neue,Helvetica,Arial,Microsoft Yahei,Hiragino Sans GB,Heiti SC,WenQuanYi Micro Hei,sans-serif',
+            link_list: [
+                { title: '预置链接1', value: 'http://www.tinymce.com' },
+                { title: '预置链接2', value: 'http://tinymce.ax-z.cn' }
+            ],
+            image_list: [
+                { title: '预置图片1', value: 'https://www.tiny.cloud/images/glyph-tinymce@2x.png' },
+                { title: '预置图片2', value: 'https://www.baidu.com/img/bd_logo1.png' }
+            ],
+            image_class_list: [
+                { title: 'None', value: '' },
+                { title: 'Some class', value: 'class-name' }
+            ],
+            //importcss_append: true,
+            //自定义文件选择器的回调内容
+            file_picker_callback: function (callback, value, meta) {
+                if (meta.filetype === 'file') {
+                    callback('https://www.baidu.com/img/bd_logo1.png', { text: 'My text' });
+                }
+                if (meta.filetype === 'image') {
+                    callback('https://www.baidu.com/img/bd_logo1.png', { alt: 'My alt text' });
+                }
+                if (meta.filetype === 'media') {
+                    callback('movie.mp4', { source2: 'alt.ogg', poster: 'https://www.baidu.com/img/bd_logo1.png' });
+                }
+            },
+            //为内容模板插件提供预置模板
+            templates: [
+                { title: '模板1', description: '介绍文字1', content: '模板内容' },
+                { title: '模板2', description: '介绍文字2', content: '<div class="mceTmpl"><span class="cdate">CDATE</span>，<span class="mdate">MDATE</span>，我的内容</div>' }
+            ],
+            //content_security_policy: "script-src *;",
+            extended_valid_elements: 'script[src]',
+            //
+            template_cdate_format: '[CDATE: %m/%d/%Y : %H:%M:%S]',
+            template_mdate_format: '[MDATE: %m/%d/%Y : %H:%M:%S]',
+            autosave_ask_before_unload: false,
+            toolbar_mode: 'wrap',
+            images_upload_base_path: '/demo',
+            images_upload_handler: function (blobInfo, succFun, failFun) {
+                succFun('/demo/images/img.jpg');
+            },
+                    //icons:'ax-color',
+            // ...
+            // 其余配置可参考官方文档
+        });
+
+        util.event('lay-event', {
+            setByAjax: function () {
+                $.ajax({
+                    url: 'mock/content.json',
+                    success: function (res) {
+                        t.get('#edit').setContent(res.data.content)
+                    }
+                })
+            },
+            layerTiny: function () {
+                layer.open({
+                    type: 1
+                    , content: $('#layer-tiny')
+                    , success: function () {
+                        t.render({
+                            elem: "#edit3"
+                            , height: 200
+                        });
+                    }
+                })
+            },
+            getContent: function () {
+                var content = t.get('#edit').getContent()
+                layer.alert(content)
+            },
+            setContent: function () {
+                t.get('#edit').setContent('点击按钮设置的内容：<span style="color: #e03e2d;">' + new Date() + '</span>')
+            },
+            clearContent: function () {
+                t.get('#edit').setContent('')
+            },
+            insertContent: function () {
+                t.get('#edit').insertContent('<b>插入内容</b>')
+            },
+            getText: function () {
+                var text = t.get('#edit').getContent({ format: 'text' })
+                layer.alert(text)
+            },
+            reload: function () {
+                t.reload({
+                    elem: '#edit',
+                    height: 230
+                    // 所有参数都可以重新设置 ...
+                }, function (opt, edit) {
+                    // 重载完成后回调函数，会把所有参数回传，
+                    // 重载仅仅重新渲染编辑器，不会清空textarea，可手动清空或设置
+                    t.get('#edit').setContent('')
+                })
+            },
+            reload2: function () {
+                t.reload('#edit', {
+                    height: 250
+                    // 所有参数都可以重新设置 ...
+                }, function (opt, edit) {
+                    // 重载完成后回调函数，会把所有参数回传，
+                    // 重载仅仅重新渲染编辑器，不会清空textarea，可手动清空或设置
+                    edit.setContent('')
+                })
+            },
+            destroy: function () {
+                t.get('#edit').destroy()
+            },
+            render: function () {
+                t.render({ elem: '#edit', height: '300px' })
+            }
+        });
+
+
+
+        //自定义验证规则
+        layui.form.verify({
+            Name: function (value) {
+                if (vale == null || value.trim().length == 0) {
+                    return '权限组是必填项';
+                }
+            }
+        });
+
+        layui.form.on('submit(tj)', function (data) {
+            debugger;
+            data.field.Content = edit.getContent();
+            data.field.Content2 = edit2.getContent();
+            if (data.field.IsHot == "on")
+                data.field.IsHot =1;
+            if (data.field.IsPublished == "on")
+                data.field.IsPublished = 1;
+            $.ajax({
+                url: 'Add',
+                method: 'post',
+                data: data.field,
+                dataType: 'JSON',
+                success: function (res) {
+
+                    if (res.code == 0) {
+                        parent.closeAdd(res.message);
+                    }
+                    else
+                        layer.msg(res.message);
+                },
+                error: function (err) {
+                    layer.msg(err);
+                }
+            });
+            return false;
+        });
+
+
+        });
+</script>
