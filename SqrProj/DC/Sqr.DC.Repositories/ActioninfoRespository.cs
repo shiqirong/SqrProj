@@ -51,7 +51,7 @@ namespace Sqr.DC.Repositories
 
         public async Task<int> Update(ActionInfo input)
         {
-            return Update(c => new
+            return await UpdateAsync(c => new
             {
                 input.Action,
                 input.Category,

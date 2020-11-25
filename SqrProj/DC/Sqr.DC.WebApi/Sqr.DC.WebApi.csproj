@@ -9,11 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\News\NewsController.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\News\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

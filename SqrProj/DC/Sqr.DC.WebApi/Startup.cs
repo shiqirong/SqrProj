@@ -42,7 +42,7 @@ namespace Sqr.DC.WebApi
                 foreach (var xml in xmlFiles)
                 {
                     if (System.IO.File.Exists(xml))
-                        c.IncludeXmlComments(xml);
+                        sg.IncludeXmlComments(xml);
                 }
             });
 
