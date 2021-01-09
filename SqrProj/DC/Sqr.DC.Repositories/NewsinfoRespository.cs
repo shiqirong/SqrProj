@@ -7,13 +7,16 @@
 // * history : Created by T4 03/11/2019 21:19:09 
 // </copyright>
 //-----------------------------------------------------------------------
+using Dapper;
 using Sqr.Common.Helper;
 using Sqr.Common.Paging;
+using Sqr.Dapper.Linq;
 using Sqr.Dapper.Linq.Common;
 using Sqr.DC.Dtos.News;
 using Sqr.DC.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace Sqr.DC.Repositories
@@ -49,6 +52,14 @@ namespace Sqr.DC.Repositories
 
         }
 
+        public int GetMaxOrderIndex()
+        {
+            using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
+            {
+                return  connection.ExecuteScalar<int>("select max(orderindex)+1 from newsinfo");
+            }
+        }
+
         public async Task<bool> UpdateAsync(Newsinfo mo)
         {
             return await UpdateAsync(c => new {
@@ -57,8 +68,7 @@ namespace Sqr.DC.Repositories
                 mo.Imagebig,
                 mo.Imagesmall,
                 mo.IsHot,
-                mo.Ispublished,
-                mo.OrderIndex,
+                mo.IsPublished,
                 mo.Publishedtime,
                 mo.Title,
                 mo.Title2,
@@ -74,6 +84,15 @@ namespace Sqr.DC.Repositories
                 UpdateTime = DateTime.Now,
                 mo.UpdateUser
             }, c => c.Id == mo.Id) > 0;
+        }
+
+        public async Task<Newsinfo> GetNearestRecord(int orderIndex)
+        {
+            return await QueryFirstOrDefaultAsync<Newsinfo>(c => c.OrderIndex > orderIndex,c=>new List<dynamic>() {
+                new { c.OrderIndex,OrderByEnum.ASC}
+            });
+
+            
         }
     }
 }

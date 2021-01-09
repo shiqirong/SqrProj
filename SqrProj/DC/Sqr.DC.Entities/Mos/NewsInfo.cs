@@ -50,7 +50,7 @@ namespace Sqr.DC.Entities
         /// <summary>
         /// 
         /// </summary>
-        public bool Ispublished { get; set; }
+        public bool IsPublished { get; set; }
 
 
         /// <summary>

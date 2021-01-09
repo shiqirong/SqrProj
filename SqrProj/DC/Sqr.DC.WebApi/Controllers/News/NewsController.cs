@@ -43,9 +43,9 @@ namespace Sqr.DC.WebApi.Controllers.News
         }
 
         [HttpPost]
-        public async Task<bool> Delete(long id)
+        public async Task<bool> Delete(NewsInfoDto input)
         {
-            return await NewsService.Instance.Delete(id);
+            return await NewsService.Instance.Delete(input);
         }
     }
 }

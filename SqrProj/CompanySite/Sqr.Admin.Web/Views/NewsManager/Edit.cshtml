@@ -13,7 +13,7 @@
                 <div class="layui-col-md6">
                     <label class="layui-form-label layui-required">新闻标题</label>
                     <div class="layui-input-block">
-                        <input type="text" name="Title" value="@Model?.Title" id="ParentId"  class="layui-input">
+                        <input type="text" name="Title" value="@Model?.Title"  class="layui-input">
                     </div>
                 </div>
 
@@ -21,7 +21,7 @@
                 <div class="layui-col-md6">
                     <label class="layui-form-label layui-required">新闻标题二</label>
                     <div class="layui-input-block">
-                        <input type="text" name="Title2" value="@Model?.Title2" id="ParentId"  class="layui-input">
+                        <input type="text" name="Title2" value="@Model?.Title2"  class="layui-input">
                     </div>
                 </div>
             </div>
@@ -29,42 +29,42 @@
                 <div class="layui-col-md6">
                     <label class="layui-form-label ">大图标</label>
                     <div class="layui-input-block">
-                        <input type="text" name="Imagebig" value="@Model?.Imagebig" id="ParentId" lay-filter="tree" class="layui-input">
+                        <input type="text" name="Imagebig" value="@Model?.Imagebig"  lay-filter="tree" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-col-md6">
                     <label class="layui-form-label">小图标</label>
                     <div class="layui-input-block">
-                        <input type="text" name="Imagesmall" value="@Model?.Imagesmall" id="ParentId" lay-filter="tree" class="layui-input">
+                        <input type="text" name="Imagesmall" value="@Model?.Imagesmall"  lay-filter="tree" class="layui-input">
                     </div>
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-col-md6">
                     <div class="layui-input-block">
-                        <input type="checkbox" name="IsHot" value="@Model?.IsHot" title="是否热门" checked>
+                        <input type="checkbox" name="IsHot" title="是否热门" @((Model!=null&&Model.IsHot)?"checked":"")>
                         @*</div>
-                    <div class="layui-input-block">*@
-                        <input type="checkbox" name="IsPublished" value="@Model?.IsPublished" title="是否发布" checked>
+                            <div class="layui-input-block">*@
+                        <input type="checkbox" name="IsPublished" title="是否发布" @((Model!=null && Model.IsPublished)?"checked":"")>
                     </div>
                 </div>
                 <div class="layui-col-md6">
                     <label class="layui-form-label">排序</label>
                     <div class="layui-input-block">
-                        <input type="number" name="OrderNum" value="@Model?.OrderNum" id="ParentId" lay-filter="tree" class="layui-input">
+                        <input type="number" name="OrderNum" value="@Model?.OrderNum"  lay-filter="tree" class="layui-input">
                     </div>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label layui-required">内容简介</label>
                 <div class="layui-input-block">
-                    <textarea name="Content2" value="@Model?.Content2" id="contentEdit2"></textarea>
+                    <textarea name="Content2" value="" id="contentEdit2">@Model?.Content2</textarea>
                 </div>
             </div>
             <div class="layui-form-item ">
                 <label class="layui-form-label layui-required">内容详情</label>
                 <div class="layui-input-block">
-                    <textarea name="Content" value="@Model?.Content" id="contentEdit"></textarea>
+                    <textarea name="Content" value="" id="contentEdit">@Model?.Content</textarea>
                 </div>
             </div>
             <div id="layer-tiny" style="display: none;">
@@ -304,19 +304,20 @@
             debugger;
             data.field.Content = edit.getContent();
             data.field.Content2 = edit2.getContent();
+            debugger;
             if (data.field.IsHot == "on")
                 data.field.IsHot =true;
             if (data.field.IsPublished == "on")
                 data.field.IsPublished = true;
             $.ajax({
-                url: 'Add',
+                url: 'Edit',
                 method: 'post',
                 data: data.field,
                 dataType: 'JSON',
                 success: function (res) {
-                    debugger;
+
                     if (res.code == 0) {
-                        parent.closeAdd(res.message);
+                        parent.closeEdit(res.message);
                     }
                     else
                         layer.msg(res.message);

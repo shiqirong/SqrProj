@@ -49,7 +49,7 @@ namespace Sqr.Dapper.Linq
             var linq2Sql = new SelectSqlFactory<T>().Where(whereExp);
             using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
             {
-                return connection.Query<T>(linq2Sql.Sql, linq2Sql.ParamsList).SingleOrDefault();
+                return connection.QuerySingleOrDefault<T>(linq2Sql.Sql, linq2Sql.ParamsList);
             }
         }
 
@@ -58,7 +58,25 @@ namespace Sqr.Dapper.Linq
             var linq2Sql = new SelectSqlFactory<T>().Where(whereExp);
             using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
             {
-                return (await connection.QueryAsync<T>(linq2Sql.Sql, linq2Sql.ParamsList)).SingleOrDefault();
+                return (await connection.QuerySingleOrDefaultAsync<T>(linq2Sql.Sql, linq2Sql.ParamsList));
+            }
+        }
+
+        public T QueryFirstOrDefault<T>(Expression<Func<T, bool>> whereExp)
+        {
+            var linq2Sql = new SelectSqlFactory<T>().Where(whereExp);
+            using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
+            {
+                return connection.QueryFirstOrDefault<T>(linq2Sql.Sql, linq2Sql.ParamsList);
+            }
+        }
+
+        public async Task<T> QueryFirstOrDefaultAsync<T>(Expression<Func<T, bool>> whereExp, Expression<Func<T, IList<dynamic>>>  orderBy)
+        {
+            var linq2Sql = new SelectSqlFactory<T>().Where(whereExp).OrderBy(orderBy);
+            using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
+            {
+                return (await connection.QueryFirstOrDefaultAsync<T>(linq2Sql.Sql, linq2Sql.ParamsList));
             }
         }
 
@@ -98,7 +116,7 @@ namespace Sqr.Dapper.Linq
         }
         public async Task<PagedList<T>> QueryPagedAsync<T>(Expression<Func<T, bool>> whereExp, Expression<Func<T, dynamic>> orderBy=null, PagedQueryParams pagedParams=null)
         {
-            var linq2Sql = new SelectSqlFactory<T>().Where(whereExp).OrderBy(orderBy).Paged(pagedParams.PageIndex, pagedParams.PageSize);
+            var linq2Sql = new SelectSqlFactory<T>().Where(whereExp)/*.OrderBy(orderBy)*/.Paged(pagedParams.PageIndex, pagedParams.PageSize);
             PagedList<T> pl = new PagedList<T>();
 
             using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
@@ -115,7 +133,7 @@ namespace Sqr.Dapper.Linq
             act(linq2Sql);
             using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
             {
-                return connection.Query<TOut>(linq2Sql.Sql, linq2Sql.ParamsList).Single();
+                return connection.QuerySingle<TOut>(linq2Sql.Sql, linq2Sql.ParamsList);
             }
         }
 
@@ -125,7 +143,7 @@ namespace Sqr.Dapper.Linq
             act(linq2Sql);
             using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
             {
-                return (await connection.QueryAsync<TOut>(linq2Sql.Sql, linq2Sql.ParamsList)).Single();
+                return (await connection.QuerySingleAsync<TOut>(linq2Sql.Sql, linq2Sql.ParamsList));
             }
         }
 
@@ -135,7 +153,7 @@ namespace Sqr.Dapper.Linq
             act(linq2Sql);
             using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
             {
-                return connection.Query<TOut>(linq2Sql.Sql, linq2Sql.ParamsList).SingleOrDefault();
+                return connection.QuerySingleOrDefault<TOut>(linq2Sql.Sql, linq2Sql.ParamsList);
             }
 
         }
@@ -146,10 +164,33 @@ namespace Sqr.Dapper.Linq
             act(linq2Sql);
             using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
             {
-                return (await connection.QueryAsync<TOut>(linq2Sql.Sql, linq2Sql.ParamsList)).SingleOrDefault();
+                return (await connection.QuerySingleOrDefaultAsync<TOut>(linq2Sql.Sql, linq2Sql.ParamsList));
             }
 
         }
+
+        public TOut QueryFirstOrDefault<TOut, T1, T2>(Action<SelectSqlFactory<T1, T2>> act)
+        {
+            var linq2Sql = new SelectSqlFactory<T1, T2>();
+            act(linq2Sql);
+            using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
+            {
+                return connection.QueryFirstOrDefault<TOut>(linq2Sql.Sql, linq2Sql.ParamsList);
+            }
+
+        }
+
+        public async Task<TOut> QueryFirstOrDefaultAsync<TOut, T1, T2>(Action<SelectSqlFactory<T1, T2>> act)
+        {
+            var linq2Sql = new SelectSqlFactory<T1, T2>();
+            act(linq2Sql);
+            using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
+            {
+                return (await connection.QueryFirstOrDefaultAsync<TOut>(linq2Sql.Sql, linq2Sql.ParamsList));
+            }
+
+        }
+        
 
         public async Task<IList<TOut>> QueryListAsync<TOut, T1, T2>(Action<SelectSqlFactory<T1, T2>> act)
         {
@@ -205,7 +246,7 @@ namespace Sqr.Dapper.Linq
             act(linq2Sql);
             using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
             {
-                return connection.Query<TOut>(linq2Sql.Sql, linq2Sql.ParamsList).SingleOrDefault();
+                return connection.QuerySingleOrDefault<TOut>(linq2Sql.Sql, linq2Sql.ParamsList);
             }
 
         }
@@ -216,7 +257,29 @@ namespace Sqr.Dapper.Linq
             act(linq2Sql);
             using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
             {
-                return (await connection.QueryAsync<TOut>(linq2Sql.Sql, linq2Sql.ParamsList)).SingleOrDefault();
+                return (await connection.QuerySingleOrDefaultAsync<TOut>(linq2Sql.Sql, linq2Sql.ParamsList));
+            }
+
+        }
+
+        public TOut QueryFirstOrDefault<TOut, T1, T2, T3>(Action<SelectSqlFactory<T1, T2, T3>> act)
+        {
+            var linq2Sql = new SelectSqlFactory<T1, T2, T3>();
+            act(linq2Sql);
+            using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
+            {
+                return connection.QueryFirstOrDefault<TOut>(linq2Sql.Sql, linq2Sql.ParamsList);
+            }
+
+        }
+
+        public async Task<TOut> QueryFirstOrDefaultAsync<TOut, T1, T2, T3>(Action<SelectSqlFactory<T1, T2, T3>> act)
+        {
+            var linq2Sql = new SelectSqlFactory<T1, T2, T3>();
+            act(linq2Sql);
+            using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
+            {
+                return (await connection.QueryFirstOrDefaultAsync<TOut>(linq2Sql.Sql, linq2Sql.ParamsList));
             }
 
         }
@@ -271,23 +334,23 @@ namespace Sqr.Dapper.Linq
 
 
 
-        public TOut QuerySigle<TOut, T1, T2, T3,T4>(Action<SelectSqlFactory<T1, T2, T3, T4>> act)
+        public TOut QuerySingle<TOut, T1, T2, T3,T4>(Action<SelectSqlFactory<T1, T2, T3, T4>> act)
         {
             var linq2Sql = new SelectSqlFactory<T1, T2, T3, T4>();
             act(linq2Sql);
             using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
             {
-                return connection.Query<TOut>(linq2Sql.Sql, linq2Sql.ParamsList).Single();
+                return connection.QuerySingle<TOut>(linq2Sql.Sql, linq2Sql.ParamsList);
             }
         }
 
-        public async Task<TOut> QuerySigleAsync<TOut, T1, T2, T3, T4>(Action<SelectSqlFactory<T1, T2, T3, T4>> act)
+        public async Task<TOut> QuerySingleAsync<TOut, T1, T2, T3, T4>(Action<SelectSqlFactory<T1, T2, T3, T4>> act)
         {
             var linq2Sql = new SelectSqlFactory<T1, T2, T3, T4>();
             act(linq2Sql);
             using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
             {
-                return (await connection.QueryAsync<TOut>(linq2Sql.Sql, linq2Sql.ParamsList)).Single();
+                return (await connection.QuerySingleAsync<TOut>(linq2Sql.Sql, linq2Sql.ParamsList));
             }
         }
 
@@ -297,7 +360,7 @@ namespace Sqr.Dapper.Linq
             act(linq2Sql);
             using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
             {
-                return connection.Query<TOut>(linq2Sql.Sql, linq2Sql.ParamsList).SingleOrDefault();
+                return connection.QuerySingleOrDefault<TOut>(linq2Sql.Sql, linq2Sql.ParamsList);
             }
 
         }
@@ -308,7 +371,30 @@ namespace Sqr.Dapper.Linq
             act(linq2Sql);
             using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
             {
-                return (await connection.QueryAsync<TOut>(linq2Sql.Sql, linq2Sql.ParamsList)).SingleOrDefault();
+                return (await connection.QuerySingleOrDefaultAsync<TOut>(linq2Sql.Sql, linq2Sql.ParamsList));
+            }
+
+        }
+
+
+        public TOut QueryFirstOrDefault<TOut, T1, T2, T3, T4>(Action<SelectSqlFactory<T1, T2, T3, T4>> act)
+        {
+            var linq2Sql = new SelectSqlFactory<T1, T2, T3, T4>();
+            act(linq2Sql);
+            using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
+            {
+                return connection.QueryFirstOrDefault<TOut>(linq2Sql.Sql, linq2Sql.ParamsList);
+            }
+
+        }
+
+        public async Task<TOut> QueryFirstOrDefaultAsync<TOut, T1, T2, T3, T4>(Action<SelectSqlFactory<T1, T2, T3, T4>> act)
+        {
+            var linq2Sql = new SelectSqlFactory<T1, T2, T3, T4>();
+            act(linq2Sql);
+            using (IDbConnection connection = new MySql.Data.MySqlClient.MySqlConnection(_connectionString))
+            {
+                return (await connection.QueryFirstOrDefaultAsync<TOut>(linq2Sql.Sql, linq2Sql.ParamsList));
             }
 
         }

@@ -57,7 +57,7 @@ namespace Sqr.DC.Entities
 			/// <summary>
 			/// 状态：1发布，2不发布
 			/// </summary>
-						public sbyte Ispublished { get; set; }
+						public sbyte IsPublished { get; set; }
 
     }
 }

@@ -75,6 +75,16 @@ namespace Sqr.DC.Repositories
             return await QuerySingleOrDefaultAsync<TEntity>(whereExp);
         }
 
+        protected TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> whereExp)
+        {
+            return QuerySingleOrDefault<TEntity>(whereExp);
+        }
+
+        protected async Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> whereExp)
+        {
+            return await QuerySingleOrDefaultAsync<TEntity>(whereExp);
+        }
+
         protected IList<TEntity> GetList(Expression<Func<TEntity, bool>> whereExp)
         {
             return QueryList<TEntity>(whereExp);

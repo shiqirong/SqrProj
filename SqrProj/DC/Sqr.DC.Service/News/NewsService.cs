@@ -20,6 +20,7 @@ namespace Sqr.DC.Services.News
 
         public async Task<NewsInfoDto> Get(long id)
         {
+            var nearest = await NewsinfoRepository.Instance.GetNearestRecord(1);
             var output= await NewsinfoRepository.Instance.GetByIdSingleAsync(id);
             return output.MapTo<NewsInfoDto>();
         }
@@ -35,9 +36,9 @@ namespace Sqr.DC.Services.News
                 Imagesmall = input.Imagesmall,
                 IsDeleted = 0,
                 IsHot = input.IsHot,
-                Ispublished = input.Ispublished,
-                OrderIndex = input.OrderIndex,
-                Publishedtime = input.Ispublished ? DateTime.Now : DateTime.MinValue,
+                IsPublished = input.IsPublished,
+                OrderIndex = NewsinfoRepository.Instance.GetMaxOrderIndex(),
+                Publishedtime = input.IsPublished ? DateTime.Now : DateTime.MinValue,
                 Title = input.Title,
                 Title2 = input.Title2
             }) > 0;
@@ -48,11 +49,11 @@ namespace Sqr.DC.Services.News
             return await NewsinfoRepository.Instance.UpdateAsync(input.MapTo<Newsinfo>()) ;
         }
 
-        public async Task<bool> Delete(long id)
+        public async Task<bool> Delete(NewsInfoDto input)
         {
             return await NewsinfoRepository.Instance.DeleteAsync(new Newsinfo()
             {
-                Id=id
+                Id= input.Id
             });
         }
         

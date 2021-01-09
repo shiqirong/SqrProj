@@ -48,7 +48,7 @@ namespace Sqr.Admin.Web.Models.News
         /// <summary>
         /// 是否置顶
         /// </summary>
-        public sbyte IsHot { get; set; }
+        public bool IsHot { get; set; }
 
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Sqr.Admin.Web.Models.News
         /// <summary>
         /// 状态：1发布，2不发布
         /// </summary>
-        public sbyte IsPublished { get; set; }
+        public bool IsPublished { get; set; }
 
         public int OrderNum { get; set; }
     }

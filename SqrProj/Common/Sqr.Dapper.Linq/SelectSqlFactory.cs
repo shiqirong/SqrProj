@@ -71,7 +71,7 @@ namespace Sqr.Dapper.Linq
             return this;
         }
 
-        public SelectSqlFactory<T1> OrderBy(Expression<Func<T1, dynamic>> joinConditon)
+        public SelectSqlFactory<T1> OrderBy(Expression<Func<T1, IList<dynamic>>> joinConditon)
         {
             if (joinConditon != null)
                 _order = $" ORDER BY  {Linq2SqlHelper.DealMemberExpresion(joinConditon, _paramsList)} ";

@@ -13,10 +13,13 @@
 <table class="layui-hide" id="tblUser" lay-filter="tblUser"></table>
 
 <script>
+
+    var renderTable;
+
     layui.use('table', function () {
         var table = layui.table;
 
-        table.render({
+        renderTable=table.render({
             elem: '#tblUser'
             , url: 'GetNewsPaged'
             , toolbar: '#toolbar' //开启头部工具栏，并为其绑定左侧模板
@@ -86,20 +89,9 @@
                 openAdd();
             }
             else if (obj.event === 'del') {
-                layer.confirm('真的删除行么', function (index) {
-                    obj.del();
-                    layer.close(index);
-                });
+                del(data);
             } else if (obj.event === 'edit') {
-                layer.prompt({
-                    formType: 2
-                    , value: data.email
-                }, function (value, index) {
-                    obj.update({
-                        email: value
-                    });
-                    layer.close(index);
-                });
+                openEdit(data);
             }
         });
     });
@@ -115,10 +107,49 @@
             title: "添加菜單"
         });
     }
-
     function closeAdd() {
         layer.close(addHandler);
         layui.table.reload("tblUser");
     }
 
+    var editHandler;
+    function openEdit(data) {
+        editHandler = layer.open({
+            type: 2,
+            area: ['1000px', '650px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: 'Edit?id=' + data.id,
+            title: "修改菜單"
+        });
+    }
+    function closeEdit() {
+        layer.close(editHandler);
+        layui.table.reload("tblUser");
+    }
+
+    function del(data) {
+        layer.confirm('确定要删除新闻【' + data.title + '】?', function (index) {
+            $.ajax({
+                url: 'delete',
+                method: 'post',
+                data: { "id": data.id },
+                dataType: 'JSON',
+                success: function (res) {
+                    if (res.code = '0') {
+                        renderTable.reload();
+                    }
+                    else
+                        alert(res.msg);
+                },
+                error: function (err) {
+                    alert(err);
+                },
+                complete: function () {
+                    layer.close(index);
+                }
+            });
+        });
+
+    }
 </script>
