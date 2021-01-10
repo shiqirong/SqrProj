@@ -35,6 +35,11 @@ namespace Sqr.DC.Repositories
 
         }
 
+        public async Task<IList<TEntity>> GetAll()
+        {
+            return QueryList<TEntity>(c => c.IsDeleted == 0);
+        }
+
         public TEntity GetByIdSingle(long Id)
         {
             return QuerySingle<TEntity>(w => w.Id == Id && w.IsDeleted==0);

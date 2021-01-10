@@ -31,7 +31,8 @@ namespace Sqr.DC.Repositories
             && WhereIf<ActionInfo>(!string.IsNullOrWhiteSpace(input.InputData.Action),()=>c.Action == input.InputData.Action)
             && WhereIf<ActionInfo>(!string.IsNullOrWhiteSpace(input.InputData.Controller), () => c.Controller == input.InputData.Controller)
             && WhereIf<ActionInfo>(!string.IsNullOrWhiteSpace(input.InputData.Category), () => c.Category == input.InputData.Category)
-            && WhereIf<ActionInfo>(!string.IsNullOrWhiteSpace(input.InputData.Name), () => c.Category.Contains(input.InputData.Name)),
+            && WhereIf<ActionInfo>(!string.IsNullOrWhiteSpace(input.InputData.Name), () => c.Category.Contains(input.InputData.Name))
+            && WhereIf<ActionInfo>(input.InputData.SystemId!=0, () => c.SystemId==input.InputData.SystemId),//c=>new { c.SystemId, c.Controller },
             
             new PagedQueryParams()
             {

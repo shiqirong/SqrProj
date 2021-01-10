@@ -14,61 +14,41 @@ namespace Sqr.DC.Entities
     /// <summary>
     /// Productinfo Entity Model
     /// </summary>    
-    public class Productinfo:BaseMo
+    public class Productinfo : BaseMo
     {
-      
-			/// <summary>
-			/// 
-			/// </summary>
-						public string Content { get; set; }
 
-      
-			/// <summary>
-			/// 
-			/// </summary>
-						public string Content2 { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Content { get; set; }
 
-      
-			/// <summary>
-			/// 
-			/// </summary>
-						public string Imagebig { get; set; }
 
-      
-			/// <summary>
-			/// 
-			/// </summary>
-						public string Imagesmall { get; set; }
 
-      
-			/// <summary>
-			/// 
-			/// </summary>
-						public string Ishot { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Imagebig { get; set; }
 
-      
-			/// <summary>
-			/// 
-			/// </summary>
-						public string IsPublished { get; set; }
 
-      
-			/// <summary>
-			/// 
-			/// </summary>
-						public DateTime Publishedtime { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Imagesmall { get; set; }
 
-      
-			/// <summary>
-			/// 
-			/// </summary>
-						public string Title { get; set; }
 
-      
-			/// <summary>
-			/// 
-			/// </summary>
-						public string Title2 { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Name { get; set; }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Model { get; set; }
+
+        public long Category { get; set; }
 
     }
 }

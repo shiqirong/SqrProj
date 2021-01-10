@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Sqr.Common.Helper;
-using Sqr.DC.Dtos.News;
+using Sqr.DC.Dtos.Co;
 using Sqr.Admin.App.Api.DC;
 using Sqr.Admin.Web.Models;
 using Sqr.Common;

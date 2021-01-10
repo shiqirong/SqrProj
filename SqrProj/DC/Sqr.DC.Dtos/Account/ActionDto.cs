@@ -39,7 +39,7 @@ namespace Sqr.DC.Dtos.Account
         /// <summary>
         /// 
         /// </summary>
-        public int ParentId { get; set; }
+        public long ParentId { get; set; }
 
         public long SystemId { get; set; }
 

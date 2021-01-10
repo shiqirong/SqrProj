@@ -12,7 +12,7 @@ using Sqr.Common.Helper;
 using Sqr.Common.Paging;
 using Sqr.Dapper.Linq;
 using Sqr.Dapper.Linq.Common;
-using Sqr.DC.Dtos.News;
+using Sqr.DC.Dtos.Co;
 using Sqr.DC.Entities;
 using System;
 using System.Collections.Generic;
@@ -35,7 +35,7 @@ namespace Sqr.DC.Repositories
              && WhereIf<Newsinfo>(input.InputData.IsPublished.HasValue, () => c.IsHot == input.InputData.IsPublished.Value)
             && WhereIf<Newsinfo>(input.InputData.PublishedTimeStart.HasValue, () => c.Publishedtime >= input.InputData.PublishedTimeStart.Value)
             && WhereIf<Newsinfo>(input.InputData.PublishedTimeEnd.HasValue, () => c.Publishedtime <= input.InputData.PublishedTimeEnd.Value),
-            c => new {c.OrderIndex,c.Publishedtime},
+            c => new List<dynamic> { new { c.OrderIndex,Order="ASC" } },
             new PagedQueryParams()
             {
                 PageIndex = input.Page,

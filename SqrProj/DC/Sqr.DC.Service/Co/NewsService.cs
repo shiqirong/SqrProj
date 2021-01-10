@@ -1,6 +1,6 @@
 ﻿using Sqr.Common.Helper;
 using Sqr.Common.Paging;
-using Sqr.DC.Dtos.News;
+using Sqr.DC.Dtos.Co;
 using Sqr.DC.Entities;
 using Sqr.DC.Repositories;
 using System;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sqr.DC.Services.News
+namespace Sqr.DC.Services.Co
 {
     public class NewsService : ServiceBase<NewsService>
     {
@@ -20,7 +20,6 @@ namespace Sqr.DC.Services.News
 
         public async Task<NewsInfoDto> Get(long id)
         {
-            var nearest = await NewsinfoRepository.Instance.GetNearestRecord(1);
             var output= await NewsinfoRepository.Instance.GetByIdSingleAsync(id);
             return output.MapTo<NewsInfoDto>();
         }

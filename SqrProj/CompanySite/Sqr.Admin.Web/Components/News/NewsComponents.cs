@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Sqr.Common.Helper;
 using Sqr.Common.Response;
-using Sqr.DC.Dtos.News;
+using Sqr.DC.Dtos.Co;
 
 namespace Sqr.Admin.Web.Components.News
 {

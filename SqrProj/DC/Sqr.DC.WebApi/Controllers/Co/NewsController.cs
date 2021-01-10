@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sqr.Common.Paging;
-using Sqr.DC.Dtos.News;
-using Sqr.DC.Services.News;
+using Sqr.DC.Dtos.Co;
+using Sqr.DC.Services.Co;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Sqr.DC.WebApi.Controllers.News
+namespace Sqr.DC.WebApi.Controllers.Co
 {
     [Route("api/[controller]/[Action]")]
     [ApiController]

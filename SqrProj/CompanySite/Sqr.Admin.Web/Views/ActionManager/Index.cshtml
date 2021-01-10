@@ -1,5 +1,6 @@
 ﻿
 @{
+    Layout = "_Layout";
     ViewData["Title"] = "Index";
 }
 
@@ -23,11 +24,11 @@
 
 
 @section Scripts{
-    <script>
+    <script type="text/javascript">
         var renderTable = null;
         /*使用模块加载的方式 加载文件*/
         layui.config({
-            base: '/lib/layui/lay//modules/'
+            base: '/lib/layui/lay/modules/'
         }).extend({
             treetable: 'treetable-lay/treetable'
         }).use(['layer', 'table', 'treetable'], function () {
@@ -52,8 +53,9 @@
                     page: false,
                     cols: [[
                         { type: 'numbers', title: '编号' },
-                        { field: 'systemName', title: '系統名称' },
                         { field: 'name', title: '菜单名称' },
+                        { field: 'systemName', title: '系統名称' },
+                       
                         { field: 'controller', title: 'Controller' },
                         { field: 'action', title: 'Action' },
                         {

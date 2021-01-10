@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sqr.DC.Dtos.News
+namespace Sqr.DC.Dtos.Co
 {
     public class NewsInfoQueryDto
     {

@@ -2,7 +2,7 @@
 using Sqr.Common;
 using Sqr.Common.Paging;
 using Sqr.Common.Response;
-using Sqr.DC.Dtos.News;
+using Sqr.DC.Dtos.Co;
 using System;
 using System.Collections.Generic;
 using System.Text;

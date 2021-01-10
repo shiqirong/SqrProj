@@ -50,7 +50,7 @@ namespace Sqr.DC.Entities
         /// <summary>
         /// 
         /// </summary>
-        public int ParentId { get; set; }
+        public long ParentId { get; set; }
 
         public long SystemId { get; set; }
 

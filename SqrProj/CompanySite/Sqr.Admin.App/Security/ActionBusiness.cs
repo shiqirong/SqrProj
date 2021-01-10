@@ -1,4 +1,5 @@
 ﻿using Sqr.Admin.App.Api.DC;
+using Sqr.Admin.App.Helper;
 using Sqr.Common;
 using Sqr.Common.Paging;
 using Sqr.DC.Dtos.Account;
@@ -10,18 +11,9 @@ namespace Sqr.Admin.App.Security
 {
     public class ActionBusiness:BaseBusiness<ActionBusiness>
     {
-        public async Task<PagingOutput<ActionDto>> MenuList()
+        public async Task<PagingOutput<ActionDto>> MenuList(PagingInput<ActionDto> input)
         {
-            var result= await SecurityApi.Instance.GetActionPaged(new PagingInput<ActionDto>()
-            {
-                InputData=new ActionDto()
-                {
-                    SystemId = 1,
-                    Category = "1",
-                },
-                Page=1,
-                Limit=int.MaxValue
-            });
+            var result= await SecurityApi.Instance.GetActionPaged(input);
             return result.Data;
         }
         

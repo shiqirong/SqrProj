@@ -21,8 +21,6 @@ namespace Sqr.DC.Services.Account
 
         public async Task<bool> Add(ActionInfo input)
         {
-            if (input.Id == 0)
-                input.Id = NumUtil.SnowNum();
             var siteInfo=await SsoSitesRepository.Instance.GetByIdSingleAsync(input.SystemId);
             input.SystemName = siteInfo.Sitename;
             input.CreateTime = DateTime.Now;
