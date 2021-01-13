@@ -24,6 +24,12 @@
             <param name="input"></param>
             <returns></returns>
         </member>
+        <member name="M:Sqr.DC.WebApi.Controllers.DefaultController.Check">
+            <summary>
+            健康检查
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Sqr.DC.WebApi.Fillter.GlobalExceptionFilter">
             <summary>
             全局异常过滤器

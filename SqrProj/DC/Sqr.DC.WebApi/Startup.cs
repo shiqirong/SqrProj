@@ -20,7 +20,7 @@ namespace Sqr.DC.WebApi
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public  IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -52,6 +52,8 @@ namespace Sqr.DC.WebApi
                 r.Filters.Add(typeof(GlobalActionFilter));
             });
             services.AddMvc(filters).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            //ConsulCommon.ConsulRegistry.Configuration = Configuration;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,6 +70,8 @@ namespace Sqr.DC.WebApi
                 s.RoutePrefix = string.Empty; //默认值是 "swagger" ,需要这样请求:https://localhost:44384/swagger
             });
             app.UseMvc();
+
+            ConsulCommon.ConsulRegistry.ConsulRegister();
         }
     }
 }
